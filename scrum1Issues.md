@@ -12,7 +12,7 @@
 
 ## Daniel:
 - Get acquainted with base tetris tech with tim tutorial
-- 
+- Work on opponent tetris game board display
 - 
 
 ## Thomas:
