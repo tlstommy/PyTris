@@ -32,6 +32,8 @@ class Server:
         print(decodedJson.get("currentGrid")[0])
         print(decodedJson.get("currentGrid")[1])
         print(decodedJson.get("currentGrid")[2])
+        print(decodedJson.get("currentGrid")[3])
+        print(decodedJson.get("currentGrid")[4])
 
         self.storePlayerData(decodedJson,c)
 
