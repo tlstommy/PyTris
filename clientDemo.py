@@ -18,15 +18,22 @@ class Client:
     def sendData(self,jsonData):
         #encode data and send
         self.clientSocket.send(json.dumps(jsonData).encode())
-        
+    def receiveData(self):
+
+        print("\nOPPONENT DATA:")
+        print(self.clientSocket.recv(1024).decode())
     
-client = Client("216.96.220.81",8888,recvPort=25000)
+
+serverIP = input("please enter the server IP: ")
+
+
+client = Client(serverIP,8888,recvPort=25000)
 
 
 
 while True:
     
-    playerName = input("\n\nName: ")
+    playerName = input("\n\nPlease enter your username: ")
     jsonData = {
                 "username":playerName, 
                 "ip":socket.gethostbyname(socket.gethostname()),
@@ -35,3 +42,5 @@ while True:
                 }
     client.createClientSocket()
     client.sendData(jsonData)
+    client.receiveData()
+    
