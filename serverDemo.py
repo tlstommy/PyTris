@@ -1,4 +1,3 @@
-from audioop import add
 import json,sys,socket
 
 class Server:
@@ -12,21 +11,20 @@ class Server:
         self.listenForConn()
     def listenForConn(self):
         self.serverSocket.listen(2)
-        while True:
-            content, addr = self.serverSocket.accept()
-            
-            #decode json
-            decodedJson = json.loads(content.recv(1024).decode())
-            
-            
-            print("\n---=INBOUND MESSAGE=---")
-            print("CLIENT ADDRESS  :",addr[0])
-            print("CLIENT PORT     :",decodedJson.get("recvPort"))
-            print("CLIENT USERNAME :",decodedJson.get("username"))
-            print("CLIENT BOARD:")
-            print(decodedJson.get("currentGrid")[0])
-            print(decodedJson.get("currentGrid")[1])
-            print(decodedJson.get("currentGrid")[2])
+        content, addr = self.serverSocket.accept()
+        #decode json
+        decodedJson = json.loads(content.recv(1024).decode())\
+
+        print("\n---=INBOUND MESSAGE=---")
+        print("CLIENT ADDRESS  :",addr[0])
+        print("CLIENT PORT     :",decodedJson.get("recvPort"))
+        print("CLIENT USERNAME :",decodedJson.get("username"))
+        print("CLIENT BOARD:")
+        print(decodedJson.get("currentGrid")[0])
+        print(decodedJson.get("currentGrid")[1])
+        print(decodedJson.get("currentGrid")[2])
+
+        
             
 
 server = Server(8888)
