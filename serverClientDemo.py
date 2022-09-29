@@ -48,7 +48,6 @@ client = Client(serverIP,8888,recvPort=25000)
 
 
 while True:
-    
     playerName = input("\n\nPlease enter your username: ")
     jsonData = {
                 "username":playerName, 
