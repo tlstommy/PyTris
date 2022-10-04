@@ -394,6 +394,10 @@ def main(win):  # *
                     current_piece.rotation -= 1
                     if not(valid_space(current_piece, grid)):
                         current_piece.rotation += 1
+                if event.key == pygame.K_a:
+                    current_piece.rotation += 2
+                    if not(valid_space(current_piece, grid)):
+                        current_piece.rotation -= 2
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.quit())
 
