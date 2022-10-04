@@ -262,14 +262,15 @@ def draw_queue(queue, surface):
     label = font.render('Queue', 1, (255,255,255))
 
     x = top_left_x + play_width + 50
-    y = top_left_y + play_height/2 - 100
-    format = queue[0].shape[queue[0].rotation % len(queue[0].shape)]
+    y = top_left_y + play_height/8
 
-    for i, line in enumerate(format):
-        row = list(line)
-        for j, column in enumerate(row):
-            if column == '0':
-                pygame.draw.rect(surface, queue[0].color, (x + j*block_size, y + i*block_size, block_size, block_size), 0)
+    for k in range(5):
+        piece_format = queue[k].shape[queue[k].rotation % len(queue[k].shape)]
+        for i, line in enumerate(piece_format):
+            row = list(line)
+            for j, column in enumerate(row):
+                if column == '0':
+                    pygame.draw.rect(surface, queue[k].color, (x + j*block_size, (y + (100 * k)) + i*block_size, block_size, block_size), 0)
 
     surface.blit(label, (x + 10, y - 30))
 
