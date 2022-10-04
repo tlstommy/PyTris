@@ -142,7 +142,13 @@ def create_grid(locked_pos={}):  # *
                 grid[i][j] = c
     return grid
 
-
+# convert_shape_format()
+#
+# Converts the easy-to-read shape arrays defined at the top of the program and returns a computer-friendly array
+# Is used in valid_space to check whether the spot in grid[] and positions[] are both full
+#
+# param shape - the Piece object of the shape we are converting into the grid format
+# return value - the converted position of the shape as a new position array which is relative to the game grid
 def convert_shape_format(shape):
     positions = []
     format = shape.shape[shape.rotation % len(shape.shape)]
@@ -152,12 +158,21 @@ def convert_shape_format(shape):
         for j, column in enumerate(row):
             if column == '0':
                 positions.append((shape.x + j, shape.y + i))
-
+    # The specifics of why this is done are confusing, watch part 2 at 4:30 for an explanation
     for i, pos in enumerate(positions):
         positions[i] = (pos[0] - 2, pos[1] - 4)
 
     return positions
 
+# valid_space()
+#
+# Determines whether the shape is in a valid space or not (not occupied by another shape)
+# Does this by iterating through the formatted array of the shape and comparing it to the grid - if the grid is colored
+# then the spot is occupied
+#
+# param shape - the piece object being checked
+# param grid - the grid array representing the current state of the board
+# return value - boolean of if the position is valid
 
 def valid_space(shape, grid):
     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
@@ -357,6 +372,12 @@ def main(win):  # *
                     current_piece.rotation += 1
                     if not(valid_space(current_piece, grid)):
                         current_piece.rotation -= 1
+                if event.key == pygame.K_z:
+                    current_piece.rotation -= 1
+                    if not(valid_space(current_piece, grid)):
+                        current_piece.rotation += 1
+                if event.key == pygame.K_ESCAPE:
+                    pygame.event.post(pygame.quit())
 
         shape_pos = convert_shape_format(current_piece)
 
@@ -386,6 +407,10 @@ def main(win):  # *
             update_score(score)
 
 
+# Future updates to this function:
+# Add textboxes for custom settings (DAS, ARR)
+# Add a textbox for the IP address to connect to
+# Pass these as arguments for the appropriate functions
 def main_menu(win):  # *
     run = True
     while run:
