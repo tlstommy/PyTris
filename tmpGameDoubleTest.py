@@ -149,6 +149,8 @@ def create_grid(locked_pos={}):  # *
 #
 # param shape - the Piece object of the shape we are converting into the grid format
 # return value - the converted position of the shape as a new position array which is relative to the game grid
+
+
 def convert_shape_format(shape):
     positions = []
     format = shape.shape[shape.rotation % len(shape.shape)]
@@ -174,6 +176,7 @@ def convert_shape_format(shape):
 # param grid - the grid array representing the current state of the board
 # return value - boolean of if the position is valid
 
+
 def valid_space(shape, grid):
     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
     accepted_pos = [j for sub in accepted_pos for j in sub]
@@ -195,13 +198,26 @@ def check_lost(positions):
 
     return False
 
+# create_queue()
+#
+# Copies the global shapes list, shuffles the list, then creates another list of shape objects from that list and
+# returns it
+#
+# return value - A list of seven randomly ordered shape objects
 
-def get_shape():
-    return Piece(5, 0, random.choice(shapes))
+
+def create_queue():
+    bag_queue = []
+    shape_queue = []
+    shape_queue[:] = shapes[:]
+    random.shuffle(shape_queue)
+    for shape in shape_queue:
+        bag_queue.append(Piece(5, 0, shape))
+    return bag_queue
 
 
 def draw_text_middle(surface, text, size, color):
-    font = pygame.font.SysFont("comicsans", size, bold=True)
+    font = pygame.font.SysFont("bauhaus93", size, bold=True)
     label = font.render(text, 1, color)
 
     surface.blit(label, (top_left_x + play_width /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
@@ -241,21 +257,21 @@ def clear_rows(grid, locked):
     return inc
 
 
-def draw_next_shape(shape, surface):
-    font = pygame.font.SysFont('comicsans', 30)
-    label = font.render('Next Shape', 1, (255,255,255))
+def draw_queue(queue, surface):
+    font = pygame.font.SysFont('bauhaus93', 30)
+    label = font.render('Queue', 1, (255,255,255))
 
-    sx = top_left_x + play_width + 50
-    sy = top_left_y + play_height/2 - 100
-    format = shape.shape[shape.rotation % len(shape.shape)]
+    x = top_left_x + play_width + 50
+    y = top_left_y + play_height/2 - 100
+    format = queue[0].shape[queue[0].rotation % len(queue[0].shape)]
 
     for i, line in enumerate(format):
         row = list(line)
         for j, column in enumerate(row):
             if column == '0':
-                pygame.draw.rect(surface, shape.color, (sx + j*block_size, sy + i*block_size, block_size, block_size), 0)
+                pygame.draw.rect(surface, queue[0].color, (x + j*block_size, y + i*block_size, block_size, block_size), 0)
 
-    surface.blit(label, (sx + 10, sy - 30))
+    surface.blit(label, (x + 10, y - 30))
 
 
 def update_score(nscore):
@@ -280,13 +296,13 @@ def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((0, 0, 0))
 
     pygame.font.init()
-    font = pygame.font.SysFont('comicsans', 60)
+    font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render('Tetris', 1, (255, 255, 255))
 
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # current score
-    font = pygame.font.SysFont('comicsans', 30)
+    font = pygame.font.SysFont('bauhaus93', 30)
     label = font.render('Score: ' + str(score), 1, (255,255,255))
 
     sx = top_left_x + play_width + 50
@@ -321,11 +337,12 @@ def main(win):  # *
     last_score = max_score()
     locked_positions = {}
     grid = create_grid(locked_positions)
+    bag_queue = create_queue() #Create a queue of seven pieces
+    bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
     change_piece = False
     run = True
-    current_piece = get_shape()
-    next_piece = get_shape()
+    current_piece = bag_queue.pop(0)
     clock = pygame.time.Clock()
     fall_time = 0
     fall_speed = 0.50
@@ -390,13 +407,14 @@ def main(win):  # *
             for pos in shape_pos:
                 p = (pos[0], pos[1])
                 locked_positions[p] = current_piece.color
-            current_piece = next_piece
-            next_piece = get_shape()
+            if len(bag_queue) <= 7:
+                bag_queue.extend(create_queue())
+            current_piece = bag_queue.pop(0)
             change_piece = False
             score += clear_rows(grid, locked_positions) * 10
 
         draw_window(win, grid, score, last_score)
-        draw_next_shape(next_piece, win)
+        draw_queue(bag_queue, win)
         pygame.display.update()
 
         if check_lost(locked_positions):
@@ -411,6 +429,8 @@ def main(win):  # *
 # Add textboxes for custom settings (DAS, ARR)
 # Add a textbox for the IP address to connect to
 # Pass these as arguments for the appropriate functions
+
+
 def main_menu(win):  # *
     run = True
     while run:
