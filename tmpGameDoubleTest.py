@@ -12,6 +12,7 @@ block_size = 30
 
 top_left_x = 150 
 top_left_y = (s_height - play_height) 
+opponent_top_left_x = s_width - (top_left_x + play_width)
 
 
 # SHAPE FORMATS
@@ -226,7 +227,7 @@ def draw_text_middle(surface, text, size, color):
 def draw_grid(surface, grid):
     sx = top_left_x
     sy = top_left_y
-    rx = s_width - (top_left_x + play_width)
+    rx = opponent_top_left_x
 
     for i in range(len(grid)):
         pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
@@ -305,6 +306,12 @@ def draw_window(surface, grid, score=0, last_score = 0):
 
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
+    pygame.font.init()
+    font = pygame.font.SysFont('bauhaus93', 60)
+    label = font.render('Opponent_Name', 1, (255, 255, 255))
+
+    surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
+
     # current score
     font = pygame.font.SysFont('bauhaus93', 30)
     label = font.render('Score: ' + str(score), 1, (255,255,255))
@@ -325,11 +332,11 @@ def draw_window(surface, grid, score=0, last_score = 0):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
             #right grid
-            pygame.draw.rect(surface, grid[i][j], (s_width - (top_left_x + play_width) + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
+            pygame.draw.rect(surface, grid[i][j], (opponent_top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
 
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
     #right board
-    pygame.draw.rect(surface, (255, 0, 0), (s_width - (top_left_x + play_width), top_left_y, play_width, play_height), 5)
+    pygame.draw.rect(surface, (255, 0, 0), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     draw_grid(surface, grid)
 
     #---
