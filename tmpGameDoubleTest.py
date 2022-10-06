@@ -137,8 +137,8 @@ class Piece(object):  # *
 # Currently a placeholder for later socket integration
 
 class Opponent(object):
-    def __init__(self, playername, locked_pos={}):
-        self.playername = playername
+    def __init__(self, name, locked_pos={}):
+        self.name = name
         self.locked_pos = locked_pos
 
 # create_grid
@@ -242,6 +242,7 @@ def draw_grid(surface, grid, opponent_grid):
     sy = top_left_y
     rx = opponent_top_left_x
 
+    # Player Grid
     for i in range(len(grid)):
         pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
         for j in range(len(grid[i])):
@@ -314,7 +315,7 @@ def max_score():
     return score
 
 
-def draw_window(surface, grid, opponent_grid, score=0, last_score = 0):
+def draw_window(surface, grid, opponent_grid, opponent_name, score=0, last_score = 0):
     surface.fill((0, 0, 0))
 
     pygame.font.init()
@@ -325,7 +326,7 @@ def draw_window(surface, grid, opponent_grid, score=0, last_score = 0):
     # Opponent Name
     pygame.font.init()
     font = pygame.font.SysFont('bauhaus93', 60)
-    label = font.render("Player 2", 1, (255, 255, 255))
+    label = font.render(opponent_name, 1, (255, 255, 255))
     surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # current score
@@ -345,7 +346,6 @@ def draw_window(surface, grid, opponent_grid, score=0, last_score = 0):
     surface.blit(label, (sx + 20, sy + 160))
 
     # Player Grid
-    
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
@@ -368,13 +368,13 @@ def draw_window(surface, grid, opponent_grid, score=0, last_score = 0):
 
 def main(win):  # *
     last_score = max_score()
-    locked_positions = {}   ###
-    grid = create_grid(locked_positions)    ###
+    locked_positions = {}
+    grid = create_grid(locked_positions)
     bag_queue = create_queue() #Create a queue of seven pieces
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
     # Opponent Initialization
-    opponent = Opponent("Player 2", locked_positions)
+    opponent = Opponent("C00l G4m3rT4g", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
     change_piece = False
@@ -387,8 +387,7 @@ def main(win):  # *
     score = 0
 
     while run:
-        grid = create_grid(locked_positions)    ###
-        # Opponent
+        grid = create_grid(locked_positions)
         opponent_grid = create_grid(opponent.locked_pos)
         fall_time += clock.get_rawtime()
         level_time += clock.get_rawtime()
@@ -456,7 +455,7 @@ def main(win):  # *
             change_piece = False
             score += clear_rows(grid, locked_positions) * 10
 
-        draw_window(win, grid, opponent_grid, score, last_score)   ###
+        draw_window(win, grid, opponent_grid, opponent.name, score, last_score)
         draw_queue(bag_queue, win)
         pygame.display.update()
 
