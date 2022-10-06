@@ -12,7 +12,7 @@ block_size = 30
 
 top_left_x = 150 
 top_left_y = (s_height - play_height) 
-opponent_top_left_x = s_width - (top_left_x + play_width)
+opponent_top_left_x = s_width - (top_left_x + play_width)   # Opponent X position
 
 
 # SHAPE FORMATS
@@ -231,9 +231,11 @@ def draw_grid(surface, grid):
 
     for i in range(len(grid)):
         pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
+        # Opponent Grid
         pygame.draw.line(surface, (128,128,128), (rx, sy + i*block_size), (rx+play_width, sy+ i*block_size))
         for j in range(len(grid[i])):
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
+            # Opponent Grid
             pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy),(rx + j*block_size, sy + play_height))
 
 
@@ -303,13 +305,12 @@ def draw_window(surface, grid, score=0, last_score = 0):
     pygame.font.init()
     font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render('Tetris', 1, (255, 255, 255))
-
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
+    # Opponent Name
     pygame.font.init()
     font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render('Opponent_Name', 1, (255, 255, 255))
-
     surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # current score
@@ -331,11 +332,11 @@ def draw_window(surface, grid, score=0, last_score = 0):
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
-            #right grid
+            # Opponent Grid
             pygame.draw.rect(surface, grid[i][j], (opponent_top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
 
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
-    #right board
+    # Opponent Grid
     pygame.draw.rect(surface, (255, 0, 0), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     draw_grid(surface, grid)
 
