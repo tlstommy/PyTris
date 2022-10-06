@@ -133,6 +133,11 @@ class Piece(object):  # *
         self.rotation = 0
 
 
+# create_grid
+#
+# colors in the tetris play space by coloring in the 2D array by checking locked positions set to a given color
+# locked positon given in the format of {(x,y):(255,0,0)}
+
 def create_grid(locked_pos={}):  # *
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
 
