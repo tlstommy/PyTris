@@ -12,7 +12,7 @@ class Client:
         self.port = serverPort
         self.recvPort = recvPort
         self.serverAddress = serverAddress
-        self.createClientSocket()
+        
 
     #create a new client socket
     def createClientSocket(self):
@@ -65,9 +65,8 @@ while True:
                 "currentGrid":genRandomBoard().tolist(),                
                 }
 
-
-    #send json data to the server             
-    client.sendData(jsonData)
+    #send json data to the server over socket     
+    client.createClientSocket();client.sendData(jsonData)
 
     #listen for data from the server
     client.receiveData()
