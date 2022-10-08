@@ -12,18 +12,22 @@ class Client:
         self.port = serverPort
         self.recvPort = recvPort
         self.serverAddress = serverAddress
+        self.createClientSocket()
+
+    #create a new client socket
     def createClientSocket(self):
         self.clientSocket = socket.socket()
         self.clientSocket.connect((self.serverAddress,self.port))
+    #send the json data
     def sendData(self,jsonData):
         #encode data and send
         self.clientSocket.send(json.dumps(jsonData).encode())
-    def receiveData(self):
+    
 
+    def receiveData(self):
+        #decode json 
         opponentJson = json.loads(self.clientSocket.recv(1024).decode())
         try:
-            os.system("clear")
-            os.system("cls")
             opponentUsername = opponentJson["username"]
             print(f"\n{opponentUsername}'s Board:\n")
 
@@ -35,7 +39,7 @@ class Client:
 
         #its an error message
         except TypeError as e:
-        
+            print("Type Error")
             print(opponentJson)
         
     
@@ -43,19 +47,28 @@ class Client:
 serverIP = input("please enter the server IP: ")
 
 
+#create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
 client = Client(serverIP,8888,recvPort=25000)
 
 
 
 while True:
+    
+    #get players username
     playerName = input("\n\nPlease enter your username: ")
+    
+    #build json data
     jsonData = {
                 "username":playerName, 
                 "ip":socket.gethostbyname(socket.gethostname()),
                 "recvPort":client.recvPort,
                 "currentGrid":genRandomBoard().tolist(),                
                 }
-    client.createClientSocket()
+
+
+    #send json data to the server             
     client.sendData(jsonData)
+
+    #listen for data from the server
     client.receiveData()
     
