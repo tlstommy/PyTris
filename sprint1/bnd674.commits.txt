@@ -1,0 +1,573 @@
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   2) import pygame
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   3) import random
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   4) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   5) pygame.font.init()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   6) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   7) # GLOBALS VARS
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   8) s_width = 1500
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400   9) s_height = 700
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  10) play_width = 300  # meaning 300 // 10 = 30 width per block
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  11) play_height = 600  # meaning 600 // 20 = 30 height per block
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  12) block_size = 30
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  13) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  14) top_left_x = 150 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  15) top_left_y = (s_height - play_height) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  17) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  18) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  19) # SHAPE FORMATS
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  20) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  21) S = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  22)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  23)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  24)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  25)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  26)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  27)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  28)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  29)       '...0.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  30)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  31) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  32) Z = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  33)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  34)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  35)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  36)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  37)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  38)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  39)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  40)       '.0...',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  41)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  42) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  44)       '0000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  45)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  46)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  52)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  53) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  54) O = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  55)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  56)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  57)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  58)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  59) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  60) J = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  61)       '.0...',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  62)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  63)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  64)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  65)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  66)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  67)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  68)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  69)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  70)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  71)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  72)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  73)       '...0.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  74)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  75)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  76)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  77)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  78)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  79)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  80) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  81) L = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  82)       '...0.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  83)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  84)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  85)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  86)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  87)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  88)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  89)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  90)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  91)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  92)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  93)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  94)       '.0...',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  95)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  96)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  97)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  98)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400  99)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 100)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 101) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 102) T = [['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 103)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 104)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 105)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 106)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 107)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 108)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 109)       '..00.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 110)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 111)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 112)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 113)       '.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 114)       '.000.',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 115)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 116)       '.....'],
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 117)      ['.....',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 118)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 119)       '.00..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 120)       '..0..',
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 121)       '.....']]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 122) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 123) shapes = [S, Z, I, O, J, L, T]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 124) shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 125) # index 0 - 6 represent shape
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 126) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 127) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 128) class Piece(object):  # *
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 129)     def __init__(self, x, y, shape):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 130)         self.x = x
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 131)         self.y = y
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 132)         self.shape = shape
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 133)         self.color = shape_colors[shapes.index(shape)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 134)         self.rotation = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 135) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 143) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 149) def create_grid(locked_pos={}):  # *
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 150)     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 151) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 152)     for i in range(len(grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 153)         for j in range(len(grid[i])):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 154)             if (j, i) in locked_pos:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 155)                 c = locked_pos[(j,i)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 156)                 grid[i][j] = c
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 157)     return grid
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 158) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 168) def convert_shape_format(shape):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 169)     positions = []
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 170)     format = shape.shape[shape.rotation % len(shape.shape)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 171) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 172)     for i, line in enumerate(format):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 173)         row = list(line)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 174)         for j, column in enumerate(row):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 175)             if column == '0':
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 176)                 positions.append((shape.x + j, shape.y + i))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 178)     for i, pos in enumerate(positions):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 179)         positions[i] = (pos[0] - 2, pos[1] - 4)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 180) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 181)     return positions
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 182) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 192) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 194) def valid_space(shape, grid):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 195)     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 196)     accepted_pos = [j for sub in accepted_pos for j in sub]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 197) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 198)     formatted = convert_shape_format(shape)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 199) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 200)     for pos in formatted:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 201)         if pos not in accepted_pos:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 202)             if pos[1] > -1:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 203)                 return False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 204)     return True
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 205) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 206) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 207) def check_lost(positions):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 208)     for pos in positions:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 209)         x, y = pos
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 210)         if y < 1:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 211)             return True
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 212) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 213)     return False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 214) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 222) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 231) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 232) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 233) def draw_text_middle(surface, text, size, color):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 235)     label = font.render(text, 1, color)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 236) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 237)     surface.blit(label, (top_left_x + play_width /2 - (label.get_width()/2), top_left_y + play_height/2 - label.get_height()/2))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 238) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 239) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 241)     sx = top_left_x
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 242)     sy = top_left_y
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 244) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 246)     for i in range(len(grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 247)         pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 248)         for j in range(len(grid[i])):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 249)             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 256) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 257) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 258) def clear_rows(grid, locked):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 259) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 260)     inc = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 261)     for i in range(len(grid)-1, -1, -1):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 262)         row = grid[i]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 263)         if (0,0,0) not in row:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 264)             inc += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 265)             ind = i
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 266)             for j in range(len(row)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 267)                 try:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 268)                     del locked[(j,i)]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 269)                 except:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 270)                     continue
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 271) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 272)     if inc > 0:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 273)         for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 274)             x, y = key
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 275)             if y < ind:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 276)                 newKey = (x, y + inc)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 277)                 locked[newKey] = locked.pop(key)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 278) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 279)     return inc
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 280) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 281) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 285) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 296) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 298) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 299) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 301)     surface.fill((0, 0, 0))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 302) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 303)     pygame.font.init()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 305)     label = font.render('Tetris', 1, (255, 255, 255))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 306)     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 307) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 314)     # current score
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 316)     label = font.render('Score: ' + str(score), 1, (255,255,255))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 317) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 318)     sx = top_left_x + play_width + 50
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 319)     sy = top_left_y + play_height/2 - 100
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 320) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 321)     surface.blit(label, (sx + 20, sy + 160))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 322) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 324)     for i in range(len(grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 325)         for j in range(len(grid[i])):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 326)             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 327) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 328)     pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 338) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 339)     #---
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 340) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 341)     #pygame.display.update()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 342) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 343) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 344) def main(win):  # *
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 349) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 354)     change_piece = False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 355)     run = True
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 357)     clock = pygame.time.Clock()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 358)     fall_time = 0
+0d123044 tmpGameDoubleTest.py (lulamae12    2022-09-29 09:09:43 -0400 359)     fall_speed = 0.50
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 360)     level_time = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 361)     score = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 362) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 363)     while run:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 366)         fall_time += clock.get_rawtime()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 367)         level_time += clock.get_rawtime()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 368)         clock.tick()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 369) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 370)         if level_time/1000 > 5:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 371)             level_time = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 372)             if level_time > 0.12:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 373)                 level_time -= 0.005
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 374) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 375)         if fall_time/1000 > fall_speed:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 376)             fall_time = 0
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 377)             current_piece.y += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 378)             if not(valid_space(current_piece, grid)) and current_piece.y > 0:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 379)                 current_piece.y -= 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 380)                 change_piece = True
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 381) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 382)         for event in pygame.event.get():
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 383)             if event.type == pygame.QUIT:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 384)                 run = False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 385)                 pygame.display.quit()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 386) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 387)             if event.type == pygame.KEYDOWN:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 388)                 if event.key == pygame.K_LEFT:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 389)                     current_piece.x -= 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 390)                     if not(valid_space(current_piece, grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 391)                         current_piece.x += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 392)                 if event.key == pygame.K_RIGHT:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 393)                     current_piece.x += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 394)                     if not(valid_space(current_piece, grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 395)                         current_piece.x -= 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 396)                 if event.key == pygame.K_DOWN:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 397)                     current_piece.y += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 398)                     if not(valid_space(current_piece, grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 399)                         current_piece.y -= 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 400)                 if event.key == pygame.K_UP:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 401)                     current_piece.rotation += 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 402)                     if not(valid_space(current_piece, grid)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 403)                         current_piece.rotation -= 1
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 414) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 415)         shape_pos = convert_shape_format(current_piece)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 416) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 417)         for i in range(len(shape_pos)):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 418)             x, y = shape_pos[i]
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 419)             if y > -1:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 420)                 grid[y][x] = current_piece.color
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 421) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 422)         if change_piece:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 423)             for pos in shape_pos:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 424)                 p = (pos[0], pos[1])
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 425)                 locked_positions[p] = current_piece.color
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 429)             change_piece = False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 430)             score += clear_rows(grid, locked_positions) * 10
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 431) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 434)         pygame.display.update()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 435) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 436)         if check_lost(locked_positions):
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 437)             draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 438)             pygame.display.update()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 439)             pygame.time.delay(1500)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 440)             run = False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 441) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 442) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 449) def main_menu(win):  # *
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 450)     run = True
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 451)     while run:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 452)         win.fill((0,0,0))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 453)         draw_text_middle(win, 'Press Any Key To Play', 60, (255,255,255))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 454)         pygame.display.update()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 455)         for event in pygame.event.get():
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 456)             if event.type == pygame.QUIT:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 457)                 run = False
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 458)             if event.type == pygame.KEYDOWN:
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 459)                 main(win)
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 460) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 461)     pygame.display.quit()
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 462) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 463) 
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 464) win = pygame.display.set_mode((s_width, s_height))
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 465) pygame.display.set_caption('Tetris')
+176c4980 tmpGameTest.py       (lulamae12    2022-09-29 08:46:28 -0400 466) main_menu(win)
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400  1) import json,sys,socket,os
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  2) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  3) import numpy
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  4) import numpy.random
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  5) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  6) #just for demo idrk how big a tetris board is. 0 is a free space 1 is a block
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  7) def genRandomBoard():
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400  8)     return numpy.random.randint(2,size=(5, 3))
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400  9) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 10) class Client:
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 11)     def __init__(self,serverAddress,serverPort,recvPort):
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 12)         self.port = serverPort
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 13)         self.recvPort = recvPort
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 14)         self.serverAddress = serverAddress
+0685b59e pytrisClientDemo.py (lulamae12 2022-10-08 13:34:11 -0400 15)         
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 16) 
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 17)     #create a new client socket
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 18)     def createClientSocket(self):
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 19)         self.clientSocket = socket.socket()
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 20)         self.clientSocket.connect((self.serverAddress,self.port))
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 21)     #send the json data
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 22)     def sendData(self,jsonData):
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 23)         #encode data and send
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 24)         self.clientSocket.send(json.dumps(jsonData).encode())
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 25)     
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 26) 
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 27)     def receiveData(self):
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 28)         #decode json 
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 29)         opponentJson = json.loads(self.clientSocket.recv(1024).decode())
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 30)         try:
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 31)             opponentUsername = opponentJson["username"]
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 32)             print(f"\n{opponentUsername}'s Board:\n")
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 33) 
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 34)             print(opponentJson["currentGrid"][0])
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 35)             print(opponentJson["currentGrid"][1])
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 36)             print(opponentJson["currentGrid"][2])
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 37)             print(opponentJson["currentGrid"][3])
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 38)             print(opponentJson["currentGrid"][4])
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 39) 
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 40)         #its an error message
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 41)         except TypeError as e:
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 42)             print("Type Error")
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 43)             print(opponentJson)
+d790b9c8 clientDemo.py       (lulamae12 2022-09-22 13:36:33 -0400 44)         
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 45)     
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 46) 
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 47) serverIP = input("please enter the server IP: ")
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 48) 
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 49) 
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 50) #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 51) client = Client(serverIP,8888,recvPort=25000)
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 52) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 53) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 54) 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 55) while True:
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 56)     
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 57)     #get players username
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 58)     playerName = input("\n\nPlease enter your username: ")
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 59)     
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 60)     #build json data
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 61)     jsonData = {
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 62)                 "username":playerName, 
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 63)                 "ip":socket.gethostbyname(socket.gethostname()),
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 64)                 "recvPort":client.recvPort,
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 65)                 "currentGrid":genRandomBoard().tolist(),                
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 66)                 }
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 67) 
+0685b59e pytrisClientDemo.py (lulamae12 2022-10-08 13:34:11 -0400 68)     #send json data to the server over socket     
+0685b59e pytrisClientDemo.py (lulamae12 2022-10-08 13:34:11 -0400 69)     client.createClientSocket();client.sendData(jsonData)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 70) 
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 71)     #listen for data from the server
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 72)     client.receiveData()
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 73)     
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  1) import json,sys,socket
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  2) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  3) #server code can sometimes produce a [WinError 10053] An established connection was aborted by the software in your host machine, depending on firewall things. i am unaware if this will happen on the HYDRA machines but can test when we get back in class
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  4) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  5) class Server:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  6)     def __init__(self,port):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  7)         self.port = port
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  8)         self.player1 = None
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400  9)         self.player2 = None
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 10)         #ids are just username+ip, helps server distinguish people with the same ip
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 11)         self.player1ID = None
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 12)         self.player2ID = None
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 13)     def createServer(self):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 14)         #create new socket
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 15)         self.serverSocket = socket.socket()
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 16)         #bind the port
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 17)         self.serverSocket.bind(('',self.port))
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 18)         self.serverSocket.listen(20)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 19)         print(f"socket created on {socket.gethostbyname(socket.gethostname())} with port: {self.port}\n")
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 20)         while True:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 21)             self.listenForConn()
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 22)             #break
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 23)         
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 24)     def listenForConn(self):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 25)         self.serverSocket.listen(2)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 26)         connectedClient,clientAddr = self.serverSocket.accept()
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 27)         
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 28)         #decode json
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 29)         decodedJson = json.loads(connectedClient.recv(1024).decode())
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 30) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 31)         print("\n---=INBOUND MESSAGE=---")
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 32)         print("CLIENT ADDRESS  :",clientAddr[0])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 33)         print("CLIENT PORT     :",decodedJson.get("recvPort"))
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 34)         print("CLIENT USERNAME :",decodedJson.get("username"))
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 35)         print("CLIENT BOARD:")
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 36)         print(decodedJson.get("currentGrid")[0])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 37)         print(decodedJson.get("currentGrid")[1])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 38)         print(decodedJson.get("currentGrid")[2])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 39)         print(decodedJson.get("currentGrid")[3])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 40)         print(decodedJson.get("currentGrid")[4])
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 41) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 42)         #store data for each new player
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 43)         self.storePlayerData(decodedJson,connectedClient)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 44) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 45) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 46)     #store player data and return the data for the opponent of the connected client
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 47)     def storePlayerData(self,jsonData,connectedClient):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 48) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 49)         #build the id
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 50)         currentPlayerID = (str(jsonData.get("username")+"@"+jsonData.get("ip")))
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 51) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 52)         #store player data for 2 people, if a third person connects send an error
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 53)         if self.player1 == None or self.player1ID == currentPlayerID:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 54)             self.player1 = jsonData
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 55)             self.player1ID = currentPlayerID
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 56)             try:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 57)                 self.sendData(self.player2,connectedClient)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 58)             except AttributeError as e:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 59)                 pass
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 60)         elif self.player2 == None or self.player2ID == currentPlayerID:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 61)             self.player2 = jsonData
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 62)             self.player2ID = currentPlayerID
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 63)             try:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 64)                 self.sendData(self.player1,connectedClient)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 65)             except AttributeError as e:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 66)                 pass
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 67)         else:
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 68)             print("MAX PLAYERS REACHED")
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 69)             self.sendError("ERROR: GAME IS FULL!",connectedClient)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 70) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 71)     #send data back to a client
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 72)     def sendData(self, playerJsonData,connectedClient):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 73)         print(playerJsonData)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 74)         connectedClient.send(json.dumps(playerJsonData).encode())
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 75) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 76)     #send an error message to client   
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 77)     def sendError(self, errorMsg,connectedClient):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 78)         connectedClient.send(errorMsg.encode())
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 79)             
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 80) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 81) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 82) #create a new Server server on port 8888
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 83) server = Server(8888)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 84) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 85) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 86) #create the server and listen for connections
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 87) server.createServer()
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 88) 
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400  1) import json,sys,socket
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400  2) 
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400  3) 
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400  4) class Server:
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400  5)     def __init__(self,port):
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400  6)         self.port = port
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400  7)         self.player1 = None
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400  8)         self.player2 = None
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400  9)         #ids for now are just username+ip
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 10)         self.player1ID = None
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 11)         self.player2ID = None
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 12)     def createServer(self):
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 13)         self.serverSocket = socket.socket()
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 14)         self.serverSocket.bind(('',self.port))
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 15)         self.serverSocket.listen(20)
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 16)         print(f"socket created on {socket.gethostbyname(socket.gethostname())} with port: {self.port}\n")
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 17)         while True:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 18)             self.listenForConn()
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 19)             #break
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 20)         
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 21)     def listenForConn(self):
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 22)         self.serverSocket.listen(2)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 23)         c,addr = self.serverSocket.accept()
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 24)         #decode json
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 25)         decodedJson = json.loads(c.recv(1024).decode())
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 26) 
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 27)         print("\n---=INBOUND MESSAGE=---")
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 28)         print("CLIENT ADDRESS  :",addr[0])
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 29)         print("CLIENT PORT     :",decodedJson.get("recvPort"))
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 30)         print("CLIENT USERNAME :",decodedJson.get("username"))
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 31)         print("CLIENT BOARD:")
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 32)         print(decodedJson.get("currentGrid")[0])
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 33)         print(decodedJson.get("currentGrid")[1])
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 34)         print(decodedJson.get("currentGrid")[2])
+d790b9c8 (lulamae12 2022-09-22 13:36:33 -0400 35)         print(decodedJson.get("currentGrid")[3])
+d790b9c8 (lulamae12 2022-09-22 13:36:33 -0400 36)         print(decodedJson.get("currentGrid")[4])
+bb515d1e (lulamae12 2022-09-22 12:24:46 -0400 37) 
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 38)         self.storePlayerData(decodedJson,c)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 39) 
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 40)     def storePlayerData(self,jsonData,c):
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 41)         currentPlayerID = (str(jsonData.get("username")+"@"+jsonData.get("ip")))
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 42)         #store player data for 2 people
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 43)         if self.player1 == None or self.player1ID == currentPlayerID:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 44)             self.player1 = jsonData
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 45)             self.player1ID = currentPlayerID
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 46)             try:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 47)                 self.sendData(self.player2,c)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 48)             except AttributeError as e:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 49)                 pass
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 50)         elif self.player2 == None or self.player2ID == currentPlayerID:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 51)             self.player2 = jsonData
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 52)             self.player2ID = currentPlayerID
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 53)             try:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 54)                 self.sendData(self.player1,c)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 55)             except AttributeError as e:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 56)                 pass
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 57)         else:
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 58)             print("MAX PLAYERS REACHED")
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 59)             self.sendData("ERROR: GAME IS FULL!",c)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 60)             return 0
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 61)     #send data back to a client
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 62)     def sendData(self, playerJsonData,c):
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 63)         print(playerJsonData)
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 64)         c.send(json.dumps(playerJsonData).encode())
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 65)         return 0
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 66) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 67)     #send an error message to client c   
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 68)     def sendError(self, errorMsg,c):
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 69)         c.send(errorMsg.encode())
+7f3fdc02 (lulamae12 2022-09-22 13:19:08 -0400 70)         return 0   
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 71)             
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 72) 
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 73) server = Server(8888)
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 74) 
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 75) server.createServer()
+b5c3c9f6 (lulamae12 2022-09-22 12:22:38 -0400 76) 
