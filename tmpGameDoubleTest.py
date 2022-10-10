@@ -19,9 +19,9 @@ opponent_top_left_x = s_width - (top_left_x + play_width)   # Opponent X positio
 # SHAPE FORMATS
 
 S = [['.....',
-      '.....',
       '..00.',
       '.00..',
+      '.....',
       '.....'],
      ['.....',
       '..0..',
@@ -30,9 +30,9 @@ S = [['.....',
       '.....']]
 
 Z = [['.....',
-      '.....',
       '.00..',
       '..00.',
+      '.....',
       '.....'],
      ['.....',
       '..0..',
@@ -52,9 +52,9 @@ I = [['.....',
       '.....']]
 
 O = [['.....',
+      '.00..',
+      '.00..',
       '.....',
-      '.00..',
-      '.00..',
       '.....']]
 
 J = [['.....',
@@ -125,7 +125,7 @@ shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 16
 # index 0 - 6 represent shape
 
 
-class Piece(object):  # *
+class Piece(object):
     def __init__(self, x, y, shape):
         self.x = x
         self.y = y
@@ -133,7 +133,7 @@ class Piece(object):  # *
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
-# Opponet Class for keeping track of the Opponent's board
+# Opponent Class for keeping track of the Opponent's board
 # Currently a placeholder for later socket integration
 
 class Opponent(object):
@@ -144,9 +144,9 @@ class Opponent(object):
 # create_grid
 #
 # colors in the tetris play space by coloring in the 2D array by checking locked positions set to a given color
-# locked positon given in the format of {(x,y):(255,0,0)}
+# locked position given in the format of {(x,y):(255,0,0)}
 
-def create_grid(locked_pos={}):  # *
+def create_grid(locked_pos={}):
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
 
     for i in range(len(grid)):
@@ -292,12 +292,12 @@ def draw_queue(queue, surface):
             row = list(line)
             for j, column in enumerate(row):
                 if column == '0':
-                    pygame.draw.rect(surface, queue[k].color, (x + j*block_size, (y + (100 * k)) + i*block_size, block_size, block_size), 0)
+                    pygame.draw.rect(surface, queue[k].color, (x + j*block_size, (y + (75 * k)) + i*block_size, block_size, block_size), 0)
 
     surface.blit(label, (x + 10, y - 30))
 
 
-def draw_window(surface, grid, opponent_grid, opponent_name, score=0):
+def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
     surface.fill((0, 0, 0))
 
     pygame.font.init()
@@ -311,37 +311,41 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score=0):
     label = font.render(opponent_name, 1, (255, 255, 255))
     surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
-    # current score
+    # display score
     font = pygame.font.SysFont('bauhaus93', 30)
-    label = font.render('Score: ' + str(score), 1, (255,255,255))
-
+    label = font.render('Score: ' + str(score), 1, (255, 255, 255))
     sx = top_left_x + play_width + 50
-    sy = top_left_y + play_height/2 - 100
+    sy = top_left_y + play_height / 2 + 250
+    surface.blit(label, (sx, sy))
 
-    surface.blit(label, (sx + 20, sy + 160))
+    # display line
+    label = font.render('Line: ' + str(line), 1, (255, 255, 255))
+    sy -= 33
+    surface.blit(label, (sx, sy))
+
+    # display level
+    label = font.render('Level: ' + str(level), 1, (255, 255, 255))
+    sy -= 33
+    surface.blit(label, (sx, sy))
 
     # Player Grid
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
 
-    pygame.draw.rect(surface, (255, 0, 0), (top_left_x, top_left_y, play_width, play_height), 5)
+    pygame.draw.rect(surface, (128, 128, 128), (top_left_x, top_left_y, play_width, play_height), 5)
     
     # Opponent Grid
     for i in range(len(opponent_grid)):
         for j in range(len(opponent_grid[i])):
             pygame.draw.rect(surface, opponent_grid[i][j], (opponent_top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
     
-    pygame.draw.rect(surface, (255, 0, 0), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
+    pygame.draw.rect(surface, (128, 128, 128), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     
     draw_grid(surface, grid, opponent_grid)
 
-    #---
 
-    #pygame.display.update()
-
-
-def main(win):  # *
+def main(win):
     locked_positions = {}
     grid = create_grid(locked_positions)
     bag_queue = create_queue() #Create a queue of seven pieces
@@ -359,6 +363,8 @@ def main(win):  # *
     fall_speed = 0.50
     level_time = 0
     score = 0
+    level = 0
+    line = 0
 
     while run:
         grid = create_grid(locked_positions)
@@ -427,9 +433,29 @@ def main(win):  # *
                 bag_queue.extend(create_queue())
             current_piece = bag_queue.pop(0)
             change_piece = False
-            score += clear_rows(grid, locked_positions) * 10
 
-        draw_window(win, grid, opponent_grid, opponent.name, score)
+            # update lines cleared
+            cleared = clear_rows(grid, locked_positions)
+            line += cleared
+
+            # update level & speed
+            if cleared > 0 and line % 10 == 0:
+                level += 1
+                fall_speed -= 0.05
+                if fall_speed < 0.1:
+                    fall_speed = 0.1
+
+            # update score
+            if cleared == 1:
+                score += 40 * (level + 1)
+            if cleared == 2:
+                score += 100 * (level + 1)
+            if cleared == 3:
+                score += 300 * (level + 1)
+            if cleared == 4:
+                score += 1200 * (level + 1)
+
+        draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win)
         pygame.display.update()
 
@@ -441,12 +467,12 @@ def main(win):  # *
 
 
 # Future updates to this function:
-# Add textboxes for custom settings (DAS, ARR)
+# Add text-boxes for custom settings (DAS, ARR)
 # Add a textbox for the IP address to connect to
 # Pass these as arguments for the appropriate functions
 
 
-def main_menu(win):  # *
+def main_menu(win):
     run = True
     while run:
         win.fill((0,0,0))
@@ -462,5 +488,5 @@ def main_menu(win):  # *
 
 
 win = pygame.display.set_mode((s_width, s_height))
-pygame.display.set_caption('Tetris')
+pygame.display.set_caption('PyTris')
 main_menu(win)
