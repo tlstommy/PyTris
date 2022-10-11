@@ -12,10 +12,12 @@ pygame.mixer.music.set_volume(volume)
 
 clear = pygame.mixer.Sound('sounds/clear.mp3')
 tetris = pygame.mixer.Sound('sounds/tetris.mp3')
+level_up = pygame.mixer.Sound('sounds/level_up.mp3')
 game_over = pygame.mixer.Sound('sounds/game_over.mp3')
 
 clear.set_volume(volume)
 tetris.set_volume(volume)
+level_up.set_volume(volume)
 game_over.set_volume(volume)
 
 # GLOBALS VARS
@@ -371,9 +373,10 @@ def main(win):
     current_piece = bag_queue.pop(0)
     clock = pygame.time.Clock()
     fall_time = 0
-    fall_speed = 0.50
+    fall_speed = 0.75
     level_count = 0
     level_time = 0
+    leveled = False
     score = 0
     level = 0
     line = 0
@@ -456,24 +459,28 @@ def main(win):
             # update level & speed
             if cleared > 0 and level_count >= 10:
                 level += 1
+                leveled = True
                 level_count -= 10
-                fall_speed -= 0.05
+                fall_speed -= 0.025
+                pygame.mixer.Sound.play(level_up)
                 if fall_speed < 0.1:
                     fall_speed = 0.1
 
             # update score
             if cleared == 1:
                 score += 40 * (level + 1)
-                pygame.mixer.Sound.play(clear)
+                if not(leveled): pygame.mixer.Sound.play(clear)
             if cleared == 2:
                 score += 100 * (level + 1)
-                pygame.mixer.Sound.play(clear)
+                if not(leveled): pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
-                pygame.mixer.Sound.play(clear)
+                if not(leveled): pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
-                pygame.mixer.Sound.play(tetris)
+                if not(leveled): pygame.mixer.Sound.play(tetris)
+
+            if leveled: leveled = False
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win)
