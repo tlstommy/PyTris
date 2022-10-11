@@ -258,15 +258,15 @@ def draw_grid(surface, grid, opponent_grid):
 
     # Player Grid
     for i in range(len(grid)):
-        pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width, sy+ i*block_size))
+        pygame.draw.line(surface, (128,128,128), (sx, sy + i*block_size), (sx+play_width-1, sy+ i*block_size))
         for j in range(len(grid[i])):
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy),(sx + j*block_size, sy + play_height))
     
     # Opponent Grid
     for i in range(len(opponent_grid)):
-        pygame.draw.line(surface, (128,128,128), (rx, sy + i*block_size), (rx+play_width, sy+ i*block_size))
+        pygame.draw.line(surface, (128,128,128), (rx, sy + i*block_size), (rx+play_width-1, sy+ i*block_size))
         for j in range(len(opponent_grid[i])):
-            pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy),(rx + j*block_size, sy + play_height))
+            pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy), (rx + j*block_size, sy + play_height))
 
 
 def clear_rows(grid, locked):
@@ -314,14 +314,11 @@ def draw_queue(queue, surface):
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
     surface.fill((0, 0, 0))
 
-    pygame.font.init()
     font = pygame.font.SysFont('bauhaus93', 60)
-    label = font.render('PyTris', 1, (255, 255, 255))
+    label = font.render('Player 1', 1, (255, 255, 255))
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # Opponent Name
-    pygame.font.init()
-    font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render(opponent_name, 1, (255, 255, 255))
     surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
@@ -366,7 +363,7 @@ def main(win):
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
     # Opponent Initialization
-    opponent = Opponent("C00l G4m3rT4g", locked_positions)
+    opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
     change_piece = False
@@ -375,6 +372,7 @@ def main(win):
     clock = pygame.time.Clock()
     fall_time = 0
     fall_speed = 0.50
+    level_count = 0
     level_time = 0
     score = 0
     level = 0
@@ -452,11 +450,13 @@ def main(win):
 
             # update lines cleared
             cleared = clear_rows(grid, locked_positions)
+            level_count += cleared
             line += cleared
 
             # update level & speed
-            if cleared > 0 and line % 10 == 0:
+            if cleared > 0 and level_count >= 10:
                 level += 1
+                level_count -= 10
                 fall_speed -= 0.05
                 if fall_speed < 0.1:
                     fall_speed = 0.1
