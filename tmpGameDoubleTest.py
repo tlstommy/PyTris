@@ -4,6 +4,20 @@ import random
 
 pygame.font.init()
 
+# Initialize music & sounds
+volume = 0.1
+pygame.mixer.init()
+pygame.mixer.music.load('sounds/music.mp3')
+pygame.mixer.music.set_volume(volume)
+
+clear = pygame.mixer.Sound('sounds/clear.mp3')
+tetris = pygame.mixer.Sound('sounds/tetris.mp3')
+game_over = pygame.mixer.Sound('sounds/game_over.mp3')
+
+clear.set_volume(volume)
+tetris.set_volume(volume)
+game_over.set_volume(volume)
+
 # GLOBALS VARS
 s_width = 1500
 s_height = 700
@@ -302,7 +316,7 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
 
     pygame.font.init()
     font = pygame.font.SysFont('bauhaus93', 60)
-    label = font.render('Tetris', 1, (255, 255, 255))
+    label = font.render('PyTris', 1, (255, 255, 255))
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # Opponent Name
@@ -365,6 +379,8 @@ def main(win):
     score = 0
     level = 0
     line = 0
+
+    pygame.mixer.music.play(-1)
 
     while run:
         grid = create_grid(locked_positions)
@@ -448,12 +464,16 @@ def main(win):
             # update score
             if cleared == 1:
                 score += 40 * (level + 1)
+                pygame.mixer.Sound.play(clear)
             if cleared == 2:
                 score += 100 * (level + 1)
+                pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
+                pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
+                pygame.mixer.Sound.play(tetris)
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win)
@@ -461,6 +481,8 @@ def main(win):
 
         if check_lost(locked_positions):
             draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
+            pygame.mixer.Sound.play(game_over)
+            pygame.mixer.music.stop()
             pygame.display.update()
             pygame.time.delay(1500)
             run = False
