@@ -1,0 +1,39 @@
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400   1) from operator import truediv
+d9298a3f tmpGameDoubleTest.py (Daniel White 2022-10-06 06:05:42 -0400  32) opponent_top_left_x = s_width - (top_left_x + play_width)   # Opponent X position
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 153) # Currently a placeholder for later socket integration
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 154) 
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 155) class Opponent(object):
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 156)     def __init__(self, name, locked_pos={}):
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 157)         self.name = name
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 158)         self.locked_pos = locked_pos
+7fa917d7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:33:20 -0400 160) # create_grid
+7fa917d7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:33:20 -0400 161) #
+7fa917d7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:33:20 -0400 162) # colors in the tetris play space by coloring in the 2D array by checking locked positions set to a given color
+7fa917d7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:33:20 -0400 164) 
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 256) def draw_grid(surface, grid, opponent_grid):
+d35931a7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:02:48 -0400 259)     rx = opponent_top_left_x
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 261)     # Player Grid
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 266)     
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 267)     # Opponent Grid
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 268)     for i in range(len(opponent_grid)):
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 270)         for j in range(len(opponent_grid[i])):
+d9298a3f tmpGameDoubleTest.py (Daniel White 2022-10-06 06:05:42 -0400 323)     # Opponent Name
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 324)     label = font.render(opponent_name, 1, (255, 255, 255))
+d35931a7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:02:48 -0400 325)     surface.blit(label, (opponent_top_left_x + play_width / 2 - (label.get_width() / 2), 30))
+d35931a7 tmpGameDoubleTest.py (Daniel White 2022-10-06 06:02:48 -0400 326) 
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 344)     # Player Grid
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 350)     
+d9298a3f tmpGameDoubleTest.py (Daniel White 2022-10-06 06:05:42 -0400 351)     # Opponent Grid
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 352)     for i in range(len(opponent_grid)):
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 353)         for j in range(len(opponent_grid[i])):
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 354)             pygame.draw.rect(surface, opponent_grid[i][j], (opponent_top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 355)     
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 357)     
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 358)     draw_grid(surface, grid, opponent_grid)
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 362)     locked_positions = {}
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 363)     grid = create_grid(locked_positions)
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 367)     # Opponent Initialization
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 369)     opponent_grid = create_grid(opponent.locked_pos)
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 370) 
+494dd928 tmpGameDoubleTest.py (Daniel White 2022-10-06 10:05:12 -0400 387)         grid = create_grid(locked_positions)
+dabbc060 tmpGameDoubleTest.py (Daniel White 2022-10-06 09:54:06 -0400 388)         opponent_grid = create_grid(opponent.locked_pos)
