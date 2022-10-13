@@ -326,6 +326,10 @@ def draw_queue(queue, surface, hold):
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
     surface.fill((0, 0, 0))
 
+    #background image - 1500x700 atleast
+    bg = pygame.image.load("background1.jpg")
+    surface.blit(bg,(0,0))
+
     font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render('Player 1', 1, (255, 255, 255))
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
