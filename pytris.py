@@ -295,9 +295,10 @@ def clear_rows(grid, locked):
     return inc
 
 
-def draw_queue(queue, surface):
+def draw_queue(queue, surface, hold):
     font = pygame.font.SysFont('bauhaus93', 30)
     label = font.render('Queue', 1, (255,255,255))
+    label2 = font.render('Hold', 1, (255, 255, 255))
 
     x = top_left_x + play_width + 50
     y = top_left_y + play_height/8
@@ -310,7 +311,16 @@ def draw_queue(queue, surface):
                 if column == '0':
                     pygame.draw.rect(surface, queue[k].color, (x + j*block_size, (y + (75 * k)) + i*block_size, block_size, block_size), 0)
 
+    if hold is not None:
+        hold_piece_format = hold.shape[hold.rotation % len(hold.shape)]
+        for i, line in enumerate(hold_piece_format):
+            row = list(line)
+            for j, column in enumerate(row):
+                if column == '0':
+                    pygame.draw.rect(surface, hold.color, (top_left_x - 140 + (j * block_size), top_left_y + i * block_size, block_size, block_size), 0)
+
     surface.blit(label, (x + 10, y - 30))
+    surface.blit(label2, (top_left_x - 100, top_left_y))
 
 
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
@@ -371,6 +381,8 @@ def main(win):
     change_piece = False
     run = True
     current_piece = bag_queue.pop(0)
+    hold_piece = None
+    hold_used = 0
     clock = pygame.time.Clock()
     fall_time = 0
     fall_speed = 0.75
@@ -432,6 +444,18 @@ def main(win):
                     current_piece.rotation += 2
                     if not(valid_space(current_piece, grid)):
                         current_piece.rotation -= 2
+                if event.key == pygame.K_LSHIFT and hold_used is 0:
+                    current_piece.x = 5
+                    current_piece.y = 0
+                    current_piece.rotation = 0
+                    if hold_piece is None:
+                        hold_piece = current_piece
+                        current_piece = bag_queue.pop(0)
+                    else:
+                        temp_piece = hold_piece
+                        hold_piece = current_piece
+                        current_piece = temp_piece
+                    hold_used = 1
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.quit())
 
@@ -449,6 +473,7 @@ def main(win):
             if len(bag_queue) <= 7:
                 bag_queue.extend(create_queue())
             current_piece = bag_queue.pop(0)
+            hold_used = 0
             change_piece = False
 
             # update lines cleared
@@ -482,7 +507,7 @@ def main(win):
             leveled = False
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
-        draw_queue(bag_queue, win)
+        draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
 
         if check_lost(locked_positions):
