@@ -460,6 +460,10 @@ def main(win):
                         hold_piece = current_piece
                         current_piece = temp_piece
                     hold_used = 1
+                if event.key == pygame.K_SPACE:
+                    while (valid_space(current_piece,grid)):
+                        current_piece.y += 1
+                    current_piece.y -= 1
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.quit())
 
