@@ -1,0 +1,98 @@
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 175) # convert_shape_format()
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 176) #
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 177) # Converts the easy-to-read shape arrays defined at the top of the program and returns a computer-friendly array
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 178) # Is used in valid_space to check whether the spot in grid[] and positions[] are both full
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 179) #
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 180) # param shape - the Piece object of the shape we are converting into the grid format
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 181) # return value - the converted position of the shape as a new position array which is relative to the game grid
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 182) 
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 183) 
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 193)     # The specifics of why this is done are confusing, watch part 2 at 4:30 for an explanation
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 199) # valid_space()
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 200) #
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 201) # Determines whether the shape is in a valid space or not (not occupied by another shape)
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 202) # Does this by iterating through the formatted array of the shape and comparing it to the grid - if the grid is colored
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 203) # then the spot is occupied
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 204) #
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 205) # param shape - the piece object being checked
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 206) # param grid - the grid array representing the current state of the board
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 207) # return value - boolean of if the position is valid
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 209) 
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 231) # create_queue()
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 232) #
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 233) # Copies the global shapes list, shuffles the list, then creates another list of shape objects from that list and
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 234) # returns it
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 235) #
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 236) # return value - A list of seven randomly ordered shape objects
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 237) 
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 239) def create_queue():
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 240)     bag_queue = []
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 241)     shape_queue = []
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 242)     shape_queue[:] = shapes[:]
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 243)     random.shuffle(shape_queue)
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 244)     for shape in shape_queue:
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 245)         bag_queue.append(Piece(5, 0, shape))
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 246)     return bag_queue
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 250)     font = pygame.font.SysFont("bauhaus93", size, bold=True)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 298) def draw_queue(queue, surface, hold):
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 299)     font = pygame.font.SysFont('bauhaus93', 30)
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 300)     label = font.render('Queue', 1, (255,255,255))
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 301)     label2 = font.render('Hold', 1, (255, 255, 255))
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 303)     x = top_left_x + play_width + 50
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 304)     y = top_left_y + play_height/8
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 305) 
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 306)     for k in range(5):
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 307)         piece_format = queue[k].shape[queue[k].rotation % len(queue[k].shape)]
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 308)         for i, line in enumerate(piece_format):
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 309)             row = list(line)
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 310)             for j, column in enumerate(row):
+eb60450a tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:48:50 -0400 311)                 if column == '0':
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 314)     if hold is not None:
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 315)         hold_piece_format = hold.shape[hold.rotation % len(hold.shape)]
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 316)         for i, line in enumerate(hold_piece_format):
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 317)             row = list(line)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 318)             for j, column in enumerate(row):
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 319)                 if column == '0':
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 320)                     pygame.draw.rect(surface, hold.color, (top_left_x - 140 + (j * block_size), top_left_y + i * block_size, block_size, block_size), 0)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 321) 
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 322)     surface.blit(label, (x + 10, y - 30))
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 323)     surface.blit(label2, (top_left_x - 100, top_left_y))
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 329)     font = pygame.font.SysFont('bauhaus93', 60)
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 338)     font = pygame.font.SysFont('bauhaus93', 30)
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 374)     bag_queue = create_queue() #Create a queue of seven pieces
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 375)     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 383)     current_piece = bag_queue.pop(0)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 384)     hold_piece = None
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 385)     hold_used = 0
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 439)                 if event.key == pygame.K_z:
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 440)                     current_piece.rotation -= 1
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 441)                     if not(valid_space(current_piece, grid)):
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 442)                         current_piece.rotation += 1
+fc1290e3 tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:57:45 -0400 443)                 if event.key == pygame.K_a:
+fc1290e3 tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:57:45 -0400 444)                     current_piece.rotation += 2
+fc1290e3 tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:57:45 -0400 445)                     if not(valid_space(current_piece, grid)):
+fc1290e3 tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:57:45 -0400 446)                         current_piece.rotation -= 2
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 447)                 if event.key == pygame.K_LSHIFT and hold_used is 0:
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 448)                     current_piece.x = 5
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 449)                     current_piece.y = 0
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 450)                     current_piece.rotation = 0
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 451)                     if hold_piece is None:
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 452)                         hold_piece = current_piece
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 453)                         current_piece = bag_queue.pop(0)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 454)                     else:
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 455)                         temp_piece = hold_piece
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 456)                         hold_piece = current_piece
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 457)                         current_piece = temp_piece
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 458)                     hold_used = 1
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 459)                 if event.key == pygame.K_ESCAPE:
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 460)                     pygame.event.post(pygame.quit())
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 473)             if len(bag_queue) <= 7:
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 474)                 bag_queue.extend(create_queue())
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 475)             current_piece = bag_queue.pop(0)
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 476)             hold_used = 0
+bd696b6b pytris.py            (hbrandutk    2022-10-13 03:33:07 -0400 510)         draw_queue(bag_queue, win, hold_piece)
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 522) # Future updates to this function:
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 524) # Add a textbox for the IP address to connect to
+7f0c118d tmpGameDoubleTest.py (hbrandutk    2022-10-04 15:52:45 -0400 525) # Pass these as arguments for the appropriate functions
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 526) 
+0bee268b tmpGameDoubleTest.py (hbrandutk    2022-10-04 17:22:25 -0400 527) 
