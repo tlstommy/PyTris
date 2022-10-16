@@ -24,10 +24,14 @@ class Server:
     def listenForConn(self):
         self.serverSocket.listen(2)
         connectedClient,clientAddr = self.serverSocket.accept()
-        
         #decode json
-        decodedJson = json.loads(connectedClient.recv(1024).decode())
 
+        try:
+            decodedJson = json.loads(connectedClient.recv(1024).decode())
+        except ConnectionRefusedError as e:
+            print(f"ERROR: {e} \n Pytris encountered an error. This commonly is caused to do network firewall settings.")
+            input("Press any key to quit")
+            sys.exit()
         print("\n---=INBOUND MESSAGE=---")
         print("CLIENT ADDRESS  :",clientAddr[0])
         print("CLIENT PORT     :",decodedJson.get("recvPort"))
@@ -85,4 +89,5 @@ server = Server(8888)
 
 #create the server and listen for connections
 server.createServer()
+
 
