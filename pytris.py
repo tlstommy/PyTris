@@ -486,6 +486,7 @@ def main(win):
 
             # update lines cleared
             cleared = clear_rows(grid, locked_positions)
+
             level_count += cleared
             line += cleared
 
