@@ -81,7 +81,8 @@ class Server:
     def sendError(self, errorMsg,connectedClient):
         connectedClient.send(errorMsg.encode())
             
-
+    def sendSignal(self,signalType,signalContent):
+        return 0
 
 #create a new Server server on port 8888
 server = Server(8888)
