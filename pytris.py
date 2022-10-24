@@ -152,6 +152,7 @@ class Piece(object):
 # Opponent Class for keeping track of the Opponent's board
 # Currently a placeholder for later socket integration
 
+
 class Opponent(object):
     def __init__(self, name, locked_pos={}):
         self.name = name
@@ -161,6 +162,7 @@ class Opponent(object):
 #
 # colors in the tetris play space by coloring in the 2D array by checking locked positions set to a given color
 # locked position given in the format of {(x,y):(255,0,0)}
+
 
 def create_grid(locked_pos={}):
     grid = [[(0,0,0) for _ in range(10)] for _ in range(20)]
@@ -220,14 +222,6 @@ def valid_space(shape, grid):
     return True
 
 
-def check_lost(positions):
-    for pos in positions:
-        x, y = pos
-        if y < 1:
-            return True
-
-    return False
-
 # create_queue()
 #
 # Copies the global shapes list, shuffles the list, then creates another list of shape objects from that list and
@@ -242,7 +236,7 @@ def create_queue():
     shape_queue[:] = shapes[:]
     random.shuffle(shape_queue)
     for shape in shape_queue:
-        bag_queue.append(Piece(5, 0, shape))
+        bag_queue.append(Piece(5, 2, shape))
     return bag_queue
 
 
@@ -271,8 +265,20 @@ def draw_grid(surface, grid, opponent_grid):
             pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy), (rx + j*block_size, sy + play_height))
 
 
-def clear_rows(grid, locked):
+def create_garbage(grid, locked, num_garbage):
+    for key in sorted(list(locked), key=lambda x: x[1]):
+        x, y = key
+        newkey = (x, y - num_garbage)
+        locked[newkey] = locked.pop(key)
+    empty_row = random.randint(0, len(grid[0]) - 1)
+    for i in range(num_garbage):
+        for j in range(len(grid[0])):
+            newkey = (j, (len(grid) - i) - 1)
+            if j is not empty_row:
+                locked[newkey] = (93, 93, 93)
 
+
+def clear_rows(grid, locked):
     inc = 0
     for i in range(len(grid)-1, -1, -1):
         row = grid[i]
@@ -289,8 +295,8 @@ def clear_rows(grid, locked):
         for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
             x, y = key
             if y < ind:
-                newKey = (x, y + inc)
-                locked[newKey] = locked.pop(key)
+                newkey = (x, y + inc)
+                locked[newkey] = locked.pop(key)
 
     return inc
 
@@ -450,7 +456,7 @@ def main(win):
                         current_piece.rotation -= 2
                 if event.key == pygame.K_LSHIFT and hold_used is 0:
                     current_piece.x = 5
-                    current_piece.y = 0
+                    current_piece.y = 2
                     current_piece.rotation = 0
                     if hold_piece is None:
                         hold_piece = current_piece
@@ -464,6 +470,17 @@ def main(win):
                     while (valid_space(current_piece,grid)):
                         current_piece.y += 1
                     current_piece.y -= 1
+                    change_piece = 1
+                if event.key == pygame.K_1:
+                    create_garbage(grid, locked_positions, 1)
+                if event.key == pygame.K_2:
+                    create_garbage(grid, locked_positions, 2)
+                if event.key == pygame.K_3:
+                    create_garbage(grid, locked_positions, 3)
+                if event.key == pygame.K_4:
+                    create_garbage(grid, locked_positions, 4)
+                if event.key == pygame.K_5:
+                    create_garbage(grid, locked_positions, 5)
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.quit())
 
@@ -481,6 +498,13 @@ def main(win):
             if len(bag_queue) <= 7:
                 bag_queue.extend(create_queue())
             current_piece = bag_queue.pop(0)
+            if not valid_space(current_piece, grid):
+                draw_text_middle(win, "YOU LOST!", 80, (255, 255, 255))
+                pygame.mixer.Sound.play(game_over)
+                pygame.mixer.music.stop()
+                pygame.display.update()
+                pygame.time.delay(1500)
+                run = False
             hold_used = 0
             change_piece = False
 
@@ -518,14 +542,6 @@ def main(win):
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
-
-        if check_lost(locked_positions):
-            draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
-            pygame.mixer.Sound.play(game_over)
-            pygame.mixer.music.stop()
-            pygame.display.update()
-            pygame.time.delay(1500)
-            run = False
 
 
 # Future updates to this function:
