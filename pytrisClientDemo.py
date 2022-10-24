@@ -62,6 +62,7 @@ while True:
                 "username":playerName, 
                 "ip":socket.gethostbyname(socket.gethostname()),
                 "recvPort":client.recvPort,
+                "signalType":"standard",
                 "currentGrid":genRandomBoard().tolist(),                
                 }
 

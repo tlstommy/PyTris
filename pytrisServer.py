@@ -70,18 +70,23 @@ class Server:
                 pass
         else:
             print("MAX PLAYERS REACHED")
-            self.sendError("ERROR: GAME IS FULL!",connectedClient)
+            self.sendSignal(connectedClient,"ERROR","ERROR: GAME IS FULL!")
 
     #send data back to a client
     def sendData(self, playerJsonData,connectedClient):
         print(playerJsonData)
         connectedClient.send(json.dumps(playerJsonData).encode())
 
-    #send an error message to client   
-    def sendError(self, errorMsg,connectedClient):
-        connectedClient.send(errorMsg.encode())
-            
-    def sendSignal(self,signalType,signalContent):
+    #send a game related signal that is not a game board        
+    def sendSignal(self,connectedClient,signalType,signalContent):
+
+        if signalType == "ERROR":
+            print(f"ERROR: {signalContent}")
+            jsonData = {
+                "signalContent":signalContent,
+                "signalType":"ERROR",       
+            }
+            connectedClient.send(json.dumps(jsonData).encode())
         return 0
 
 #create a new Server server on port 8888
