@@ -140,6 +140,49 @@ shapes = [S, Z, I, O, J, L, T]
 shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
 # index 0 - 6 represent shape
 
+COLOR_INACTIVE = pygame.Color(128, 128, 128)
+COLOR_ACTIVE = pygame.Color(255, 255, 255)
+FONT = pygame.font.SysFont(None, 48)
+
+
+class TextBox:
+
+    def __init__(self, x, y, w, h, text=''):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.color = COLOR_INACTIVE
+        self.text = text
+        self.txt_surface = FONT.render(text, True, self.color)
+        self.active = False
+
+    def handle(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+
+            self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
+
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+
+                self.txt_surface = FONT.render(self.text, True, self.color)
+
+    def update(self):
+        width = max(300, self.txt_surface.get_width()+10)
+        self.rect.w = width
+
+    def draw(self, screen):
+        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
+    def get_text(self):
+        return self.text
+
 
 class Piece(object):
     def __init__(self, x, y, shape):
@@ -568,15 +611,47 @@ def main(win):
 
 def main_menu(win):
     run = True
+
+    name_box = TextBox(600, 200, 400, 48)
+    ip_box = TextBox(600, 300, 400, 48)
+    text_boxes = [name_box, ip_box]
+
     while run:
-        win.fill((0,0,0))
-        draw_text_middle(win, 'Press Any Key To Play', 60, (255,255,255))
-        pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                main(win)
+                if event.key == pygame.K_RETURN:
+
+                    name = name_box.get_text()
+                    ip = ip_box.get_text()
+
+                    if name != '' and ip != '':
+                        print(f'Username -- { name }')
+                        print(f'      IP -- { ip }')
+                        main(win)
+
+            for box in text_boxes:
+                box.handle(event)
+
+        for box in text_boxes:
+            box.update()
+
+        win.fill((0, 0, 0))
+
+        label = FONT.render('Press ENTER to Play', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 125))
+
+        label = FONT.render('Username: ', True, (255, 255, 255))
+        win.blit(label, (410, 207))
+
+        label = FONT.render('IP: ', True, (255, 255, 255))
+        win.blit(label, (543, 307))
+
+        for box in text_boxes:
+            box.draw(win)
+
+        pygame.display.flip()
 
     pygame.display.quit()
 
