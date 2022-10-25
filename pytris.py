@@ -1,4 +1,5 @@
 from operator import truediv
+from unicodedata import name
 import pygame
 import random
 
@@ -10,6 +11,7 @@ pygame.mixer.init()
 pygame.mixer.music.load('sounds/music.mp3')
 pygame.mixer.music.set_volume(volume/2)
 
+SERVER_IP = None
 clear = pygame.mixer.Sound('sounds/clear.mp3')
 tetris = pygame.mixer.Sound('sounds/tetris.mp3')
 level_up = pygame.mixer.Sound('sounds/level_up.mp3')
@@ -436,8 +438,13 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
+def call_server(server_ip,username,grid,opponent_grid,win):
+    print(grid)
+    print(opponent_grid)
+    draw_window(win, grid, opponent_grid,"","","","",)
+    return 0
 
-def main(win):
+def main(win,server_ip,username):
     locked_positions = {}
     grid = create_grid(locked_positions)
     bag_queue = create_queue() #Create a queue of seven pieces
@@ -597,6 +604,7 @@ def main(win):
                 if not leveled: pygame.mixer.Sound.play(tetris)
 
             leveled = False
+        call_server(server_ip,username,grid,opponent_grid,win)
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
@@ -629,7 +637,7 @@ def main_menu(win):
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
                         print(f'      IP -- { ip }')
-                        main(win)
+                        main(win,ip,name)
 
             for box in text_boxes:
                 box.handle(event)
@@ -645,8 +653,8 @@ def main_menu(win):
         label = FONT.render('Username: ', True, (255, 255, 255))
         win.blit(label, (410, 207))
 
-        label = FONT.render('IP: ', True, (255, 255, 255))
-        win.blit(label, (543, 307))
+        label = FONT.render('Server IP: ', True, (255, 255, 255))
+        win.blit(label, (400, 307))
 
         for box in text_boxes:
             box.draw(win)
