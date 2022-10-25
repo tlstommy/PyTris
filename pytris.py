@@ -144,7 +144,7 @@ shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 16
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
-FONT = pygame.font.SysFont(None, 48)
+FONT = pygame.font.Font(None, 48)
 
 
 class TextBox:
@@ -184,6 +184,9 @@ class TextBox:
 
     def get_text(self):
         return self.text
+
+    def get_state(self):
+        return self.active
 
 
 class Piece(object):
@@ -444,6 +447,52 @@ def call_server(server_ip,username,grid,opponent_grid,win):
     draw_window(win, grid, opponent_grid,"","","","",)
     return 0
 
+
+# Add more settings in the future and allow for settings to be applied
+
+def settings_menu(win):
+    run = True
+
+    vol_box = TextBox(600, 220, 400, 48)
+    setting_boxes = [vol_box]
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+            for box in setting_boxes:
+                box.handle(event)
+
+        for box in setting_boxes:
+            box.update()
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Settings', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        label = FONT.render('Volume: ', True, (255, 255, 255))
+        win.blit(label, (456, 227))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 300))
+
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 330))
+
+        for box in setting_boxes:
+            box.draw(win)
+
+        pygame.display.flip()
+
 def main(win,server_ip,username):
     locked_positions = {}
     grid = create_grid(locked_positions)
@@ -493,7 +542,7 @@ def main(win,server_ip,username):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-                pygame.display.quit()
+                exit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -520,7 +569,7 @@ def main(win,server_ip,username):
                     current_piece.rotation += 2
                     if not(valid_space(current_piece, grid)):
                         current_piece.rotation -= 2
-                if event.key == pygame.K_LSHIFT and hold_used is 0:
+                if event.key == pygame.K_LSHIFT and hold_used == 0:
                     current_piece.x = 5
                     current_piece.y = 2
                     current_piece.rotation = 0
@@ -620,14 +669,15 @@ def main(win,server_ip,username):
 def main_menu(win):
     run = True
 
-    name_box = TextBox(600, 200, 400, 48)
-    ip_box = TextBox(600, 300, 400, 48)
+    name_box = TextBox(600, 220, 400, 48)
+    ip_box = TextBox(600, 280, 400, 48)
     text_boxes = [name_box, ip_box]
 
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
 
@@ -637,7 +687,15 @@ def main_menu(win):
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
                         print(f'      IP -- { ip }')
-                        main(win,ip,name)
+                        main(win, ip, name)
+
+                active = False
+
+                for box in text_boxes:
+                    active = active or box.get_state()
+
+                if event.key == pygame.K_s and not active:
+                    settings_menu(win)
 
             for box in text_boxes:
                 box.handle(event)
@@ -647,14 +705,22 @@ def main_menu(win):
 
         win.fill((0, 0, 0))
 
-        label = FONT.render('Press ENTER to Play', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 125))
+        font = pygame.font.Font(None, 125)
+        label = font.render('PyTris', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 75))
 
         label = FONT.render('Username: ', True, (255, 255, 255))
-        win.blit(label, (410, 207))
+        win.blit(label, (410, 227))
 
         label = FONT.render('Server IP: ', True, (255, 255, 255))
-        win.blit(label, (400, 307))
+        win.blit(label, (428, 287))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ENTER to Play', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 370))
+
+        label = font.render('Press S for Settings', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 400))
 
         for box in text_boxes:
             box.draw(win)
