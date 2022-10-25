@@ -29,7 +29,7 @@ block_size = 30
 
 top_left_x = 150 
 top_left_y = (s_height - play_height) 
-opponent_top_left_x = s_width - (top_left_x + play_width)   # Opponent X position
+opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X position
 
 
 # SHAPE FORMATS
@@ -323,10 +323,10 @@ def draw_queue(queue, surface, hold):
             row = list(line)
             for j, column in enumerate(row):
                 if column == '0':
-                    pygame.draw.rect(surface, hold.color, (top_left_x - 140 + (j * block_size), top_left_y + i * block_size, block_size, block_size), 0)
+                    pygame.draw.rect(surface, hold.color, (top_left_x - 140 + (j * block_size), top_left_y + i * block_size + 75, block_size, block_size), 0)
 
     surface.blit(label, (x + 10, y - 30))
-    surface.blit(label2, (top_left_x - 100, top_left_y))
+    surface.blit(label2, (top_left_x - 100, y - 30))
 
 
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
@@ -346,18 +346,34 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
 
     # display score
     font = pygame.font.SysFont('bauhaus93', 30)
-    label = font.render('Score: ' + str(score), 1, (255, 255, 255))
+    label = font.render(f'Score: { score }', True, (255, 255, 255))
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height / 2 + 250
     surface.blit(label, (sx, sy))
 
     # display line
-    label = font.render('Line: ' + str(line), 1, (255, 255, 255))
+    label = font.render(f'Line: { line }', True, (255, 255, 255))
     sy -= 33
     surface.blit(label, (sx, sy))
 
     # display level
-    label = font.render('Level: ' + str(level), 1, (255, 255, 255))
+    label = font.render(f'Level: { level }', True, (255, 255, 255))
+    sy -= 33
+    surface.blit(label, (sx, sy))
+
+    # Opponent score
+    label = font.render(f'Score: 0', True, (255, 255, 255))
+    sx = opponent_top_left_x + play_width + 50
+    sy = top_left_y + play_height / 2 + 250
+    surface.blit(label, (sx, sy))
+
+    # Opponent line
+    label = font.render(f'Line: 0', True, (255, 255, 255))
+    sy -= 33
+    surface.blit(label, (sx, sy))
+
+    # Opponent level
+    label = font.render(f'Level: 0', True, (255, 255, 255))
     sy -= 33
     surface.blit(label, (sx, sy))
 
