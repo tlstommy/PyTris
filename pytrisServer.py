@@ -77,7 +77,7 @@ class Server:
         print(playerJsonData)
         connectedClient.send(json.dumps(playerJsonData).encode())
 
-    #send a game related signal that is not a game board        
+    #send a game related signal that is not a game board such as gameover
     def sendSignal(self,connectedClient,signalType,signalContent):
         if signalType == "ERROR":
             print(f"ERROR: {signalContent}")
