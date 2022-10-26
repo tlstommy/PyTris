@@ -79,7 +79,6 @@ class Server:
 
     #send a game related signal that is not a game board        
     def sendSignal(self,connectedClient,signalType,signalContent):
-
         if signalType == "ERROR":
             print(f"ERROR: {signalContent}")
             jsonData = {
@@ -87,6 +86,8 @@ class Server:
                 "signalType":"ERROR",       
             }
             connectedClient.send(json.dumps(jsonData).encode())
+        else:
+            print("unsuporrted error type")
         return 0
 
 #create a new Server server on port 8888
