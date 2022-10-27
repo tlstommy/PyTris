@@ -688,23 +688,29 @@ def main(win,server_ip,username):
                 level_count -= 10
                 fall_speed -= 0.025
                 pygame.mixer.Sound.play(level_up)
-                if fall_speed < 0.1: fall_speed = 0.1
+                if fall_speed < 0.1:
+                    fall_speed = 0.1
 
             # update score
             if cleared == 1:
                 score += 40 * (level + 1)
-                if not leveled: pygame.mixer.Sound.play(clear)
+                if not leveled:
+                    pygame.mixer.Sound.play(clear)
             if cleared == 2:
                 score += 100 * (level + 1)
-                if not leveled: pygame.mixer.Sound.play(clear)
+                if not leveled:
+                    pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
-                if not leveled: pygame.mixer.Sound.play(clear)
+                if not leveled:
+                    pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
-                if not leveled: pygame.mixer.Sound.play(tetris)
+                if not leveled:
+                    pygame.mixer.Sound.play(tetris)
 
             leveled = False
+
         playerinfo.update(grid, locked_positions)
         call_server(playerinfo,opponentinfo, grid, opponent, win)
 
