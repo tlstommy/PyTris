@@ -1,7 +1,10 @@
 from operator import truediv
 from unicodedata import name
+from matplotlib.font_manager import json_dump
 import pygame
 import random
+#from pytrisServer import server
+import json
 
 pygame.font.init()
 
@@ -197,14 +200,57 @@ class Piece(object):
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
-# Opponent Class for keeping track of the Opponent's board
-# Currently a placeholder for later socket integration
+# Player Class for keeping track of locked positions and general info
+# Only used for local opponent and player data
 
-
-class Opponent(object):
-    def __init__(self, name, locked_pos={}):
-        self.name = name
+class Player(object):
+    def __init__(self, name, IP, locked_pos={}):
+        self.username = name
+        self.ip = IP
         self.locked_pos = locked_pos
+
+# PlayerInfo class used for data encoding and decoding over socket
+# Holds information such as username, ip, and locked positions formatted through
+# a json object
+
+class PlayerInfo(object):
+    def __init__(self, name, IP, grid, locked_pos = {}):
+        self.username = name
+        self.ip = IP
+        self.locked_pos = []
+
+        # Formatting dictionary into a 1D array for json enc
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if (j, i) in locked_pos:
+                    c = locked_pos[(j,i)]
+                    self.locked_pos.append(c)
+                else:
+                    self.locked_pos.append((0,0,0))
+
+    # Updating the 1D array of locked positions
+    def update(self, grid, locked_pos = {}):
+        counter = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if (j, i) in locked_pos:
+                    c = locked_pos[(j,i)]
+                    self.locked_pos[counter] = (c)
+                counter += 1
+ 
+    # JSON encoding used to send data to client over socket server
+    def json_enc(self):
+        return json.dumps(self, indent = 4, default = lambda o: o.__dict__)
+
+    # JSON decoding used to recieve opponent data and decode into grid
+    def json_dec(self, grid, opponent):
+        counter = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                c = self.locked_pos[counter]
+                if (c != (0,0,0)):
+                    opponent.locked_pos[(j,i)] = (c)
+                counter += 1
 
 # create_grid
 #
@@ -441,10 +487,14 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
-def call_server(server_ip,username,grid,opponent_grid,win):
-    print(grid)
-    print(opponent_grid)
-    draw_window(win, grid, opponent_grid,"","","","",)
+# Function used to integrate socket connections to send/recive data about player/opponent boards
+# JSON enc/dec used to translate JSON objects into local grid in player structs
+
+def call_server(playerinfo, opponentinfo, grid, opponent, win):
+    print(playerinfo.json_enc())
+    playerinfo.json_dec(grid, opponent)
+    print(opponent.locked_pos)
+    # draw_window(win, grid, opponent_grid,"","","","",)
     return 0
 
 
@@ -499,8 +549,10 @@ def main(win,server_ip,username):
     bag_queue = create_queue() #Create a queue of seven pieces
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
-    # Opponent Initialization
-    opponent = Opponent("Player 2", locked_positions)
+    # Opponent & Player Info Initialization
+    opponent = Player("Player 2", server_ip, locked_positions)
+    opponentinfo = PlayerInfo(opponent.username, opponent.ip, grid, locked_positions)
+    playerinfo = PlayerInfo(username, server_ip, grid, locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
     change_piece = False
@@ -653,9 +705,10 @@ def main(win,server_ip,username):
                 if not leveled: pygame.mixer.Sound.play(tetris)
 
             leveled = False
-        call_server(server_ip,username,grid,opponent_grid,win)
+        playerinfo.update(grid, locked_positions)
+        call_server(playerinfo,opponentinfo, grid, opponent, win)
 
-        draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
+        draw_window(win, grid, opponent_grid, opponent.username, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
 
