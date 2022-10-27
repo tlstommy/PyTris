@@ -1,0 +1,62 @@
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400  14) SERVER_IP = None  
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 444) def call_server(server_ip,username,grid,opponent_grid,win):
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 445)     print(grid)
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 446)     print(opponent_grid)
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 447)     draw_window(win, grid, opponent_grid,"","","","",)
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 448)     return 0
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 449)
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 496) def main(win,server_ip,username):
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 656)         call_server(server_ip,username,grid,opponent_grid,win)
+44587d74 pytris.py            (lulamae12     2022-10-25 09:41:57 -0400 715)         label = FONT.render('Server IP: ', True, (255, 255, 255))
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 729)
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 730)     pygame.display.quit()
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 731)
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 732)
+176c4980 tmpGameTest.py       (lulamae12     2022-09-29 08:46:28 -0400 733) win = pygame.display.set_mode((s_width, s_height))
+0685b59e pytrisClientDemo.py (lulamae12 2022-10-08 13:34:11 -0400 12)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 13)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 14)     #create a new client socket
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 15)     def createClientSocket(self):
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 16)         self.clientSocket = socket.socket()
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 17)         self.clientSocket.connect((self.serverAddress,self.port))       
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 18)     #send the json data
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 19)     def sendData(self,jsonData):
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 20)         #encode data and send
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 21)         self.clientSocket.send(json.dumps(jsonData).encode())
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 22)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 24)     def receiveData(self):
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 25)         #decode json
+b5c3c9f6 clientDemo.py       (lulamae12 2022-09-22 12:22:38 -0400 52) while True:
+ee2256f2 pytrisClientDemo.py (lulamae12 2022-10-27 12:12:32 -0400 53)     lockedpos = [""]
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 54)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 55)     #get players username
+7f3fdc02 clientDemo.py       (lulamae12 2022-09-22 13:19:08 -0400 56)     playerName = input("\n\nPlease enter your username: ")
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 57)
+57ed1839 pytrisClientDemo.py (lulamae12 2022-10-08 13:20:09 -0400 58)     #build json data
+52e7ab29 pytrisClientDemo.py (lulamae12 2022-10-24 10:53:40 -0400 63)                 "signalType":"standard",
+ee2256f2 pytrisClientDemo.py (lulamae12 2022-10-27 12:12:32 -0400 64)                 "currentGrid":lockedpos,    client.receiveData()
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  29)         try:
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  30)             decodedJson = json.loads(connectedClient.recv(1024).decode())
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  31)         except ConnectionRefusedError as e:
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  32)             print(f"ERROR: {e} \n Pytris encountered an error. This commonly is caused to do network firewall settings.")
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  33)             input("Press any key to quit")
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400  34)             sys.exit()
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  73)             self.sendSignal(connectedClient,"ERROR","ERROR: GAME IS FULL!")
+9a923540 (lulamae12 2022-10-26 16:29:50 -0400  80)     #send a game related signal that is not a game board such as gameover
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  81)     def sendSignal(self,connectedClient,signalType,signalContent):
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  82)         if signalType == "ERROR":
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  83)             print(f"ERROR: {signalContent}")
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  84)             jsonData = {
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  85)                 "signalContent":signalContent,
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  86)                 "signalType":"ERROR",
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  87)             }
+52e7ab29 (lulamae12 2022-10-24 10:53:40 -0400  88)             connectedClient.send(json.dumps(jsonData).encode())
+08917a27 (lulamae12 2022-10-26 16:28:13 -0400  89)         else:
+08917a27 (lulamae12 2022-10-26 16:28:13 -0400  90)             print("unsuporrted error type")
+77e3d4ae (lulamae12 2022-10-20 08:22:21 -0400  91)         return 0
+2b92068d (lulamae12 2022-10-16 13:38:17 -0400 100)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 12)     def createServer(self):
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 65)         return 0
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 66)
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 67)     #send an error message to client c
+57ed1839 (lulamae12 2022-10-08 13:20:09 -0400 75) server.createServer()
