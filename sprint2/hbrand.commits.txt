@@ -1,0 +1,122 @@
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400   8) import copy
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  45)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  49)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  50)       '.00..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  52)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  53)      ['.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  54)       '.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  55)       '.00..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  56)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  57)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  58)      ['.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  59)       '0....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  60)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  61)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  65)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  73)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  74)      ['.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  75)       '.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  76)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  77)       '.00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  78)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  79)      ['.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  80)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  81)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  82)       '0....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  94)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  95)      ['.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  96)       '.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  97)       '0000.',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  98)       '.....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400  99)       '.....'],
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 100)      ['.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 101)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 102)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 103)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 113)       '0....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 114)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 118)       '.00..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 119)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 120)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 124)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 125)       '..0..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 128)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 129)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 130)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 134)       '..0..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 135)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 139)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 140)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 141)       '.00..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 145)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 146)       '0....',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 149)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 150)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 151)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 155)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 156)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 160)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 161)       '.00..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 162)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 166)       '000..',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 167)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 170)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 171)       '00...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 172)       '.0...',
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 176) shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (0, 0, 255), (255, 165, 0), (128, 0, 128)]
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 290) 
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 337)     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0) or grid[i][j] == (255, 255, 255)] for i in range(20)]
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 363)         bag_queue.append(Piece(5, 2, shape))
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 391) # create_garbage()
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 392) # Shifts all of the rows on the board in locked_positions up the number of garbage lines to be sent, then generates
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 393) # random garbage
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 394) # Meant to be called after receiving a lines cleared signal from the server
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 395) # grid - The 20x10 list containing tuples of the rgb color value of the cell
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 396) # locked - A dictionary keyed on grid coordinates with values a 3d tuple containing the color of the cell
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 397) # num_garbage - The number of lines to be created
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 398) def create_garbage(grid, locked, num_garbage):
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 399)     for key in sorted(list(locked), key=lambda x: x[1]):
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 400)         x, y = key
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 401)         newkey = (x, y - num_garbage)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 402)         locked[newkey] = locked.pop(key)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 403)     empty_row = random.randint(0, len(grid[0]) - 1)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 404)     for i in range(num_garbage):
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 405)         for j in range(len(grid[0])):
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 406)             newkey = (j, (len(grid) - i) - 1)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 407)             if j is not empty_row:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 408)                 locked[newkey] = (93, 93, 93)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 410) 
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 411) def clear_rows(grid, locked):
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 415)         if (0, 0, 0) not in row and (255, 255, 255) not in row:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 428)                 newkey = (x, y + inc)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 429)                 locked[newkey] = locked.pop(key)
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 673)                     while valid_space(current_piece, grid):
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 676)                     change_piece = 1
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 677)                 if event.key == pygame.K_1:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 678)                     create_garbage(grid, locked_positions, 1)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 679)                 if event.key == pygame.K_2:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 680)                     create_garbage(grid, locked_positions, 2)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 681)                 if event.key == pygame.K_3:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 682)                     create_garbage(grid, locked_positions, 3)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 683)                 if event.key == pygame.K_4:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 684)                     create_garbage(grid, locked_positions, 4)
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 685)                 if event.key == pygame.K_5:
+e0da392d pytris.py            (hbrandutk     2022-10-24 18:53:21 -0400 686)                     create_garbage(grid, locked_positions, 5)
+7f0c118d tmpGameDoubleTest.py (hbrandutk     2022-10-04 15:52:45 -0400 687)                 if event.key == pygame.K_ESCAPE:
+7f0c118d tmpGameDoubleTest.py (hbrandutk     2022-10-04 15:52:45 -0400 688)                     pygame.event.post(pygame.quit())
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 697)         # I went ahead and made the ghost piece but it's pretty buggy, you can finalize and commit if you want Lohith
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 698)         # Make a deep copy of the current piece to use as the ghost
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 699)         # Move it below the current piece because it won't find any valid spaces otherwise
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 700)         # Recolor the cell to white
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 701)         ghost_shape_copy = copy.deepcopy(current_piece)
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 702)         while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y + 4 < 20:
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 703)             ghost_shape_copy.y += 4
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 704)         while valid_space(ghost_shape_copy, grid):
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 705)             ghost_shape_copy.y += 1
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 706)         ghost_shape_copy.y -= 1
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 707)         ghost_pos = convert_shape_format(ghost_shape_copy)
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 708)         for i in range(len(ghost_pos)):
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 709)             x, y = ghost_pos[i]
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 710)             if grid[y][x] == (0, 0, 0):
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 711)                 grid[y][x] = (255, 255, 255)
+a9a94563 pytris.py            (hbrandutk     2022-10-27 23:17:46 -0400 712)
