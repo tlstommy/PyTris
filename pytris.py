@@ -479,7 +479,6 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
-
 def call_server(server_ip,username,grid,opponent_grid,win):
     #print(grid)
     #print(opponent_grid)
