@@ -2,7 +2,6 @@ from operator import truediv
 from unicodedata import name
 import pygame
 import random
-import copy
 
 pygame.font.init()
 
@@ -38,45 +37,25 @@ opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X p
 # SHAPE FORMATS
 
 S = [['.....',
+      '..00.',
       '.00..',
-      '00...',
       '.....',
       '.....'],
      ['.....',
-      '.0...',
-      '.00..',
       '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '.00..',
-      '00...',
-      '.....'],
-     ['.....',
-      '0....',
-      '00...',
-      '.0...',
+      '..00.',
+      '...0.',
       '.....']]
 
 Z = [['.....',
-      '00...',
       '.00..',
+      '..00.',
       '.....',
       '.....'],
      ['.....',
       '..0..',
       '.00..',
       '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '00...',
-      '.00...',
-      '.....'],
-     ['.....',
-      '.0...',
-      '00...',
-      '0....',
       '.....']]
 
 I = [['.....',
@@ -88,16 +67,6 @@ I = [['.....',
       '..0..',
       '..0..',
       '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '0000.',
-      '.....',
-      '.....'],
-     ['.0...',
-      '.0...',
-      '.0...',
-      '.0...',
       '.....']]
 
 O = [['.....',
@@ -107,70 +76,70 @@ O = [['.....',
       '.....']]
 
 J = [['.....',
-      '0....',
-      '000..',
+      '.0...',
+      '.000.',
       '.....',
       '.....'],
      ['.....',
-      '.00..',
-      '.0...',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
+      '..00.',
+      '..0..',
       '..0..',
       '.....'],
      ['.....',
-      '.0...',
-      '.0...',
-      '00...',
+      '.....',
+      '.000.',
+      '...0.',
+      '.....'],
+     ['.....',
+      '..0..',
+      '..0..',
+      '.00..',
       '.....']]
 
 L = [['.....',
+      '...0.',
+      '.000.',
+      '.....',
+      '.....'],
+     ['.....',
       '..0..',
-      '000..',
-      '.....',
+      '..0..',
+      '..00.',
       '.....'],
      ['.....',
+      '.....',
+      '.000.',
       '.0...',
-      '.0...',
+      '.....'],
+     ['.....',
       '.00..',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
-      '0....',
-      '.....'],
-     ['.....',
-      '00...',
-      '.0...',
-      '.0...',
+      '..0..',
+      '..0..',
       '.....']]
 
 T = [['.....',
-      '.0...',
-      '000..',
+      '..0..',
+      '.000.',
       '.....',
       '.....'],
      ['.....',
-      '.0...',
+      '..0..',
+      '..00.',
+      '..0..',
+      '.....'],
+     ['.....',
+      '.....',
+      '.000.',
+      '..0..',
+      '.....'],
+     ['.....',
+      '..0..',
       '.00..',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.0...',
-      '00...',
-      '.0...',
+      '..0..',
       '.....']]
 
 shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (0, 0, 255), (255, 165, 0), (128, 0, 128)]
+shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
 # index 0 - 6 represent shape
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
@@ -289,7 +258,7 @@ def convert_shape_format(shape):
 
 
 def valid_space(shape, grid):
-    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0) or grid[i][j] == (255, 255, 255)] for i in range(20)]
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
     accepted_pos = [j for sub in accepted_pos for j in sub]
 
     formatted = convert_shape_format(shape)
@@ -344,13 +313,6 @@ def draw_grid(surface, grid, opponent_grid):
             pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy), (rx + j*block_size, sy + play_height))
 
 
-# create_garbage()
-# Shifts all of the rows on the board in locked_positions up the number of garbage lines to be sent, then generates
-# random garbage
-# Meant to be called after receiving a lines cleared signal from the server
-# grid - The 20x10 list containing tuples of the rgb color value of the cell
-# locked - A dictionary keyed on grid coordinates with values a 3d tuple containing the color of the cell
-# num_garbage - The number of lines to be created
 def create_garbage(grid, locked, num_garbage):
     for key in sorted(list(locked), key=lambda x: x[1]):
         x, y = key
@@ -368,7 +330,7 @@ def clear_rows(grid, locked):
     inc = 0
     for i in range(len(grid)-1, -1, -1):
         row = grid[i]
-        if (0, 0, 0) not in row and (255, 255, 255) not in row:
+        if (0,0,0) not in row:
             inc += 1
             ind = i
             for j in range(len(row)):
@@ -480,8 +442,8 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     draw_grid(surface, grid, opponent_grid)
 
 def call_server(server_ip,username,grid,opponent_grid,win):
-    #print(grid)
-    #print(opponent_grid)
+    print(grid)
+    print(opponent_grid)
     draw_window(win, grid, opponent_grid,"","","","",)
     return 0
 
@@ -531,7 +493,6 @@ def settings_menu(win):
 
         pygame.display.flip()
 
-
 def main(win,server_ip,username):
     locked_positions = {}
     grid = create_grid(locked_positions)
@@ -556,7 +517,6 @@ def main(win,server_ip,username):
     score = 0
     level = 0
     line = 0
-    das = 100
 
     pygame.mixer.music.play(-1)
 
@@ -622,7 +582,7 @@ def main(win,server_ip,username):
                         current_piece = temp_piece
                     hold_used = 1
                 if event.key == pygame.K_SPACE:
-                    while valid_space(current_piece, grid):
+                    while (valid_space(current_piece,grid)):
                         current_piece.y += 1
                     current_piece.y -= 1
                     change_piece = 1
@@ -645,22 +605,6 @@ def main(win,server_ip,username):
             x, y = shape_pos[i]
             if y > -1:
                 grid[y][x] = current_piece.color
-
-        # I went ahead and made the ghost piece but it's pretty buggy, fix it if you want Lohith
-        # Make a deep copy of the current piece to use as the ghost
-        # Move it below the current piece because it won't find any valid spaces otherwise
-        # Recolor the cell to white
-        ghost_shape_copy = copy.deepcopy(current_piece)
-        while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y + 4 < 20:
-            ghost_shape_copy.y += 4
-        while valid_space(ghost_shape_copy, grid):
-            ghost_shape_copy.y += 1
-        ghost_shape_copy.y -= 1
-        ghost_pos = convert_shape_format(ghost_shape_copy)
-        for i in range(len(ghost_pos)):
-            x, y = ghost_pos[i]
-            if grid[y][x] == (0, 0, 0):
-                grid[y][x] = (255, 255, 255)
 
         if change_piece:
             for pos in shape_pos:
@@ -714,6 +658,12 @@ def main(win,server_ip,username):
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
+
+
+# Future updates to this function:
+# Add text-boxes for custom settings (DAS, ARR)
+# Add a textbox for the IP address to connect to
+# Pass these as arguments for the appropriate functions
 
 
 def main_menu(win):
