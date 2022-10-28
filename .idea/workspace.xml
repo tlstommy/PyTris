@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09963b4a-ca98-4f33-95f3-4be53b00c675" name="Changes" comment="180 rotations (a key)">
-      <change afterPath="$PROJECT_DIR$/.idea/PyTris.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/background1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pygametris.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprint2/dwhite69.commits.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprint2/dwhite69.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprint2/ekell.commits.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprint2/ekell.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pytris.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytris.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
