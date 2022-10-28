@@ -2,12 +2,9 @@ from operator import truediv
 from unicodedata import name
 import pygame
 import random
-<<<<<<< HEAD
-=======
 #from pytrisServer import server
 import json
 import copy
->>>>>>> a9a94563285c9fb4845f15e1f29f5db9238d3ad6
 
 pygame.font.init()
 
@@ -242,8 +239,6 @@ class Opponent(object):
         self.name = name
         self.locked_pos = locked_pos
 
-<<<<<<< HEAD
-=======
 # PlayerInfo class used for data encoding and decoding over socket
 # Holds information such as username, ip, and locked positions formatted through
 # a json object
@@ -286,7 +281,6 @@ class PlayerInfo(object):
                     opponent.locked_pos[(j,i)] = (c)
                 counter += 1
 
->>>>>>> a9a94563285c9fb4845f15e1f29f5db9238d3ad6
 # create_grid
 #
 # colors in the tetris play space by coloring in the 2D array by checking locked positions set to a given color
