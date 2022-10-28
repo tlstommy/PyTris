@@ -427,7 +427,7 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     surface.fill((0, 0, 0))
 
     #background image - 1500x700 atleast
-    bg = pygame.image.load("background1.jpg")
+    bg = pygame.image.load("backgrounds/bg1.jpg")
     surface.blit(bg,(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
@@ -537,6 +537,33 @@ def settings_menu(win):
 
         label = font.render('Press ESC to Return', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 330))
+
+        label = font.render('Choose a background image', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 360))
+
+        default_image_size = (100,100)
+        default_y_pos = 420
+        
+        image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'),default_image_size)
+        win.blit(image2,(100,default_y_pos))
+
+        image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'),default_image_size)
+        win.blit(image3,(300,default_y_pos))
+
+        image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'),default_image_size)
+        win.blit(image4,(500,default_y_pos))
+
+        image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'),default_image_size)
+        win.blit(image5,(700,default_y_pos))
+
+        image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'),default_image_size)
+        win.blit(image6,(900,default_y_pos))
+
+        image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'),default_image_size)
+        win.blit(image7,(1100,default_y_pos))
+
+        image8 = pygame.transform.scale(pygame.image.load('background1.jpg'),default_image_size)
+        win.blit(image8,(1300,default_y_pos))
 
         for box in setting_boxes:
             box.draw(win)
