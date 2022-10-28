@@ -1,6 +1,5 @@
 from operator import truediv
 from unicodedata import name
-from matplotlib.font_manager import json_dump
 import pygame
 import random
 #from pytrisServer import server
@@ -231,13 +230,13 @@ class Piece(object):
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
-# Player Class for keeping track of locked positions and general info
-# Only used for local opponent and player data
+# Opponent Class for keeping track of the Opponent's board
+# Currently a placeholder for later socket integration
 
-class Player(object):
-    def __init__(self, name, IP, locked_pos={}):
-        self.username = name
-        self.ip = IP
+
+class Opponent(object):
+    def __init__(self, name, locked_pos={}):
+        self.name = name
         self.locked_pos = locked_pos
 
 # PlayerInfo class used for data encoding and decoding over socket
@@ -459,12 +458,21 @@ def draw_queue(queue, surface, hold):
     surface.blit(label2, (top_left_x - 100, y - 30))
 
 
+class background_image:
+    def __init__(self,image_num=1):
+        self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+    def get_background(self):
+        return self._bg
+    def set_background(self,image_num):
+        self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+
+
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
     surface.fill((0, 0, 0))
 
     #background image - 1500x700 atleast
-    bg = pygame.image.load("background1.jpg")
-    surface.blit(bg,(0,0))
+    bg = background_image()
+    surface.blit(bg.get_background(),(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
     label = font.render('Player 1', 1, (255, 255, 255))
@@ -523,14 +531,10 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
-# Function used to integrate socket connections to send/recive data about player/opponent boards
-# JSON enc/dec used to translate JSON objects into local grid in player structs
-
-def call_server(playerinfo, opponentinfo, grid, opponent, win):
-    print(playerinfo.json_enc())
-    playerinfo.json_dec(grid, opponent)
-    print(opponent.locked_pos)
-    # draw_window(win, grid, opponent_grid,"","","","",)
+def call_server(server_ip,username,grid,opponent_grid,win):
+    print(grid)
+    print(opponent_grid)
+    draw_window(win, grid, opponent_grid,"","","","",)
     return 0
 
 
@@ -549,6 +553,21 @@ def settings_menu(win):
                 exit()
 
             if event.type == pygame.KEYDOWN:
+                bg = background_image()
+                if event.key == pygame.K_1:
+                    bg.set_background(1)
+                if event.key == pygame.K_2:
+                    bg.set_background(2)
+                if event.key == pygame.K_3:
+                    bg.set_background(3)
+                if event.key == pygame.K_4:
+                    bg.set_background(4)
+                if event.key == pygame.K_5:
+                    bg.set_background(5)
+                if event.key == pygame.K_6:
+                    bg.set_background(6)
+                if event.key == pygame.K_7:
+                    bg.set_background(7)
                 if event.key == pygame.K_ESCAPE:
                     run = False
 
@@ -574,6 +593,47 @@ def settings_menu(win):
         label = font.render('Press ESC to Return', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 330))
 
+        label = font.render('Choose a background image', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 360))
+
+        default_image_size = (100,100)
+        default_y_pos = 430
+        
+        label = font.render('2', True, (255, 255, 255))
+        win.blit(label,(150,default_y_pos - 30))
+        image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'),default_image_size)
+        win.blit(image2,(100,default_y_pos))
+
+        label = font.render('3', True, (255, 255, 255))
+        win.blit(label,(350,default_y_pos - 30))
+        image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'),default_image_size)
+        win.blit(image3,(300,default_y_pos))
+
+        label = font.render('4', True, (255, 255, 255))
+        win.blit(label,(550,default_y_pos - 30))
+        image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'),default_image_size)
+        win.blit(image4,(500,default_y_pos))
+
+        label = font.render('5', True, (255, 255, 255))
+        win.blit(label,(750,default_y_pos - 30))
+        image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'),default_image_size)
+        win.blit(image5,(700,default_y_pos))
+
+        label = font.render('6', True, (255, 255, 255))
+        win.blit(label,(950,default_y_pos - 30))
+        image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'),default_image_size)
+        win.blit(image6,(900,default_y_pos))
+
+        label = font.render('7', True, (255, 255, 255))
+        win.blit(label,(1150,default_y_pos - 30))
+        image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'),default_image_size)
+        win.blit(image7,(1100,default_y_pos))
+
+        label = font.render('1', True, (255, 255, 255))
+        win.blit(label,(1350,default_y_pos - 30))
+        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'),default_image_size)
+        win.blit(image8,(1300,default_y_pos))
+
         for box in setting_boxes:
             box.draw(win)
 
@@ -585,10 +645,8 @@ def main(win,server_ip,username):
     bag_queue = create_queue() #Create a queue of seven pieces
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
-    # Opponent & Player Info Initialization
-    opponent = Player("Player 2", server_ip, locked_positions)
-    opponentinfo = PlayerInfo(opponent.username, opponent.ip, grid, locked_positions)
-    playerinfo = PlayerInfo(username, server_ip, grid, locked_positions)
+    # Opponent Initialization
+    opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
     change_piece = False
@@ -762,11 +820,9 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
+        call_server(server_ip,username,grid,opponent_grid,win)
 
-        playerinfo.update(grid, locked_positions)
-        call_server(playerinfo,opponentinfo, grid, opponent, win)
-
-        draw_window(win, grid, opponent_grid, opponent.username, score, line, level)
+        draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
 
