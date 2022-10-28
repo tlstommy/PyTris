@@ -1,0 +1,72 @@
+731aad24 pytris.py            (LohithGangula 2022-10-27 22:10:51 -0400 460) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 461) class background_image:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 462)     def __init__(self,image_num=1):
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 463)         self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 464)     def get_background(self):
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 465)         return self._bg
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 466)     def set_background(self,image_num):
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 467)         self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 468) 
+c506e4b2 pytris.py            (LohithGangula 2022-10-13 17:04:19 -0400 473)     #background image - 1500x700 atleast
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 474)     bg = background_image()
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 475)     surface.blit(bg.get_background(),(0,0))
+c506e4b2 pytris.py            (LohithGangula 2022-10-13 17:04:19 -0400 476) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 556)                 bg = background_image()
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 557)                 if event.key == pygame.K_1:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 558)                     bg.set_background(1)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 559)                 if event.key == pygame.K_2:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 560)                     bg.set_background(2)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 561)                 if event.key == pygame.K_3:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 562)                     bg.set_background(3)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 563)                 if event.key == pygame.K_4:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 564)                     bg.set_background(4)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 565)                 if event.key == pygame.K_5:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 566)                     bg.set_background(5)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 567)                 if event.key == pygame.K_6:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 568)                     bg.set_background(6)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 569)                 if event.key == pygame.K_7:
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 570)                     bg.set_background(7)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 596)         label = font.render('Choose a background image', True, (255, 255, 255))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 597)         win.blit(label, (750-(label.get_width()/2), 360))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 598) 
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 599)         default_image_size = (100,100)
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 600)         default_y_pos = 430
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 601)         
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 602)         label = font.render('2', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 603)         win.blit(label,(150,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 604)         image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 605)         win.blit(image2,(100,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 606) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 607)         label = font.render('3', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 608)         win.blit(label,(350,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 609)         image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 610)         win.blit(image3,(300,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 611) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 612)         label = font.render('4', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 613)         win.blit(label,(550,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 614)         image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 615)         win.blit(image4,(500,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 616) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 617)         label = font.render('5', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 618)         win.blit(label,(750,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 619)         image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 620)         win.blit(image5,(700,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 621) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 622)         label = font.render('6', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 623)         win.blit(label,(950,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 624)         image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 625)         win.blit(image6,(900,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 626) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 627)         label = font.render('7', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 628)         win.blit(label,(1150,default_y_pos - 30))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 629)         image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 630)         win.blit(image7,(1100,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 631) 
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 632)         label = font.render('1', True, (255, 255, 255))
+dc370791 pytris.py            (LohithGangula 2022-10-27 22:40:05 -0400 633)         win.blit(label,(1350,default_y_pos - 30))
+731aad24 pytris.py            (LohithGangula 2022-10-27 22:10:51 -0400 634)         image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'),default_image_size)
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 635)         win.blit(image8,(1300,default_y_pos))
+bab9fa62 pytris.py            (LohithGangula 2022-10-27 22:05:17 -0400 636) 
+b58a7545 pytris.py            (LohithGangula 2022-10-13 17:06:30 -0400 730)                 if event.key == pygame.K_SPACE:
+b58a7545 pytris.py            (LohithGangula 2022-10-13 17:06:30 -0400 732)                         current_piece.y += 1
+b58a7545 pytris.py            (LohithGangula 2022-10-13 17:06:30 -0400 733)                     current_piece.y -= 1
