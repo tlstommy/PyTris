@@ -1,10 +1,8 @@
 from operator import truediv
 from unicodedata import name
-from matplotlib.font_manager import json_dump
 import pygame
 import random
-#from pytrisServer import server
-import json
+import copy
 
 pygame.font.init()
 
@@ -40,25 +38,45 @@ opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X p
 # SHAPE FORMATS
 
 S = [['.....',
-      '..00.',
       '.00..',
+      '00...',
       '.....',
       '.....'],
      ['.....',
+      '.0...',
+      '.00..',
       '..0..',
-      '..00.',
-      '...0.',
+      '.....'],
+     ['.....',
+      '.....',
+      '.00..',
+      '00...',
+      '.....'],
+     ['.....',
+      '0....',
+      '00...',
+      '.0...',
       '.....']]
 
 Z = [['.....',
+      '00...',
       '.00..',
-      '..00.',
       '.....',
       '.....'],
      ['.....',
       '..0..',
       '.00..',
       '.0...',
+      '.....'],
+     ['.....',
+      '.....',
+      '00...',
+      '.00...',
+      '.....'],
+     ['.....',
+      '.0...',
+      '00...',
+      '0....',
       '.....']]
 
 I = [['.....',
@@ -70,6 +88,16 @@ I = [['.....',
       '..0..',
       '..0..',
       '..0..',
+      '.....'],
+     ['.....',
+      '.....',
+      '0000.',
+      '.....',
+      '.....'],
+     ['.0...',
+      '.0...',
+      '.0...',
+      '.0...',
       '.....']]
 
 O = [['.....',
@@ -79,70 +107,70 @@ O = [['.....',
       '.....']]
 
 J = [['.....',
-      '.0...',
-      '.000.',
+      '0....',
+      '000..',
       '.....',
       '.....'],
      ['.....',
-      '..00.',
-      '..0..',
-      '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '.000.',
-      '...0.',
-      '.....'],
-     ['.....',
-      '..0..',
-      '..0..',
       '.00..',
+      '.0...',
+      '.0...',
+      '.....'],
+     ['.....',
+      '.....',
+      '000..',
+      '..0..',
+      '.....'],
+     ['.....',
+      '.0...',
+      '.0...',
+      '00...',
       '.....']]
 
 L = [['.....',
-      '...0.',
-      '.000.',
+      '..0..',
+      '000..',
       '.....',
       '.....'],
      ['.....',
-      '..0..',
-      '..0..',
-      '..00.',
-      '.....'],
-     ['.....',
-      '.....',
-      '.000.',
       '.0...',
+      '.0...',
+      '.00..',
       '.....'],
      ['.....',
-      '.00..',
-      '..0..',
-      '..0..',
+      '.....',
+      '000..',
+      '0....',
+      '.....'],
+     ['.....',
+      '00...',
+      '.0...',
+      '.0...',
       '.....']]
 
 T = [['.....',
-      '..0..',
-      '.000.',
+      '.0...',
+      '000..',
       '.....',
       '.....'],
      ['.....',
-      '..0..',
-      '..00.',
-      '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '.000.',
-      '..0..',
-      '.....'],
-     ['.....',
-      '..0..',
+      '.0...',
       '.00..',
-      '..0..',
+      '.0...',
+      '.....'],
+     ['.....',
+      '.....',
+      '000..',
+      '.0...',
+      '.....'],
+     ['.....',
+      '.0...',
+      '00...',
+      '.0...',
       '.....']]
 
 shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (255, 165, 0), (0, 0, 255), (128, 0, 128)]
+shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (0, 0, 255), (255, 165, 0), (128, 0, 128)]
 # index 0 - 6 represent shape
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
@@ -200,57 +228,14 @@ class Piece(object):
         self.color = shape_colors[shapes.index(shape)]
         self.rotation = 0
 
-# Player Class for keeping track of locked positions and general info
-# Only used for local opponent and player data
+# Opponent Class for keeping track of the Opponent's board
+# Currently a placeholder for later socket integration
 
-class Player(object):
-    def __init__(self, name, IP, locked_pos={}):
-        self.username = name
-        self.ip = IP
+
+class Opponent(object):
+    def __init__(self, name, locked_pos={}):
+        self.name = name
         self.locked_pos = locked_pos
-
-# PlayerInfo class used for data encoding and decoding over socket
-# Holds information such as username, ip, and locked positions formatted through
-# a json object
-
-class PlayerInfo(object):
-    def __init__(self, name, IP, grid, locked_pos = {}):
-        self.username = name
-        self.ip = IP
-        self.locked_pos = []
-
-        # Formatting dictionary into a 1D array for json enc
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                if (j, i) in locked_pos:
-                    c = locked_pos[(j,i)]
-                    self.locked_pos.append(c)
-                else:
-                    self.locked_pos.append((0,0,0))
-
-    # Updating the 1D array of locked positions
-    def update(self, grid, locked_pos = {}):
-        counter = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                if (j, i) in locked_pos:
-                    c = locked_pos[(j,i)]
-                    self.locked_pos[counter] = (c)
-                counter += 1
- 
-    # JSON encoding used to send data to client over socket server
-    def json_enc(self):
-        return json.dumps(self, indent = 4, default = lambda o: o.__dict__)
-
-    # JSON decoding used to recieve opponent data and decode into grid
-    def json_dec(self, grid, opponent):
-        counter = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                c = self.locked_pos[counter]
-                if (c != (0,0,0)):
-                    opponent.locked_pos[(j,i)] = (c)
-                counter += 1
 
 # create_grid
 #
@@ -304,7 +289,7 @@ def convert_shape_format(shape):
 
 
 def valid_space(shape, grid):
-    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0) or grid[i][j] == (255, 255, 255)] for i in range(20)]
     accepted_pos = [j for sub in accepted_pos for j in sub]
 
     formatted = convert_shape_format(shape)
@@ -359,6 +344,13 @@ def draw_grid(surface, grid, opponent_grid):
             pygame.draw.line(surface, (128, 128, 128), (rx + j*block_size, sy), (rx + j*block_size, sy + play_height))
 
 
+# create_garbage()
+# Shifts all of the rows on the board in locked_positions up the number of garbage lines to be sent, then generates
+# random garbage
+# Meant to be called after receiving a lines cleared signal from the server
+# grid - The 20x10 list containing tuples of the rgb color value of the cell
+# locked - A dictionary keyed on grid coordinates with values a 3d tuple containing the color of the cell
+# num_garbage - The number of lines to be created
 def create_garbage(grid, locked, num_garbage):
     for key in sorted(list(locked), key=lambda x: x[1]):
         x, y = key
@@ -376,7 +368,7 @@ def clear_rows(grid, locked):
     inc = 0
     for i in range(len(grid)-1, -1, -1):
         row = grid[i]
-        if (0,0,0) not in row:
+        if (0, 0, 0) not in row and (255, 255, 255) not in row:
             inc += 1
             ind = i
             for j in range(len(row)):
@@ -487,14 +479,10 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
-# Function used to integrate socket connections to send/recive data about player/opponent boards
-# JSON enc/dec used to translate JSON objects into local grid in player structs
-
-def call_server(playerinfo, opponentinfo, grid, opponent, win):
-    print(playerinfo.json_enc())
-    playerinfo.json_dec(grid, opponent)
-    print(opponent.locked_pos)
-    # draw_window(win, grid, opponent_grid,"","","","",)
+def call_server(server_ip,username,grid,opponent_grid,win):
+    #print(grid)
+    #print(opponent_grid)
+    draw_window(win, grid, opponent_grid,"","","","",)
     return 0
 
 
@@ -570,16 +558,15 @@ def settings_menu(win):
 
         pygame.display.flip()
 
+
 def main(win,server_ip,username):
     locked_positions = {}
     grid = create_grid(locked_positions)
     bag_queue = create_queue() #Create a queue of seven pieces
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
-    # Opponent & Player Info Initialization
-    opponent = Player("Player 2", server_ip, locked_positions)
-    opponentinfo = PlayerInfo(opponent.username, opponent.ip, grid, locked_positions)
-    playerinfo = PlayerInfo(username, server_ip, grid, locked_positions)
+    # Opponent Initialization
+    opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
     change_piece = False
@@ -596,6 +583,7 @@ def main(win,server_ip,username):
     score = 0
     level = 0
     line = 0
+    das = 100
 
     pygame.mixer.music.play(-1)
 
@@ -661,7 +649,7 @@ def main(win,server_ip,username):
                         current_piece = temp_piece
                     hold_used = 1
                 if event.key == pygame.K_SPACE:
-                    while (valid_space(current_piece,grid)):
+                    while valid_space(current_piece, grid):
                         current_piece.y += 1
                     current_piece.y -= 1
                     change_piece = 1
@@ -684,6 +672,22 @@ def main(win,server_ip,username):
             x, y = shape_pos[i]
             if y > -1:
                 grid[y][x] = current_piece.color
+
+        # I went ahead and made the ghost piece but it's pretty buggy, fix it if you want Lohith
+        # Make a deep copy of the current piece to use as the ghost
+        # Move it below the current piece because it won't find any valid spaces otherwise
+        # Recolor the cell to white
+        ghost_shape_copy = copy.deepcopy(current_piece)
+        while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y + 4 < 20:
+            ghost_shape_copy.y += 4
+        while valid_space(ghost_shape_copy, grid):
+            ghost_shape_copy.y += 1
+        ghost_shape_copy.y -= 1
+        ghost_pos = convert_shape_format(ghost_shape_copy)
+        for i in range(len(ghost_pos)):
+            x, y = ghost_pos[i]
+            if grid[y][x] == (0, 0, 0):
+                grid[y][x] = (255, 255, 255)
 
         if change_piece:
             for pos in shape_pos:
@@ -715,41 +719,28 @@ def main(win,server_ip,username):
                 level_count -= 10
                 fall_speed -= 0.025
                 pygame.mixer.Sound.play(level_up)
-                if fall_speed < 0.1:
-                    fall_speed = 0.1
+                if fall_speed < 0.1: fall_speed = 0.1
 
             # update score
             if cleared == 1:
                 score += 40 * (level + 1)
-                if not leveled:
-                    pygame.mixer.Sound.play(clear)
+                if not leveled: pygame.mixer.Sound.play(clear)
             if cleared == 2:
                 score += 100 * (level + 1)
-                if not leveled:
-                    pygame.mixer.Sound.play(clear)
+                if not leveled: pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
-                if not leveled:
-                    pygame.mixer.Sound.play(clear)
+                if not leveled: pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
-                if not leveled:
-                    pygame.mixer.Sound.play(tetris)
+                if not leveled: pygame.mixer.Sound.play(tetris)
 
             leveled = False
+        call_server(server_ip,username,grid,opponent_grid,win)
 
-        playerinfo.update(grid, locked_positions)
-        call_server(playerinfo,opponentinfo, grid, opponent, win)
-
-        draw_window(win, grid, opponent_grid, opponent.username, score, line, level)
+        draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
         pygame.display.update()
-
-
-# Future updates to this function:
-# Add text-boxes for custom settings (DAS, ARR)
-# Add a textbox for the IP address to connect to
-# Pass these as arguments for the appropriate functions
 
 
 def main_menu(win):
