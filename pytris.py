@@ -414,12 +414,18 @@ def draw_queue(queue, surface, hold):
     surface.blit(label, (x + 10, y - 30))
     surface.blit(label2, (top_left_x - 100, y - 30))
 
+bg = pygame.image.load("backgrounds/bg1.jpg")
+def get_background():
+    return bg
+
+def set_background(a):
+    bg = pygame.image.load("backgrounds/bg"+a+".jpg")
 
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
     surface.fill((0, 0, 0))
 
     #background image - 1500x700 atleast
-    bg = pygame.image.load("backgrounds/bg1.jpg")
+    bg = get_background()
     surface.blit(bg,(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
@@ -550,7 +556,7 @@ def settings_menu(win):
         image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'),default_image_size)
         win.blit(image7,(1100,default_y_pos))
 
-        image8 = pygame.transform.scale(pygame.image.load('background1.jpg'),default_image_size)
+        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'),default_image_size)
         win.blit(image8,(1300,default_y_pos))
 
         for box in setting_boxes:
