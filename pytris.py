@@ -265,7 +265,10 @@ class PlayerInfo(object):
                 if (j, i) in locked_pos:
                     c = locked_pos[(j,i)]
                     self.locked_pos[counter] = (c)
+                else:
+                    self.locked_pos[counter] = (0,0,0)
                 counter += 1
+                
  
     # JSON encoding used to send data to client over socket server
     def json_enc(self):
