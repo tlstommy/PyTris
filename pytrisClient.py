@@ -13,8 +13,6 @@ class Client:
         self.clientSocket.connect((self.serverAddress,self.port))
     #send the json data
     def sendData(self,jsonData):
-        print("SENDDATA:")
-        print(jsonData)
         #encode data and send
         self.clientSocket.send(json.dumps(jsonData).encode())
     
