@@ -1,9 +1,5 @@
 import json,sys,socket,os
 
-import numpy
-import numpy.random
-
-
 class Client:
     def __init__(self,serverAddress,serverPort,recvPort):
         self.port = serverPort
@@ -24,6 +20,7 @@ class Client:
     def receiveData(self):
         #decode json 
         opponentJson = json.loads(self.clientSocket.recv(1024).decode())
+        return opponentJson
         try:
             opponentUsername = opponentJson["username"]
             print(f"\n{opponentUsername}'s Board:\n")
@@ -41,32 +38,9 @@ class Client:
         
     
 
-serverIP = input("please enter the server IP: ")
+#serverIP = input("please enter the server IP: ")
 
 
 #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
-client = Client(serverIP,8888,recvPort=25000)
 
-
-
-while True:
-    lockedpos = [""]
-    
-    #get players username
-    playerName = input("\n\nPlease enter your username: ")
-    
-    #build json data
-    jsonData = {
-                "username":playerName, 
-                "ip":socket.gethostbyname(socket.gethostname()),
-                "recvPort":client.recvPort,
-                "signalType":"standard",
-                "currentGrid":lockedpos,                
-                }
-
-    #send json data to the server over socket     
-    client.createClientSocket();client.sendData(jsonData)
-
-    #listen for data from the server
-    client.receiveData()
     

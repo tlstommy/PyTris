@@ -32,16 +32,7 @@ class Server:
             print(f"ERROR: {e} \n Pytris encountered an error. This commonly is caused to do network firewall settings.")
             input("Press any key to quit")
             sys.exit()
-        print("\n---=INBOUND MESSAGE=---")
-        print("CLIENT ADDRESS  :",clientAddr[0])
-        print("CLIENT PORT     :",decodedJson.get("recvPort"))
-        print("CLIENT USERNAME :",decodedJson.get("username"))
-        print("CLIENT BOARD:")
-        print(decodedJson.get("currentGrid")[0])
-        print(decodedJson.get("currentGrid")[1])
-        print(decodedJson.get("currentGrid")[2])
-        print(decodedJson.get("currentGrid")[3])
-        print(decodedJson.get("currentGrid")[4])
+
 
         #store data for each new player
         self.storePlayerData(decodedJson,connectedClient)

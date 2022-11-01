@@ -1,10 +1,12 @@
 from operator import truediv
 from unicodedata import name
-import pygame
+import pygame,socket,sys,os
 import random
 #from pytrisServer import server
 import json
 import copy
+
+from pytrisClient import Client
 
 pygame.font.init()
 
@@ -178,6 +180,7 @@ shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (0, 0, 2
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
 FONT = pygame.font.Font(None, 48)
+
 
 
 class TextBox:
@@ -534,7 +537,18 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     
     draw_grid(surface, grid, opponent_grid)
 
-def call_server(server_ip,username,grid,opponent_grid,win):
+def call_server(server_ip,username,grid,opponent_grid,win,client):
+
+    jsonData = {
+                "username":username, 
+                "ip":socket.gethostbyname(socket.gethostname()),
+                "recvPort":25000,
+                "signalType":"standard",
+                "currentGrid":"test",                
+                }
+
+    client.createClientSocket();client.sendData(jsonData)
+    print(client.receiveData())
     print(grid)
     print(opponent_grid)
     draw_window(win, grid, opponent_grid,"","","","",)
@@ -647,6 +661,11 @@ def main(win,server_ip,username):
     grid = create_grid(locked_positions)
     bag_queue = create_queue() #Create a queue of seven pieces
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
+
+    #server stuff
+    client = Client(server_ip,8888,recvPort=25000)
+
+
 
     # Opponent Initialization
     opponent = Opponent("Player 2", locked_positions)
@@ -823,7 +842,7 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
-        call_server(server_ip,username,grid,opponent_grid,win)
+        call_server(server_ip,username,grid,opponent_grid,win,client)
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
@@ -851,6 +870,7 @@ def main_menu(win):
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
                         print(f'      IP -- { ip }')
+                        #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
                         main(win, ip, name)
 
                 active = False
