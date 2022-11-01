@@ -842,7 +842,7 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
-        call_server(server_ip,username,grid,opponent_grid,win,client)
+        #call_server(server_ip,username,grid,opponent_grid,win,client)
 
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)

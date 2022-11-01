@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="09963b4a-ca98-4f33-95f3-4be53b00c675" name="Changes" comment="180 rotations (a key)">
+      <change beforePath="$PROJECT_DIR$/pytris.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytris.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2FgI55sevKGUgvMO0WL7ZjlBZ6x" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Henry/Desktop/PyTris/pytris.py&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="09963b4a-ca98-4f33-95f3-4be53b00c675" name="Changes" comment="" />
+      <created>1664907114532</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664907114532</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added in a left rotate button (z), added some comments, added a quit button (esc)">
+      <created>1664913166010</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1664913166010</updated>
+    </task>
+    <task id="LOCAL-00002" summary="seven bag and font">
+      <created>1664918545455</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664918545455</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Functioning (but extremely ugly) 5 piece queue">
+      <created>1664920130739</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1664920130739</updated>
+    </task>
+    <task id="LOCAL-00004" summary="180 rotations (a key)">
+      <created>1664920665194</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664920665194</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added in a left rotate button (z), added some comments, added a quit button (esc)" />
+    <MESSAGE value="seven bag and font" />
+    <MESSAGE value="Functioning (but extremely ugly) 5 piece queue" />
+    <MESSAGE value="180 rotations (a key)" />
+    <option name="LAST_COMMIT_MESSAGE" value="180 rotations (a key)" />
+  </component>
+</project>
