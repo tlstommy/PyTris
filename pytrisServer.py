@@ -27,7 +27,8 @@ class Server:
         #decode json
 
         try:
-            decodedJson = json.loads(connectedClient.recv(1024).decode())
+            print(connectedClient.recv(4096).decode())
+            decodedJson = json.loads(connectedClient.recv(4096).decode())
         except ConnectionRefusedError as e:
             print(f"ERROR: {e} \n Pytris encountered an error. This commonly is caused to do network firewall settings.")
             input("Press any key to quit")

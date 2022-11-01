@@ -13,13 +13,15 @@ class Client:
         self.clientSocket.connect((self.serverAddress,self.port))
     #send the json data
     def sendData(self,jsonData):
+        print("SENDDATA:")
+        print(jsonData)
         #encode data and send
         self.clientSocket.send(json.dumps(jsonData).encode())
     
 
     def receiveData(self):
         #decode json 
-        opponentJson = json.loads(self.clientSocket.recv(1024).decode())
+        opponentJson = json.loads(self.clientSocket.recv(4096).decode())
         return opponentJson
         try:
             opponentUsername = opponentJson["username"]

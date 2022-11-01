@@ -538,13 +538,13 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     draw_grid(surface, grid, opponent_grid)
 
 def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
-
+    print(grid)
     jsonData = {
                 "username":username, 
                 "ip":localIP,
                 "recvPort":25000,
                 "signalType":"standard",
-                "currentGrid":"test",                
+                "currentGrid":json.dumps(grid),           
                 }
 
     client.createClientSocket();client.sendData(jsonData)
