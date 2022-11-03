@@ -1,5 +1,3 @@
-from operator import truediv
-from unicodedata import name
 import pygame,socket,sys,os
 import random
 #from pytrisServer import server

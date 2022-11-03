@@ -6,7 +6,7 @@ PyTris is a client server application for the purpose of playing a multiplayer o
 
 # How to build
 
-Using PyTris is simple, to run simply pull the repository, make sure you have Python installed, and run PyTris.py in the main folder. To host an online game, run pytrisServer.py and connect to your machine's local ip on the PyTris.py client.
+Using PyTris is simple, to run simply pull the repository, make sure you have Python installed, install the required packages with ```pip install -r requirements.txt```, and run PyTris.py in the main folder. To host an online game, run pytrisServer.py and connect to your machine's local ip on the PyTris.py client.
 
 # Credits
 
