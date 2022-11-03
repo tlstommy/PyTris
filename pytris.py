@@ -1,4 +1,4 @@
-import pygame,socket,sys,os
+import pygame,socket,sys,os,time
 import random
 #from pytrisServer import server
 import json
@@ -532,28 +532,26 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
             pygame.draw.rect(surface, opponent_grid[i][j], (opponent_top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
     
     pygame.draw.rect(surface, (128, 128, 128), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
-    
     draw_grid(surface, grid, opponent_grid)
 
 def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
-    print(grid)
+    #print(grid)
     jsonData = {
                 "username":username, 
                 "ip":localIP,
                 "recvPort":25000,
                 "signalType":"standard",
-                "currentGrid":json.dumps(grid),           
+                "currentGrid":grid,           
                 }
 
     client.createClientSocket();client.sendData(jsonData)
-    opponent_grid = list(client.receiveData()["currentGrid"][0])
-    if opponent_grid == None:
-        opponent_grid = [[(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 165, 0), (0, 0, 0), (0, 0, 0)], [(0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 165, 0), (0, 165, 0), (0, 165, 0), (0, 0, 0), (0, 0, 0)]]
-    print(grid)
-    print(type(opponent_grid))
+    opponent_grid = client.receiveData()["currentGrid"]
+    
+    print(opponent_grid == grid)
+    print("opp grid type",type(opponent_grid))
 
     
-    return opponent_grid
+    return list(opponent_grid)
 
 
 # Add more settings in the future and allow for settings to be applied
@@ -691,7 +689,7 @@ def main(win,server_ip,username):
 
     while run:
         grid = create_grid(locked_positions)
-        opponent_grid = create_grid(opponent.locked_pos)
+        #opponent_grid = create_grid(opponent.locked_pos)
         fall_time += clock.get_rawtime()
         level_time += clock.get_rawtime()
         clock.tick()
@@ -843,10 +841,17 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
-            #opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
-
+            try:
+                opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+                
+            except TypeError as e:
+                print("ERROR:",e)
+                
+        opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
+
+
         pygame.display.update()
 
 
@@ -867,6 +872,9 @@ def main_menu(win):
 
                     name = name_box.get_text()
                     ip = ip_box.get_text()
+
+                    #print("ipdebug on!")
+                    #ip = "216.96.223.159"
 
                     if name != '' and ip != '':
                         print(f'Username -- { name }')

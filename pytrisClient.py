@@ -20,6 +20,7 @@ class Client:
     def receiveData(self):
         #decode json 
         opponentJson = json.loads(self.clientSocket.recv(4096).decode())
+        opponentJson["currentGrid"] = list(opponentJson["currentGrid"])
         return opponentJson
         try:
             opponentUsername = opponentJson["username"]
