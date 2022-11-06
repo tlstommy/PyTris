@@ -3,7 +3,7 @@ import random
 #from pytrisServer import server
 import json
 import copy
-
+from pytrisShapePacks import EVERYTHING_PACK
 from pytrisClient import Client
 
 pygame.font.init()
@@ -36,153 +36,14 @@ top_left_x = 150
 top_left_y = (s_height - play_height) 
 opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X position
 
-
-# SHAPE FORMATS
-
-S = [['.....',
-      '.00..',
-      '00...',
-      '.....',
-      '.....'],
-     ['.....',
-      '.0...',
-      '.00..',
-      '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '.00..',
-      '00...',
-      '.....'],
-     ['.....',
-      '0....',
-      '00...',
-      '.0...',
-      '.....']]
-
-Z = [['.....',
-      '00...',
-      '.00..',
-      '.....',
-      '.....'],
-     ['.....',
-      '..0..',
-      '.00..',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '00...',
-      '.00...',
-      '.....'],
-     ['.....',
-      '.0...',
-      '00...',
-      '0....',
-      '.....']]
-
-I = [['.....',
-      '0000.',
-      '.....',
-      '.....',
-      '.....'],
-     ['..0..',
-      '..0..',
-      '..0..',
-      '..0..',
-      '.....'],
-     ['.....',
-      '.....',
-      '0000.',
-      '.....',
-      '.....'],
-     ['.0...',
-      '.0...',
-      '.0...',
-      '.0...',
-      '.....']]
-
-O = [['.....',
-      '.00..',
-      '.00..',
-      '.....',
-      '.....']]
-
-J = [['.....',
-      '0....',
-      '000..',
-      '.....',
-      '.....'],
-     ['.....',
-      '.00..',
-      '.0...',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
-      '..0..',
-      '.....'],
-     ['.....',
-      '.0...',
-      '.0...',
-      '00...',
-      '.....']]
-
-L = [['.....',
-      '..0..',
-      '000..',
-      '.....',
-      '.....'],
-     ['.....',
-      '.0...',
-      '.0...',
-      '.00..',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
-      '0....',
-      '.....'],
-     ['.....',
-      '00...',
-      '.0...',
-      '.0...',
-      '.....']]
-
-T = [['.....',
-      '.0...',
-      '000..',
-      '.....',
-      '.....'],
-     ['.....',
-      '.0...',
-      '.00..',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.....',
-      '000..',
-      '.0...',
-      '.....'],
-     ['.....',
-      '.0...',
-      '00...',
-      '.0...',
-      '.....']]
-
-shapes = [S, Z, I, O, J, L, T]
-shape_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 255), (255, 255, 0), (0, 0, 255), (255, 165, 0), (128, 0, 128)]
-# index 0 - 6 represent shape
+shape_pack = EVERYTHING_PACK
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
 FONT = pygame.font.Font(None, 48)
 
 
-
 class TextBox:
-
     def __init__(self, x, y, w, h, text=''):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
@@ -228,7 +89,7 @@ class Piece(object):
         self.x = x
         self.y = y
         self.shape = shape
-        self.color = shape_colors[shapes.index(shape)]
+        self.color = shape_pack.shape_colors[shape_pack.shapes.index(shape)]
         self.rotation = 0
 
 # Opponent Class for keeping track of the Opponent's board
@@ -360,7 +221,7 @@ def valid_space(shape, grid):
 def create_queue():
     bag_queue = []
     shape_queue = []
-    shape_queue[:] = shapes[:]
+    shape_queue[:] = shape_pack.shapes[:]
     random.shuffle(shape_queue)
     for shape in shape_queue:
         bag_queue.append(Piece(5, 2, shape))
@@ -662,8 +523,8 @@ def main(win,server_ip,username):
     bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
 
     #server stuff
-    client = Client(server_ip,8888,recvPort=25000)
-    localIP =socket.gethostbyname(socket.gethostname())
+    #client = Client(server_ip,8888,recvPort=25000)
+    #localIP =socket.gethostbyname(socket.gethostname())
 
 
     # Opponent Initialization
@@ -841,13 +702,13 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
-            try:
-                opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+            #try:
+            #    opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
                 
-            except TypeError as e:
-                print("ERROR:",e)
+            #except TypeError as e:
+            #    print("ERROR:",e)
                 
-        opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+        #opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
