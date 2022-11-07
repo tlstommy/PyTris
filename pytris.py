@@ -3,7 +3,7 @@ import random
 #from pytrisServer import server
 import json
 import copy
-from pytrisShapePacks import EVERYTHING_PACK
+from pytrisShapePacks import SRS_PACK
 from pytrisClient import Client
 
 pygame.font.init()
@@ -36,7 +36,7 @@ top_left_x = 150
 top_left_y = (s_height - play_height) 
 opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X position
 
-shape_pack = EVERYTHING_PACK
+shape_pack = SRS_PACK
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
@@ -90,6 +90,7 @@ class Piece(object):
         self.y = y
         self.shape = shape
         self.color = shape_pack.shape_colors[shape_pack.shapes.index(shape)]
+        self.ghost_color = shape_pack.ghost_colors[shape_pack.shapes.index(shape)]
         self.rotation = 0
 
 # Opponent Class for keeping track of the Opponent's board
@@ -198,7 +199,7 @@ def convert_shape_format(shape):
 
 
 def valid_space(shape, grid):
-    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0) or grid[i][j] == (255, 255, 255)] for i in range(20)]
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0) or grid[i][j] in shape_pack.ghost_colors] for i in range(20)]
     accepted_pos = [j for sub in accepted_pos for j in sub]
 
     formatted = convert_shape_format(shape)
@@ -639,8 +640,8 @@ def main(win,server_ip,username):
         # Move it below the current piece because it won't find any valid spaces otherwise
         # Recolor the cell to white
         ghost_shape_copy = copy.deepcopy(current_piece)
-        while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y + 4 < 20:
-            ghost_shape_copy.y += 4
+        while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y < 20:
+            ghost_shape_copy.y += 1
         while valid_space(ghost_shape_copy, grid):
             ghost_shape_copy.y += 1
         ghost_shape_copy.y -= 1
@@ -648,7 +649,7 @@ def main(win,server_ip,username):
         for i in range(len(ghost_pos)):
             x, y = ghost_pos[i]
             if grid[y][x] == (0, 0, 0):
-                grid[y][x] = (255, 255, 255)
+                grid[y][x] = ghost_shape_copy.ghost_color
 
         if change_piece:
             for pos in shape_pos:
