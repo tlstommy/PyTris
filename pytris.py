@@ -421,8 +421,54 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
 def settings_menu(win):
     run = True
 
-    vol_box = TextBox(600, 220, 400, 48)
-    setting_boxes = [vol_box]
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+                if event.key == pygame.K_p:
+                    pack_menu(win)
+                if event.key == pygame.K_s:
+                    sound_menu(win)
+                if event.key == pygame.K_b:
+                    background_menu(win)
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Settings', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        label = FONT.render('Press P for Packs', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 200))
+
+        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 250))
+
+        label = FONT.render('Press B for Backgrounds', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 300))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 400))
+
+        pygame.display.flip()
+
+
+def pack_menu(win):
+    pass
+
+
+def sound_menu(win):
+    pass
+
+
+def background_menu(win):
+    run = True
 
     while run:
         for event in pygame.event.get():
@@ -449,73 +495,57 @@ def settings_menu(win):
                 if event.key == pygame.K_ESCAPE:
                     run = False
 
-            for box in setting_boxes:
-                box.handle(event)
-
-        for box in setting_boxes:
-            box.update()
-
         win.fill((0, 0, 0))
 
         font = pygame.font.Font(None, 110)
-        label = font.render('Settings', True, (255, 255, 255))
+        label = font.render('Backgrounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 25))
 
-        label = FONT.render('Volume: ', True, (255, 255, 255))
-        win.blit(label, (456, 227))
+        default_image_size = (100, 100)
+        default_y_pos = 200
 
         font = pygame.font.Font(None, 28)
-        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 300))
-
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 330))
-
-        label = font.render('Choose a background image', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 360))
-
-        default_image_size = (100,100)
-        default_y_pos = 430
-        
         label = font.render('2', True, (255, 255, 255))
-        win.blit(label,(150,default_y_pos - 30))
-        image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'),default_image_size)
-        win.blit(image2,(100,default_y_pos))
+        win.blit(label, (150, default_y_pos - 30))
+        image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'), default_image_size)
+        win.blit(image2, (100, default_y_pos))
 
         label = font.render('3', True, (255, 255, 255))
-        win.blit(label,(350,default_y_pos - 30))
-        image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'),default_image_size)
-        win.blit(image3,(300,default_y_pos))
+        win.blit(label, (350, default_y_pos - 30))
+        image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'), default_image_size)
+        win.blit(image3, (300, default_y_pos))
 
         label = font.render('4', True, (255, 255, 255))
-        win.blit(label,(550,default_y_pos - 30))
-        image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'),default_image_size)
-        win.blit(image4,(500,default_y_pos))
+        win.blit(label, (550, default_y_pos - 30))
+        image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'), default_image_size)
+        win.blit(image4, (500, default_y_pos))
 
         label = font.render('5', True, (255, 255, 255))
-        win.blit(label,(750,default_y_pos - 30))
-        image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'),default_image_size)
-        win.blit(image5,(700,default_y_pos))
+        win.blit(label, (750, default_y_pos - 30))
+        image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'), default_image_size)
+        win.blit(image5, (700, default_y_pos))
 
         label = font.render('6', True, (255, 255, 255))
-        win.blit(label,(950,default_y_pos - 30))
-        image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'),default_image_size)
-        win.blit(image6,(900,default_y_pos))
+        win.blit(label, (950, default_y_pos - 30))
+        image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'), default_image_size)
+        win.blit(image6, (900, default_y_pos))
 
         label = font.render('7', True, (255, 255, 255))
-        win.blit(label,(1150,default_y_pos - 30))
-        image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'),default_image_size)
-        win.blit(image7,(1100,default_y_pos))
+        win.blit(label, (1150, default_y_pos - 30))
+        image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'), default_image_size)
+        win.blit(image7, (1100, default_y_pos))
 
         label = font.render('1', True, (255, 255, 255))
-        win.blit(label,(1350,default_y_pos - 30))
-        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'),default_image_size)
-        win.blit(image8,(1300,default_y_pos))
+        win.blit(label, (1350, default_y_pos - 30))
+        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'), default_image_size)
+        win.blit(image8, (1300, default_y_pos))
 
-        for box in setting_boxes:
-            box.draw(win)
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750 - (label.get_width() / 2), 400))
 
         pygame.display.flip()
+
 
 def main(win,server_ip,username):
     locked_positions = {}
