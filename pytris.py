@@ -3,16 +3,16 @@ import random
 #from pytrisServer import server
 import json
 import copy
-from pytrisShapePacks import SRS_PACK
+from pytrisShapePacks import *
 from pytrisClient import Client
 
 pygame.font.init()
 
 # Initialize music & sounds
-volume = 0.1
+music_volume = 0.1
 pygame.mixer.init()
 pygame.mixer.music.load('sounds/music.mp3')
-pygame.mixer.music.set_volume(volume/2)
+pygame.mixer.music.set_volume(music_volume)
 
 SERVER_IP = None
 clear = pygame.mixer.Sound('sounds/clear.mp3')
@@ -20,10 +20,11 @@ tetris = pygame.mixer.Sound('sounds/tetris.mp3')
 level_up = pygame.mixer.Sound('sounds/level_up.mp3')
 game_over = pygame.mixer.Sound('sounds/game_over.mp3')
 
-clear.set_volume(volume)
-tetris.set_volume(volume)
-level_up.set_volume(volume)
-game_over.set_volume(volume)
+sfx_volume = 0.1
+clear.set_volume(sfx_volume)
+tetris.set_volume(sfx_volume)
+level_up.set_volume(sfx_volume)
+game_over.set_volume(sfx_volume)
 
 # GLOBALS VARS
 s_width = 1500
@@ -293,6 +294,9 @@ def clear_rows(grid, locked):
                 newkey = (x, y + inc)
                 locked[newkey] = locked.pop(key)
 
+    if inc > 4:
+        inc = 4
+
     return inc
 
 
@@ -459,13 +463,144 @@ def settings_menu(win):
         pygame.display.flip()
 
 
+# Monominos, Dominos, and Triominos do not work
+
 def pack_menu(win):
-    pass
+    run = True
+    global shape_pack
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    shape_pack = SRS_PACK
+                if event.key == pygame.K_2:
+                    shape_pack = MONOMINO_PACK
+                if event.key == pygame.K_3:
+                    shape_pack = DOMINO_PACK
+                if event.key == pygame.K_4:
+                    shape_pack = TRIOMINO_PACK
+                if event.key == pygame.K_5:
+                    shape_pack = EVERYTHING_PACK
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Packs', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render(f'Current Pack: { shape_pack.name }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 150))
+
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750 - (label.get_width() / 2), 525))
+
+        label = FONT.render('SRS -- 1', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 225))
+
+        label = FONT.render('Monominos -- 2', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 275))
+
+        label = FONT.render('Dominos -- 3', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 325))
+
+        label = FONT.render('Triominos -- 4', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 375))
+
+        label = FONT.render('Everything -- 5', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 425))
+
+        pygame.display.flip()
 
 
 def sound_menu(win):
-    pass
+    run = True
+    global music_volume, sfx_volume
 
+    music_box = TextBox(600, 220, 400, 48)
+    sfx_box = TextBox(600, 280, 400, 48)
+    text_boxes = [music_box, sfx_box]
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    music = music_box.get_text()
+                    sfx = sfx_box.get_text()
+
+                    if music != '':
+                        music_volume = float(music)
+
+                        if music_volume < 0:
+                            music_volume = 0
+                        if music_volume > 1:
+                            music_volume = 1
+
+                        pygame.mixer.music.set_volume(music_volume)
+
+                    if sfx != '':
+                        sfx_volume = float(sfx)
+
+                        if sfx_volume < 0:
+                            sfx_volume = 0
+                        if sfx_volume > 1:
+                            sfx_volume = 1
+
+                        clear.set_volume(sfx_volume)
+                        tetris.set_volume(sfx_volume)
+                        level_up.set_volume(sfx_volume)
+                        game_over.set_volume(sfx_volume)
+
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+            for box in text_boxes:
+                box.handle(event)
+
+        for box in text_boxes:
+            box.update()
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Sounds', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render(f'Music Volume: { music_volume }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 150))
+
+        label = font.render(f'SFX Volume: { sfx_volume }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 175))
+
+        label = FONT.render('Music Volume: ', True, (255, 255, 255))
+        win.blit(label, (350, 227))
+
+        label = FONT.render('SFX Volume: ', True, (255, 255, 255))
+        win.blit(label, (380, 287))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 370))
+
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 400))
+
+        for box in text_boxes:
+            box.draw(win)
+
+        pygame.display.flip()
 
 def background_menu(win):
     run = True
@@ -540,9 +675,8 @@ def background_menu(win):
         image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'), default_image_size)
         win.blit(image8, (1300, default_y_pos))
 
-        font = pygame.font.Font(None, 28)
         label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750 - (label.get_width() / 2), 400))
+        win.blit(label, (750-(label.get_width()/2), 400))
 
         pygame.display.flip()
 
