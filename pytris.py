@@ -331,17 +331,26 @@ def draw_queue(queue, surface, hold):
 class background_image:
     def __init__(self,image_num=1):
         self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+        self.num = image_num
     def get_background(self):
         return self._bg
     def set_background(self,image_num):
         self._bg = pygame.image.load("backgrounds/bg"+str(image_num)+".jpg")
+        self.num = image_num
+    def get_number(self):
+        return self.num
+
+
+bg = background_image()
 
 
 def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
+    global bg
+
     surface.fill((0, 0, 0))
 
     #background image - 1500x700 atleast
-    bg = background_image()
+    # bg = background_image()
     surface.blit(bg.get_background(),(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
@@ -604,6 +613,7 @@ def sound_menu(win):
 
 def background_menu(win):
     run = True
+    global bg
 
     while run:
         for event in pygame.event.get():
@@ -612,7 +622,6 @@ def background_menu(win):
                 exit()
 
             if event.type == pygame.KEYDOWN:
-                bg = background_image()
                 if event.key == pygame.K_1:
                     bg.set_background(1)
                 if event.key == pygame.K_2:
@@ -636,8 +645,12 @@ def background_menu(win):
         label = font.render('Backgrounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 25))
 
+        font = pygame.font.Font(None, 28)
+        label = font.render(f'Current Background: { bg.get_number() }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 150))
+
         default_image_size = (100, 100)
-        default_y_pos = 200
+        default_y_pos = 250
 
         font = pygame.font.Font(None, 28)
         label = font.render('2', True, (255, 255, 255))
@@ -676,7 +689,7 @@ def background_menu(win):
         win.blit(image8, (1300, default_y_pos))
 
         label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 400))
+        win.blit(label, (750-(label.get_width()/2), 450))
 
         pygame.display.flip()
 
