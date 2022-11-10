@@ -1,0 +1,1 @@
+git blame pytris.py | findstr "" > output_file.txt
