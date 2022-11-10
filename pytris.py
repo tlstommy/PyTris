@@ -350,7 +350,6 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     surface.fill((0, 0, 0))
 
     #background image - 1500x700 atleast
-    # bg = background_image()
     surface.blit(bg.get_background(),(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
@@ -429,8 +428,6 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
     return list(opponent_grid)
 
 
-# Add more settings in the future and allow for settings to be applied
-
 def settings_menu(win):
     run = True
 
@@ -471,8 +468,6 @@ def settings_menu(win):
 
         pygame.display.flip()
 
-
-# Monominos, Dominos, and Triominos do not work
 
 def pack_menu(win):
     run = True
@@ -690,6 +685,35 @@ def background_menu(win):
 
         label = font.render('Press ESC to Return', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 450))
+
+        pygame.display.flip()
+
+
+def wait_screen(win):
+    run = True
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    run = False
+
+            # if 2 players are connected to server
+                # run = False
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 125)
+        label = font.render('Connecting...', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 350-(label.get_height()/2)))
+
+        font = pygame.font.Font(None, 24)
+        label = font.render('Press ENTER to skip', True, (255, 255, 255))
+        win.blit(label, (10, 10))
 
         pygame.display.flip()
 
@@ -920,6 +944,8 @@ def main_menu(win):
                         print(f'Username -- { name }')
                         print(f'      IP -- { ip }')
                         #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
+
+                        wait_screen(win)
                         main(win, ip, name)
 
                 active = False
