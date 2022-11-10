@@ -1,0 +1,39 @@
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400    1) import pygame,socket,sys,os,time
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400    7) from pytrisClient import Client
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400    8) 
+a4955016 pytris.py            (lulamae12     2022-11-01 11:14:32 -0400  417) def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  418)     #print(grid)
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  419)     jsonData = {
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  420)                 "username":username, 
+a4955016 pytris.py            (lulamae12     2022-11-01 11:14:32 -0400  421)                 "ip":localIP,
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  422)                 "recvPort":25000,
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  423)                 "signalType":"standard",
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  424)                 "currentGrid":grid,           
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  425)                 }
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  426) 
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  427)     client.createClientSocket();client.sendData(jsonData)
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  428)     opponent_grid = client.receiveData()["currentGrid"]
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  429)     
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  430)     print(opponent_grid == grid)
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  431)     print("opp grid type",type(opponent_grid))
+70a4a23c pytris.py            (lulamae12     2022-11-01 18:38:08 -0400  432) 
+70a4a23c pytris.py            (lulamae12     2022-11-01 18:38:08 -0400  433)     
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  434)     return list(opponent_grid)
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  734)     #server stuff
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  737) 
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  738) 
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  765)         #opponent_grid = create_grid(opponent.locked_pos)
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  944)                 
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  947)                 
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  951) 
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  952)       if event.type == pygame.KEYDOWN:
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  974)                     #print("ipdebug on!")
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  975)                     #ip = "216.96.223.159"
+4200bc23 pytris.py            (lulamae12     2022-11-03 11:24:24 -0400  976) 
+cf9d23f4 pytris.py            (lulamae12     2022-11-01 08:50:48 -0400  980)                         #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
+e75d2b89 (lulamae12 2022-11-01 18:21:44 -0400 30)             decodedJson = json.loads(connectedClient.recv(4096).decode())
+cf9d23f4 (lulamae12 2022-11-01 08:50:48 -0400 35) 
+e75d2b89 pytrisClient.py     (lulamae12 2022-11-01 18:21:44 -0400 22)         opponentJson = json.loads(self.clientSocket.recv(4096).decode())
+4200bc23 pytrisClient.py     (lulamae12 2022-11-03 11:24:24 -0400 23)         opponentJson["currentGrid"] = list(opponentJson["currentGrid"])
+cf9d23f4 pytrisClient.py     (lulamae12 2022-11-01 08:50:48 -0400 24)         return opponentJson
+cf9d23f4 pytrisClient.py     (lulamae12 2022-11-01 08:50:48 -0400 42) #serverIP = input("please enter the server IP: ")
