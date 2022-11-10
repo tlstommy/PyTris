@@ -111,6 +111,9 @@ class PlayerInfo(object):
         self.username = name
         self.ip = IP
         self.locked_pos = []
+        self.game_start = False
+        self.game_end = False
+        self.send_garbage = 0
 
         # Formatting dictionary into a 1D array for json enc
         for i in range(len(grid)):
@@ -132,7 +135,6 @@ class PlayerInfo(object):
                 else:
                     self.locked_pos[counter] = (0,0,0)
                 counter += 1
-                
  
     # JSON encoding used to send data to client over socket server
     def json_enc(self):
@@ -147,6 +149,10 @@ class PlayerInfo(object):
                 if (c != (0,0,0)):
                     opponent.locked_pos[(j,i)] = (c)
                 counter += 1
+
+    def send_garbage(self, lines):
+        self.send_garbage = lines
+        return
 
 # create_grid
 #
@@ -869,14 +875,20 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(clear)
             if cleared == 2:
                 score += 100 * (level + 1)
+                # send 1 line
+                # opponent_info.send_garbage(1)
                 if not leveled:
                     pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
+                # send 2 lines
+                # opponent_info.send_garbage(2)
                 if not leveled:
                     pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
+                # send 3 lines
+                # opponent_info.send_garbage(3)
                 if not leveled:
                     pygame.mixer.Sound.play(tetris)
 
