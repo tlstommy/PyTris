@@ -837,7 +837,7 @@ def main(win,server_ip,username):
                 if event.key == pygame.K_5:
                     create_garbage(grid, locked_positions, 5)
                 if event.key == pygame.K_ESCAPE:
-                    pygame.event.post(pygame.quit())
+                    exit()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
