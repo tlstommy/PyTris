@@ -697,8 +697,9 @@ def background_menu(win):
 def main(win,server_ip,username):
     locked_positions = {}
     grid = create_grid(locked_positions)
-    bag_queue = create_queue() #Create a queue of seven pieces
-    bag_queue.extend(create_queue()) #Append another seven pieces, now 14 pieces
+    bag_queue = create_queue()
+    while len(bag_queue) <= 7:
+        bag_queue.extend(create_queue())
 
     #server stuff
     #client = Client(server_ip,8888,recvPort=25000)
@@ -832,7 +833,7 @@ def main(win,server_ip,username):
             for pos in shape_pos:
                 p = (pos[0], pos[1])
                 locked_positions[p] = current_piece.color
-            if len(bag_queue) <= 7:
+            while len(bag_queue) <= 7:
                 bag_queue.extend(create_queue())
             current_piece = bag_queue.pop(0)
             if not valid_space(current_piece, grid):
