@@ -232,7 +232,7 @@ def create_queue():
     shape_queue[:] = shape_pack.shapes[:]
     random.shuffle(shape_queue)
     for shape in shape_queue:
-        bag_queue.append(Piece(5, 2, shape))
+        bag_queue.append(Piece(5, 3, shape))
     return bag_queue
 
 
@@ -732,14 +732,17 @@ def main(win,server_ip,username):
         bag_queue.extend(create_queue())
 
     #server stuff
-    #client = Client(server_ip,8888,recvPort=25000)
-    #localIP =socket.gethostbyname(socket.gethostname())
+    client = Client(server_ip,8888,recvPort=25000)
+    localIP =socket.gethostbyname(socket.gethostname())
 
 
     # Opponent Initialization
     opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
+    DAS = 75
+    total_left_held = 0
+    total_right_held = 0
     change_piece = False
     run = True
     current_piece = bag_queue.pop(0)
@@ -836,6 +839,25 @@ def main(win,server_ip,username):
                 if event.key == pygame.K_ESCAPE:
                     pygame.event.post(pygame.quit())
 
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            total_left_held += clock.get_rawtime()
+            if total_left_held >= DAS:
+                while valid_space(current_piece, grid):
+                    current_piece.x -= 1
+                current_piece.x += 1
+        else:
+            total_left_held = 0
+
+        if keys[pygame.K_RIGHT]:
+            total_right_held += clock.get_rawtime()
+            if total_right_held >= DAS:
+                while valid_space(current_piece, grid):
+                    current_piece.x += 1
+                current_piece.x -= 1
+        else:
+            total_right_held = 0
+
         shape_pos = convert_shape_format(current_piece)
 
         for i in range(len(shape_pos)):
@@ -917,13 +939,13 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
-            #try:
-            #    opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+            try:
+                opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
                 
-            #except TypeError as e:
-            #    print("ERROR:",e)
+            except TypeError as e:
+                print("ERROR:",e)
                 
-        #opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+        opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
