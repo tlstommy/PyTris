@@ -35,12 +35,9 @@ class Server:
 
         print(decodedJson.get("signalType"))
         
-        if(decodedJson.get("signalType") == "gameover-loss"):
-            self.sendData("gameOVER",connectedClient)
-            input("Gameover>>")
-        else:    
+
             #store data for each new player
-            self.storePlayerData(decodedJson,connectedClient)
+        self.storePlayerData(decodedJson,connectedClient)
 
 
     #store player data and return the data for the opponent of the connected client
@@ -71,20 +68,21 @@ class Server:
     #send data back to a client
     def sendData(self, playerJsonData,connectedClient):
         print(playerJsonData)
-        connectedClient.send(json.dumps(playerJsonData).encode())
+        if(playerJsonData.get("signalType") == "gameover-loss"):
+            print("Gameover")
+            self.sendSignal(connectedClient,playerJsonData.get("signalType"),"gameover player")
+        else:    
+            connectedClient.send(json.dumps(playerJsonData).encode())
 
     #send a game related signal that is not a game board such as gameover
     def sendSignal(self,connectedClient,signalType,signalContent):
-        if signalType == "ERROR":
-            print(f"ERROR: {signalContent}")
-            jsonData = {
-                "signalContent":signalContent,
-                "signalType":"ERROR",       
-            }
-            connectedClient.send(json.dumps(jsonData).encode())
-        else:
-            print("unsuporrted error type")
-        return 0
+
+        jsonData = {
+            "signalContent":signalContent,
+            "signalType":signalType,       
+        }
+        connectedClient.send(json.dumps(jsonData).encode())
+        
 
 #create a new Server server on port 8888
 server = Server(8888)

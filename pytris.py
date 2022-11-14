@@ -434,6 +434,7 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalT
     try:
         opponent_grid = client.receiveData()["currentGrid"]
     except:
+        
         opponent_grid = EMPTY_GRID
 
 
@@ -898,6 +899,9 @@ def main(win,server_ip,username):
             if not valid_space(current_piece, grid):
                 draw_text_middle(win, "YOU LOST!", 80, (255, 255, 255))
                 call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"gameover-loss")
+                client.createClientSocket();client.sendData("GAMEOVER")
+                print(client.receiveData())
+                input()
                 pygame.mixer.Sound.play(game_over)
                 pygame.mixer.music.stop()
                 pygame.display.update()
@@ -980,7 +984,7 @@ def main_menu(win):
                     ip = ip_box.get_text()
 
                     #print("ipdebug on!")
-                    #ip = "10.0.0.45"
+                    ip = "10.0.0.45"
 
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
