@@ -419,23 +419,23 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     pygame.draw.rect(surface, (128, 128, 128), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     draw_grid(surface, grid, opponent_grid)
 
-def call_server(server_ip,localIP,username,grid,opponent_grid,win,client):
+def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType):
     #print(grid)
     jsonData = {
                 "username":username, 
                 "ip":localIP,
                 "recvPort":25000,
-                "signalType":"standard",
+                "signalType":signalType,
                 "currentGrid":grid,           
                 }
 
     client.createClientSocket();client.sendData(jsonData)
+    
     try:
         opponent_grid = client.receiveData()["currentGrid"]
     except:
         opponent_grid = EMPTY_GRID
-    print(opponent_grid == grid)
-    print("opp grid type",type(opponent_grid))
+
 
     
     return list(opponent_grid)
@@ -897,6 +897,7 @@ def main(win,server_ip,username):
             current_piece = bag_queue.pop(0)
             if not valid_space(current_piece, grid):
                 draw_text_middle(win, "YOU LOST!", 80, (255, 255, 255))
+                call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"gameover-loss")
                 pygame.mixer.Sound.play(game_over)
                 pygame.mixer.music.stop()
                 pygame.display.update()
@@ -947,12 +948,12 @@ def main(win,server_ip,username):
 
             leveled = False
             try:
-                opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+                opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"standard")
                 
             except TypeError as e:
                 print("ERROR:",e)
                 
-        opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client)
+        opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"standard")
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
@@ -978,8 +979,8 @@ def main_menu(win):
                     name = name_box.get_text()
                     ip = ip_box.get_text()
 
-                    print("ipdebug on!")
-                    ip = "10.0.0.45"
+                    #print("ipdebug on!")
+                    #ip = "10.0.0.45"
 
                     if name != '' and ip != '':
                         print(f'Username -- { name }')

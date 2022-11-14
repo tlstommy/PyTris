@@ -20,25 +20,12 @@ class Client:
     def receiveData(self):
         #decode json 
         opponentJson = json.loads(self.clientSocket.recv(4096).decode())
+        if(opponentJson == "gameOver"):
+            print("Gameover")
+            return -1
         opponentJson["currentGrid"] = list(opponentJson["currentGrid"])
         return opponentJson
-        try:
-            opponentUsername = opponentJson["username"]
-            print(f"\n{opponentUsername}'s Board:\n")
-
-            print(opponentJson["currentGrid"][0])
-            print(opponentJson["currentGrid"][1])
-            print(opponentJson["currentGrid"][2])
-            print(opponentJson["currentGrid"][3])
-            print(opponentJson["currentGrid"][4])
-
-        #its an error message
-        except TypeError as e:
-            print("Type Error")
-            print(opponentJson)
         
-    
-
 #serverIP = input("please enter the server IP: ")
 
 

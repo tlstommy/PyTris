@@ -33,9 +33,14 @@ class Server:
             input("Press any key to quit")
             sys.exit()
 
-
-        #store data for each new player
-        self.storePlayerData(decodedJson,connectedClient)
+        print(decodedJson.get("signalType"))
+        
+        if(decodedJson.get("signalType") == "gameover-loss"):
+            self.sendData("gameOVER",connectedClient)
+            input("Gameover>>")
+        else:    
+            #store data for each new player
+            self.storePlayerData(decodedJson,connectedClient)
 
 
     #store player data and return the data for the opponent of the connected client
