@@ -901,7 +901,6 @@ def main(win,server_ip,username):
                 call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"gameover-loss")
                 client.createClientSocket();client.sendData("GAMEOVER")
                 print(client.receiveData())
-                input()
                 pygame.mixer.Sound.play(game_over)
                 pygame.mixer.music.stop()
                 pygame.display.update()
@@ -984,7 +983,7 @@ def main_menu(win):
                     ip = ip_box.get_text()
 
                     #print("ipdebug on!")
-                    #ip = "10.0.0.45"
+                    #ip = "216.96.223.241"
 
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
