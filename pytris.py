@@ -984,7 +984,7 @@ def main_menu(win):
                     ip = ip_box.get_text()
 
                     #print("ipdebug on!")
-                    ip = "10.0.0.45"
+                    #ip = "10.0.0.45"
 
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
