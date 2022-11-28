@@ -43,6 +43,7 @@ top_left_y = (s_height - play_height)
 opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X position
 
 shape_pack = SRS_PACK
+DAS = 75
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
@@ -458,6 +459,8 @@ def settings_menu(win):
                     pack_menu(win)
                 if event.key == pygame.K_s:
                     sound_menu(win)
+                if event.key == pygame.K_g:
+                    game_menu(win)
                 if event.key == pygame.K_b:
                     background_menu(win)
 
@@ -470,15 +473,18 @@ def settings_menu(win):
         label = FONT.render('Press P for Packs', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 200))
 
-        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
+        label = FONT.render('Press G for Game', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 250))
 
-        label = FONT.render('Press B for Backgrounds', True, (255, 255, 255))
+        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 300))
+
+        label = FONT.render('Press B for Backgrounds', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 350))
 
         font = pygame.font.Font(None, 28)
         label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 400))
+        win.blit(label, (750-(label.get_width()/2), 450))
 
         pygame.display.flip()
 
@@ -534,6 +540,64 @@ def pack_menu(win):
 
         label = FONT.render('Everything -- 5', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 425))
+
+        pygame.display.flip()
+
+
+def game_menu(win):
+    run = True
+    global DAS
+
+    das_box = TextBox(600, 220, 400, 48)
+    text_boxes = [das_box]
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    das = das_box.get_text()
+
+                    if das != '':
+                        DAS = int(das)
+
+                        if DAS < 0:
+                            DAS = 0
+
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+            for box in text_boxes:
+                box.handle(event)
+
+        for box in text_boxes:
+            box.update()
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Game', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render(f'DAS: { DAS }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 150))
+
+        label = FONT.render('DAS: ', True, (255, 255, 255))
+        win.blit(label, (500, 227))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 304))
+
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 334))
+
+        for box in text_boxes:
+            box.draw(win)
 
         pygame.display.flip()
 
@@ -619,6 +683,7 @@ def sound_menu(win):
             box.draw(win)
 
         pygame.display.flip()
+
 
 def background_menu(win):
     run = True
@@ -748,7 +813,6 @@ def main(win,server_ip,username):
     opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
 
-    DAS = 75
     total_left_held = 0
     total_right_held = 0
     change_piece = False
