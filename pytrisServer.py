@@ -69,12 +69,14 @@ class Server:
     def sendData(self, playerJsonData,connectedClient):
         print(playerJsonData)
         if(playerJsonData.get("signalType") == "gameover-loss"):
+
             print("Gameover")
             self.sendSignal(connectedClient,playerJsonData.get("signalType"),"gameover player")
         else:    
             connectedClient.send(json.dumps(playerJsonData).encode())
 
     #send a game related signal that is not a game board such as gameover
+    #replace with sendsignal dans thing
     def sendSignal(self,connectedClient,signalType,signalContent):
 
         jsonData = {

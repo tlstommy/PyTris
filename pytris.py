@@ -3,6 +3,7 @@ import random
 #from pytrisServer import server
 import json
 import copy
+
 from pytrisShapePacks import *
 from pytrisClient import Client
 
