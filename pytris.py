@@ -12,6 +12,7 @@ EMPTY_GRID = [[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0],
 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 
 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]]
 
+online = 1   # 1 for multiplayer; 0 for single-player
 
 # Initialize music & sounds
 music_volume = 0.1
@@ -459,8 +460,10 @@ def settings_menu(win):
                     pack_menu(win)
                 if event.key == pygame.K_s:
                     sound_menu(win)
-                if event.key == pygame.K_g:
-                    game_menu(win)
+                if event.key == pygame.K_c:
+                    control_menu(win)
+                if event.key == pygame.K_n:
+                    network_menu(win)
                 if event.key == pygame.K_b:
                     background_menu(win)
 
@@ -473,18 +476,21 @@ def settings_menu(win):
         label = FONT.render('Press P for Packs', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 200))
 
-        label = FONT.render('Press G for Game', True, (255, 255, 255))
+        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 250))
 
-        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
+        label = FONT.render('Press N for Network', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 300))
 
+        label = FONT.render('Press C for Controls', True, (255, 255, 255))
+        win.blit(label, (750 - (label.get_width() / 2), 350))
+
         label = FONT.render('Press B for Backgrounds', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 350))
+        win.blit(label, (750-(label.get_width()/2), 400))
 
         font = pygame.font.Font(None, 28)
         label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 450))
+        win.blit(label, (750-(label.get_width()/2), 500))
 
         pygame.display.flip()
 
@@ -544,7 +550,7 @@ def pack_menu(win):
         pygame.display.flip()
 
 
-def game_menu(win):
+def control_menu(win):
     run = True
     global DAS
 
@@ -579,7 +585,7 @@ def game_menu(win):
         win.fill((0, 0, 0))
 
         font = pygame.font.Font(None, 110)
-        label = font.render('Game', True, (255, 255, 255))
+        label = font.render('Controls', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 25))
 
         font = pygame.font.Font(None, 28)
@@ -681,6 +687,51 @@ def sound_menu(win):
 
         for box in text_boxes:
             box.draw(win)
+
+        pygame.display.flip()
+
+
+def network_menu(win):
+    run = True
+    global online
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    online = 1
+                if event.key == pygame.K_2:
+                    online = 0
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Network', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        font = pygame.font.Font(None, 28)
+
+        if online:
+            label = font.render('Mode: Multiplayer', True, (255, 255, 255))
+        else:
+            label = font.render('Mode: Singleplayer', True, (255, 255, 255))
+
+        win.blit(label, (750-(label.get_width()/2), 150))
+
+        label = font.render('Press ESC to Return', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 350))
+
+        label = FONT.render('Multiplayer -- 1', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 225))
+
+        label = FONT.render('Singleplayer -- 2', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 275))
 
         pygame.display.flip()
 
