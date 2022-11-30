@@ -6,6 +6,8 @@ import copy
 
 from pytrisShapePacks import *
 from pytrisClient import Client
+from pytrisClient import PlayerInfo
+from pytrisClient import Opponent
 
 pygame.font.init()
 
@@ -101,14 +103,6 @@ class Piece(object):
         self.color = shape_pack.shape_colors[shape_pack.shapes.index(shape)]
         self.ghost_color = shape_pack.ghost_colors[shape_pack.shapes.index(shape)]
         self.rotation = 0
-
-# Opponent Class for keeping track of the Opponent's board
-# Currently a placeholder for later socket integration
-
-class Opponent(object):
-    def __init__(self, name, locked_pos={}):
-        self.name = name
-        self.locked_pos = locked_pos
 
 # create_grid
 #

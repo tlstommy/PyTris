@@ -28,6 +28,14 @@ class Client:
         
 #serverIP = input("please enter the server IP: ")
 
+# Opponent Class for keeping track of the Opponent's board
+# Currently a placeholder for later socket integration
+
+
+class Opponent(object):
+    def __init__(self, name, locked_pos={}):
+        self.name = name
+        self.locked_pos = locked_pos
 
 #create a new client for the server at serverIP:8888, and open on port 25000 for reciveing
     
