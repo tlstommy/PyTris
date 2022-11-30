@@ -986,6 +986,7 @@ def main(win,server_ip,username):
     score = 0
     level = 0
     line = 0
+    cleared = 0
     game_end = False
 
     opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
