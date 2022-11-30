@@ -303,7 +303,7 @@ class background_image:
 bg = background_image()
 
 
-def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level):
+def draw_window(surface, grid, opponent_grid, username, opponent_name, score, line, level):
     global bg
 
     surface.fill((0, 0, 0))
@@ -312,7 +312,7 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     surface.blit(bg.get_background(),(0,0))
 
     font = pygame.font.SysFont('bauhaus93', 60)
-    label = font.render('Player 1', 1, (255, 255, 255))
+    label = font.render(username, 1, (255, 255, 255))
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # Opponent Name
@@ -1192,7 +1192,7 @@ def main(win,server_ip,username):
 
         opponent_grid = opponent_info["currentGrid"]
         garbage_queue += opponent_info["send_garbage"]
-        draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
+        draw_window(win, grid, opponent_grid, username, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
 
