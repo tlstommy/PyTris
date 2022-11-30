@@ -1185,7 +1185,7 @@ def main(win,server_ip,username):
         except TypeError as e:
             print("ERROR:", e)
 
-        opponent_grid = opponent_info["CurrentGrid"]
+        opponent_grid = opponent_info["currentGrid"]
         garbage_queue += opponent_info["send_garbage"]
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
