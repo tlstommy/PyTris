@@ -1,0 +1,370 @@
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500   18) online = 1   # 1 for multiplayer; 0 for single-player
+4dbc9633 pytris.py            (eli-kell          2022-11-30 13:38:34 -0500  233) def clear_lines(grid, locked):
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  234)     lines = 0
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  236)     for i in range(len(grid)):
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  238)         count = 0
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  239)         for j in row:
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  240)             if j in all_colors:
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  241)                 count += 1
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  242) 
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  243)         if count == 10:
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  245)             lines += 1
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  252)     if lines:
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  256)                 newkey = (x, y + lines)
+15d5747d pytris.py            (eli-kell          2022-11-30 13:37:01 -0500  259)     return lines
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  396)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  397)     packs = pygame.Rect(625, 190, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  398)     sounds = pygame.Rect(625, 240, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  399)     network = pygame.Rect(625, 290, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  400)     controls = pygame.Rect(625, 340, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  401)     backgrounds = pygame.Rect(625, 390, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  402) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  409)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  410)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  411)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  412)                 if packs.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  413)                     pack_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  414)                 if sounds.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  415)                     sound_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  416)                 if network.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  417)                     network_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  418)                 if controls.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  419)                     control_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  420)                 if backgrounds.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  421)                     background_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  422) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  430)                 if event.key == pygame.K_n:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  431)                     network_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  432)                 if event.key == pygame.K_c:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  433)                     control_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  443)         label = FONT.render('Packs', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  446)         label = FONT.render('Sounds', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  449)         label = FONT.render('Network', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  452)         label = FONT.render('Controls', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  453)         win.blit(label, (750 - (label.get_width() / 2), 350))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  454) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  455)         label = FONT.render('Backgrounds', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  456)         win.blit(label, (750-(label.get_width()/2), 400))
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  457) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  458)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  459)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  460) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  461)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  462)         pygame.draw.rect(win, (50, 50, 50), packs, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  463)         pygame.draw.rect(win, (50, 50, 50), sounds, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  464)         pygame.draw.rect(win, (50, 50, 50), network, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  465)         pygame.draw.rect(win, (50, 50, 50), controls, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  466)         pygame.draw.rect(win, (50, 50, 50), backgrounds, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  475)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  476)     srs = pygame.Rect(625, 215, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  477)     mono = pygame.Rect(625, 265, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  478)     domino = pygame.Rect(625, 315, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  479)     triomino = pygame.Rect(625, 365, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  480)     everything = pygame.Rect(625, 415, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  481) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  488)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  489)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  490)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  491)                 if srs.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  492)                     shape_pack = SRS_PACK
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  493)                 if mono.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  494)                     shape_pack = MONOMINO_PACK
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  495)                 if domino.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  496)                     shape_pack = DOMINO_PACK
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  497)                 if triomino.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  498)                     shape_pack = TRIOMINO_PACK
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  499)                 if everything.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  500)                     shape_pack = EVERYTHING_PACK
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  501) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  526)         label = FONT.render('SRS', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  529)         label = FONT.render('Monominos', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  532)         label = FONT.render('Dominos', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  535)         label = FONT.render('Triominos', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  538)         label = FONT.render('Everything', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  541)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  542)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  543) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  544)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  545)         pygame.draw.rect(win, (50, 50, 50), srs, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  546)         pygame.draw.rect(win, (50, 50, 50), mono, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  547)         pygame.draw.rect(win, (50, 50, 50), domino, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  548)         pygame.draw.rect(win, (50, 50, 50), triomino, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  549)         pygame.draw.rect(win, (50, 50, 50), everything, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  550) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  554) def sound_menu(win):
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  555)     run = True
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  556)     global music_volume, sfx_volume
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  557) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  558)     music_box = TextBox(600, 220, 400, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  559)     sfx_box = TextBox(600, 280, 400, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  560)     text_boxes = [music_box, sfx_box]
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  561) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  562)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  563)     apply = pygame.Rect(650, 363, 200, 48)
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  564) 
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  565)     while run:
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  566)         for event in pygame.event.get():
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  567)             if event.type == pygame.QUIT:
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  568)                 run = False
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  569)                 exit()
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  570) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  571)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  572)                 if esc.collidepoint(event.pos):
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  573)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  574)                 if apply.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  575)                     music = music_box.get_text()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  576)                     sfx = sfx_box.get_text()
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  577) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  578)                     if music != '':
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  579)                         music_volume = float(music)
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  580) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  581)                         if music_volume < 0:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  582)                             music_volume = 0
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  583)                         if music_volume > 1:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  584)                             music_volume = 1
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  585) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  586)                         pygame.mixer.music.set_volume(music_volume)
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  587) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  588)                     if sfx != '':
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  589)                         sfx_volume = float(sfx)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  591)                         if sfx_volume < 0:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  592)                             sfx_volume = 0
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  593)                         if sfx_volume > 1:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  594)                             sfx_volume = 1
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  596)                         clear.set_volume(sfx_volume)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  597)                         tetris.set_volume(sfx_volume)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  598)                         level_up.set_volume(sfx_volume)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  599)                         game_over.set_volume(sfx_volume)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  657)         label = FONT.render('Apply', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  660)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  661)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  662) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  663)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  664)         pygame.draw.rect(win, (50, 50, 50), apply, 2)
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500  671) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  672) def network_menu(win):
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  673)     run = True
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  674)     global online
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  675) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  676)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  677)     multi = pygame.Rect(625, 218, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  678)     single = pygame.Rect(625, 268, 250, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  679) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  680)     while run:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  681)         for event in pygame.event.get():
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  682)             if event.type == pygame.QUIT:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  683)                 run = False
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  684)                 exit()
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  685) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  686)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  687)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  688)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  689)                 if multi.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  690)                     online = 1
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  691)                 if single.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  692)                     online = 0
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  693) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  694)             if event.type == pygame.KEYDOWN:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  695)                 if event.key == pygame.K_1:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  696)                     online = 1
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  697)                 if event.key == pygame.K_2:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  698)                     online = 0
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  699)                 if event.key == pygame.K_ESCAPE:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  700)                     run = False
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  701) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  702)         win.fill((0, 0, 0))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  703) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  704)         font = pygame.font.Font(None, 110)
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  705)         label = font.render('Network', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  706)         win.blit(label, (750-(label.get_width()/2), 25))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  707) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  708)         font = pygame.font.Font(None, 28)
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  709) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  710)         if online:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  711)             label = font.render('Mode: Multiplayer', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  712)         else:
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  713)             label = font.render('Mode: Singleplayer', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  714) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  715)         win.blit(label, (750-(label.get_width()/2), 150))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  716) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  717)         label = FONT.render('Multiplayer', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  718)         win.blit(label, (750-(label.get_width()/2), 225))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  719) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  720)         label = FONT.render('Singleplayer', True, (255, 255, 255))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  721)         win.blit(label, (750-(label.get_width()/2), 275))
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  722) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  723)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  724)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  725) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  726)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  727)         pygame.draw.rect(win, (50, 50, 50), multi, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  728)         pygame.draw.rect(win, (50, 50, 50), single, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  729) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  730)         pygame.display.flip()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  731) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  732) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  733) def control_menu(win):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  734)     run = True
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  735)     global DAS
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  736) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  737)     das_box = TextBox(600, 220, 400, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  738)     text_boxes = [das_box]
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  739) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  740)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  741)     apply = pygame.Rect(650, 297, 200, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  742) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  743)     while run:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  744)         for event in pygame.event.get():
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  745)             if event.type == pygame.QUIT:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  746)                 run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  747)                 exit()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  748) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  749)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  750)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  751)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  752)                 if apply.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  753)                     das = das_box.get_text()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  754) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  755)                     if das != '':
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  756)                         DAS = int(das)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  757) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  758)                         if DAS < 0:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  759)                             DAS = 0
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  760) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  761)             if event.type == pygame.KEYDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  762)                 if event.key == pygame.K_RETURN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  763)                     das = das_box.get_text()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  764) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  765)                     if das != '':
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  766)                         DAS = int(das)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  767) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  768)                         if DAS < 0:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  769)                             DAS = 0
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  770) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  771)                 if event.key == pygame.K_ESCAPE:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  772)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  773) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  774)             for box in text_boxes:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  775)                 box.handle(event)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  776) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  777)         for box in text_boxes:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  778)             box.update()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  779) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  780)         win.fill((0, 0, 0))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  781) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  782)         font = pygame.font.Font(None, 110)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  783)         label = font.render('Controls', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  784)         win.blit(label, (750-(label.get_width()/2), 25))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  785) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  786)         font = pygame.font.Font(None, 28)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  787)         label = font.render(f'DAS: { DAS }', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  788)         win.blit(label, (750-(label.get_width()/2), 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  789) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  790)         label = FONT.render('DAS: ', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  791)         win.blit(label, (500, 227))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  792) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  793)         label = FONT.render('Apply', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  794)         win.blit(label, (750-(label.get_width()/2), 304))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  795) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  796)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  797)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  798) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  799)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  800)         pygame.draw.rect(win, (50, 50, 50), apply, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  801) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  802)         for box in text_boxes:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  803)             box.draw(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  804) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  805)         pygame.display.flip()
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  806) 
+eec79537 pytris.py            (eli-kell          2022-11-29 15:15:26 -0500  807) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  812)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  813)     bg_1 = pygame.Rect(75, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  814)     bg_2 = pygame.Rect(275, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  815)     bg_3 = pygame.Rect(475, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  816)     bg_4 = pygame.Rect(675, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  817)     bg_5 = pygame.Rect(875, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  818)     bg_6 = pygame.Rect(1075, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  819)     bg_7 = pygame.Rect(1275, 225, 150, 150)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  820) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  821) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  828)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  829)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  830)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  831)                 if bg_1.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  832)                     bg.set_background(1)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  833)                 if bg_2.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  834)                     bg.set_background(2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  835)                 if bg_3.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  836)                     bg.set_background(3)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  837)                 if bg_4.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  838)                     bg.set_background(4)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  839)                 if bg_5.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  840)                     bg.set_background(5)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  841)                 if bg_6.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  842)                     bg.set_background(6)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  843)                 if bg_7.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  844)                     bg.set_background(7)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  845) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  877)         label = font.render('1', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  878)         win.blit(label, (150, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  879)         image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'), default_image_size)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  880)         win.blit(image8, (100, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  881) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  884)         win.blit(label, (350, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  886)         win.blit(image2, (300, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  889)         win.blit(label, (550, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  891)         win.blit(image3, (500, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  894)         win.blit(label, (750, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  896)         win.blit(image4, (700, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  899)         win.blit(label, (950, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  901)         win.blit(image5, (900, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  904)         win.blit(label, (1150, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  906)         win.blit(image6, (1100, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  909)         win.blit(label, (1350, default_y_pos + 150))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  911)         win.blit(image7, (1300, default_y_pos))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  913)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  914)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  916)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  917)         pygame.draw.rect(win, (50, 50, 50), bg_1, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  918)         pygame.draw.rect(win, (50, 50, 50), bg_2, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  919)         pygame.draw.rect(win, (50, 50, 50), bg_3, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  920)         pygame.draw.rect(win, (50, 50, 50), bg_4, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  921)         pygame.draw.rect(win, (50, 50, 50), bg_5, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  922)         pygame.draw.rect(win, (50, 50, 50), bg_6, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500  923)         pygame.draw.rect(win, (50, 50, 50), bg_7, 2)
+4dbc9633 pytris.py            (eli-kell          2022-11-30 13:38:34 -0500 1146)             cleared = clear_lines(grid, locked_positions)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1211)     esc = pygame.Rect(5, 5, 40, 40)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1212)     play = pygame.Rect(675, 368, 150, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1213)     settings = pygame.Rect(650, 593, 200, 48)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1214) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1220)             if event.type == pygame.MOUSEBUTTONDOWN:
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1221)                 if esc.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1222)                     run = False
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1223) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1224)                 if play.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1225)                     name = name_box.get_text()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1226)                     ip = ip_box.get_text()
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1227) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1228)                     if name != '' and ip != '':
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1229)                         print(f'Username -- { name }')
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1230)                         print(f'      IP -- { ip }')
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1231) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1232)                         wait_screen(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1233)                         main(win, ip, name)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1234) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1235)                 if settings.collidepoint(event.pos):
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1236)                     settings_menu(win)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1237) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1281)         label = FONT.render('X', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1282)         win.blit(label, (14, 10))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1284)         label = FONT.render('Play', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1285)         win.blit(label, (750-(label.get_width()/2), 375))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1286) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1287)         label = FONT.render('Settings', True, (255, 255, 255))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1288)         win.blit(label, (750-(label.get_width()/2), 600))
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1289) 
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1290)         pygame.draw.rect(win, (50, 50, 50), esc, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1291)         pygame.draw.rect(win, (50, 50, 50), play, 2)
+120b195d pytris.py            (eli-kell          2022-11-29 20:14:44 -0500 1292)         pygame.draw.rect(win, (50, 50, 50), settings, 2)
+42a1e361 pytris.py            (eli-kell          2022-11-27 20:20:20 -0500 1304) main_menu(win)
