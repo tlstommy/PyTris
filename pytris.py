@@ -367,7 +367,7 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     pygame.draw.rect(surface, (128, 128, 128), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     draw_grid(surface, grid, opponent_grid)
 
-def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType, game_start, game_end, send_garbage):
+def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType, game_end, send_garbage):
     #print(grid)
     jsonData = {
                 "username":username, 
