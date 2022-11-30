@@ -1,0 +1,52 @@
+24d6524e pytris.py            (lulamae12     2022-11-29 09:39:35 -0500    6)
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500   14) EMPTY_GRID = [[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0,
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500   15) 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], 
+[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0,
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500   16) 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], 
+[0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], 
+[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], 
+[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 
+0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 
+0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]]
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500   17)
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500   19)
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500  370) def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType):
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500  376)                 "signalType":signalType,
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500  381)
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500  382)     try:
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500  383)         opponent_grid = client.receiveData()["currentGrid"]
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500  384)     except:
+ea294391 pytris.py            (lulamae12     2022-11-14 16:23:47 -0500  385)
+8e968dd5 pytris.py            (lulamae12     2022-11-13 21:59:33 -0500  386)         opponent_grid = EMPTY_GRID
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500  387)
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500 1134)                 call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"gameover-loss")
+ea294391 pytris.py            (lulamae12     2022-11-14 16:23:47 -0500 1135)                 client.createClientSocket();client.sendData("GAMEOVER")
+ea294391 pytris.py            (lulamae12     2022-11-14 16:23:47 -0500 1136)                 print(client.receiveData())
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500 1189)                 opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"standard")
+           if event.type == pygame.KEYDOWN:
+77c32174 pytris.py            (lulamae12     2022-11-13 22:29:05 -0500 1244)                     #print("ipdebug on!")
+cc38d736 pytris.py            (lulamae12     2022-11-15 12:16:37 -0500 1245)                     #ip = "216.96.223.241"
+98acca07 pytris.py            (lulamae12     2022-11-16 11:35:00 -0500 1246)
+77c32174 (lulamae12 2022-11-13 22:29:05 -0500 36)         print(decodedJson.get("signalType"))
+77c32174 (lulamae12 2022-11-13 22:29:05 -0500 37)
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 38)
+77c32174 (lulamae12 2022-11-13 22:29:05 -0500 39)             #store data for each new player
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 40)         self.storePlayerData(decodedJson,connectedClient)
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 71)         if(playerJsonData.get("signalType") == "gameover-loss"):
+24d6524e (lulamae12 2022-11-29 09:39:35 -0500 72)
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 73)             print("Gameover")
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 74)             self.sendSignal(connectedClient,playerJsonData.get("signalType"),"gameover player")
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 75)         else:
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 76)             connectedClient.send(json.dumps(playerJsonData).encode())
+24d6524e (lulamae12 2022-11-29 09:39:35 -0500 79)     #replace with sendsignal dans thing
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 81)
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 82)         jsonData = {
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 83)             "signalContent":signalContent,
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 84)             "signalType":signalType,
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 85)         }
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 86)         connectedClient.send(json.dumps(jsonData).encode())
+ea294391 (lulamae12 2022-11-14 16:23:47 -0500 87)
+77c32174 pytrisClient.py     (lulamae12    2022-11-13 22:29:05 -0500 23)         if(opponentJson == "gameOver"):
+77c32174 pytrisClient.py     (lulamae12    2022-11-13 22:29:05 -0500 24)             print("Gameover")
+77c32174 pytrisClient.py     (lulamae12    2022-11-13 22:29:05 -0500 25)             return -1
+4200bc23 pytrisClient.py     (lulamae12    2022-11-13 11:24:24 -0400 26)         opponentJson["currentGrid"] = list(opponentJson["currentGrid"])
