@@ -1,20 +1,46 @@
 # Product Requirements Document
-Name: your name here
+Name: Thomas Smith
 
-Product Name:
+Product Name: VoiceCards
 
 ## Background
-Explain the user need or market opportunity
+The problem with most study apps are that there is not a safe, legal way to use them while stuck in traffic or on the drive to class, which are both great places to study as there is nothing else going on. This use of voice recognition is a perfect solution to this problem for peaople such as students.
 
 ## Project Overview
-Describe the proposed project. You can use the same description that your group uses in the final project README.md. The rest should be your own work,
-but the project overview can be the same for everyone in the group.
+My project idea would be an app or website called VoiceCards. VoiceCards would be a learning app, like quizlet, that uses flash cards as study sets. The primary diffrence between my project VoiceCards and something like quizlet is something that I belive quizlet is missing, voice recoginition. VoiceCard would be able to read aloud flash cards and be able to hear and understand what the user says in response and determine if they have the right answer to the question.
+users would be able to: 
+- make custom flashcard sets
+- read out flashcards and listen for correct responses
+- normal flashcard mode
+- use the app for free but have it funded by ads
+- create groups of sets (sort of like a classroom)
+
+overall if this project were to me made i think that now would be a perfect time for it as quizlet has just started to monitize and restrict the service.
 
 ## Features
-Give at least 8 user stories to describe required features. These can come from the issues assigned to you during the 4 sprints, or you 
-can create new items. Give a title or feature name for each story. Example: 
-1. **Account holder withdraws cash.** As a customer,	I want to withdraw cash from an ATM,	so that I don’t have to wait in line at the bank.
-2. **Create Account.** As a new user, I want to register by creating a username and password so that the system can remember me and my data
+1.  [Feature: Hands-free Voice recoginition] As a student, I want to be able to study flashcards in my car so that I can capitalize on the time while im waiting.
+2.  [Feature: Hands-free Voice recoginition] As a college student, I want study on my drive home from break so that i can safely prepare for my exam my professor scheduled on the day back.
+3.  [Feature: Voice recoginition] As a audiotory learner, I want speak to someone so that i can learn better.
+4.  [Feature: Custom flashcard sets] As a upper level science major, I want create specific flashcards so that i can practice my exam.
+5.  [Feature: Custom flashcard sets] As a Destiny 2 player, I want make a custom flashcard set so that i can memorize the names of the Vow of the Disciple Raid Glyphs.
+6.  [Feature: normal flashcard mode] As a former quizlet user, I want be able to make my own flashcards and not risk missing a rent payment due to outrageouse subscription prices.
+7.  [Feature: free app with ad funding] As a student, I want to study for my test with a simple online free service.
+8.  [Feature: create groups of sets] As a teacher, I want create a study set so that i can prepare my class.
+9.  [Feature: create groups of sets] As a student, I want to create a study set so that my group can study together.
+10. [Feature: read out flashcards and listen for correct responses] As a visually imparied person, I want be able to talk to a device so that i can study.
 
 ## Technologies to be used
-Describe any tools and technologies to be used in the project. Include the languages, third-party libraries, and tools that will be used.
+as a webserver:
+python
+html/js/css
+possibly flask
+
+as an app:
+swift/c++
+javascript
+xcode
+
+
+both:
+git
+
