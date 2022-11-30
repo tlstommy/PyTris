@@ -76,8 +76,11 @@ class PlayerInfo(object):
     def json_enc(self):
         return json.dumps(self, indent = 4, default = lambda o: o.__dict__)
 
+    def json_dec(self, json_string):
+        self = json.loads(json_string)
+
     # JSON decoding used to recieve opponent data and decode into grid
-    def json_dec(self, grid, opponent):
+    def grid_dec(self, grid, opponent):
         counter = 0
         for i in range(len(grid)):
             for j in range(len(grid[i])):
