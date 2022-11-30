@@ -994,6 +994,7 @@ def main(win,server_ip,username):
         opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
 
     pygame.mixer.music.play(-1)
+    opponent.name = opponent_info["username"]
 
     while run:
         grid = create_grid(locked_positions)
