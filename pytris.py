@@ -1016,17 +1016,19 @@ def main(win,server_ip,username):
                 change_piece = True
 
         for event in pygame.event.get():
-            # if receiver.game_end == True:
-            #    draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
-            #    pygame.mixer.Sound.play(game_over)
-            #    pygame.mixer.music.stop()
-            #    pygame.display.update()
-            #    pygame.time.delay(1500)
-            #    run = False
-            #    exit()
+            if opponent_info["game_end"] == True:
+               draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
+               pygame.mixer.Sound.play(game_over)
+               pygame.mixer.music.stop()
+               pygame.display.update()
+               pygame.time.delay(1500)
+               run = False
+               exit()
 
             if event.type == pygame.QUIT:
                 run = False
+                game_end = True
+                opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
                 exit()
 
             if event.type == pygame.KEYDOWN:
@@ -1073,6 +1075,8 @@ def main(win,server_ip,username):
                     change_piece = 1
                 if event.key == pygame.K_ESCAPE:
                     # send info over server
+                    game_end = True
+                    opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
                     exit()
 
         keys = pygame.key.get_pressed()
@@ -1126,6 +1130,7 @@ def main(win,server_ip,username):
             current_piece = bag_queue.pop(0)
             if not valid_space(current_piece, grid):
                 draw_text_middle(win, "YOU LOST!", 80, (255, 255, 255))
+                game_end = True
                 pygame.mixer.Sound.play(game_over)
                 pygame.mixer.music.stop()
                 pygame.display.update()
