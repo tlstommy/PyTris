@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="09963b4a-ca98-4f33-95f3-4be53b00c675" name="Changes" comment="180 rotations (a key)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytrisClient2.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytrisClient2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytrisServer2.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytrisServer2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
