@@ -1023,7 +1023,6 @@ def main(win,server_ip,username):
                pygame.display.update()
                pygame.time.delay(1500)
                run = False
-               exit()
 
             if event.type == pygame.QUIT:
                 run = False
