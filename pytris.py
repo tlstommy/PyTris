@@ -1052,16 +1052,6 @@ def main(win,server_ip,username):
                         current_piece.y += 1
                     current_piece.y -= 1
                     change_piece = 1
-                if event.key == pygame.K_1:
-                    create_garbage(grid, locked_positions, 1)
-                if event.key == pygame.K_2:
-                    create_garbage(grid, locked_positions, 2)
-                if event.key == pygame.K_3:
-                    create_garbage(grid, locked_positions, 3)
-                if event.key == pygame.K_4:
-                    create_garbage(grid, locked_positions, 4)
-                if event.key == pygame.K_5:
-                    create_garbage(grid, locked_positions, 5)
                 if event.key == pygame.K_ESCAPE:
                     exit()
 
