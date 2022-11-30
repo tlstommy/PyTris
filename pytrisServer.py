@@ -52,6 +52,9 @@ class Server:
             self.player1ID = currentPlayerID
             try:
                 self.sendData(self.player2,connectedClient)
+                if self.player2 != None:
+                    if self.player2["send_garbage"] > 0:
+                        self.player2["send_garbage"] = 0
             except AttributeError as e:
                 pass
         elif self.player2 == None or self.player2ID == currentPlayerID:
@@ -59,6 +62,9 @@ class Server:
             self.player2ID = currentPlayerID
             try:
                 self.sendData(self.player1,connectedClient)
+                if self.player1 != None:
+                    if self.player1["send_garbage"] > 0:
+                        self.player1["send_garbage"] = 0
             except AttributeError as e:
                 pass
         else:

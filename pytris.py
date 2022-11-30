@@ -986,7 +986,6 @@ def main(win,server_ip,username):
     score = 0
     level = 0
     line = 0
-    cleared = 0
     garbage_queue = 0
     game_end = False
 
@@ -1001,6 +1000,7 @@ def main(win,server_ip,username):
         #opponent_grid = create_grid(opponent.locked_pos)
         fall_time += clock.get_rawtime()
         level_time += clock.get_rawtime()
+        cleared = 0
         clock.tick()
 
         if level_time/1000 > 5:
