@@ -448,11 +448,32 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalT
 def settings_menu(win):
     run = True
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    packs = pygame.Rect(625, 190, 250, 48)
+    sounds = pygame.Rect(625, 240, 250, 48)
+    network = pygame.Rect(625, 290, 250, 48)
+    controls = pygame.Rect(625, 340, 250, 48)
+    backgrounds = pygame.Rect(625, 390, 250, 48)
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if packs.collidepoint(event.pos):
+                    pack_menu(win)
+                if sounds.collidepoint(event.pos):
+                    sound_menu(win)
+                if network.collidepoint(event.pos):
+                    network_menu(win)
+                if controls.collidepoint(event.pos):
+                    control_menu(win)
+                if backgrounds.collidepoint(event.pos):
+                    background_menu(win)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -461,10 +482,10 @@ def settings_menu(win):
                     pack_menu(win)
                 if event.key == pygame.K_s:
                     sound_menu(win)
-                if event.key == pygame.K_c:
-                    control_menu(win)
                 if event.key == pygame.K_n:
                     network_menu(win)
+                if event.key == pygame.K_c:
+                    control_menu(win)
                 if event.key == pygame.K_b:
                     background_menu(win)
 
@@ -474,24 +495,30 @@ def settings_menu(win):
         label = font.render('Settings', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 25))
 
-        label = FONT.render('Press P for Packs', True, (255, 255, 255))
+        label = FONT.render('Packs', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 200))
 
-        label = FONT.render('Press S for Sounds', True, (255, 255, 255))
+        label = FONT.render('Sounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 250))
 
-        label = FONT.render('Press N for Network', True, (255, 255, 255))
+        label = FONT.render('Network', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 300))
 
-        label = FONT.render('Press C for Controls', True, (255, 255, 255))
+        label = FONT.render('Controls', True, (255, 255, 255))
         win.blit(label, (750 - (label.get_width() / 2), 350))
 
-        label = FONT.render('Press B for Backgrounds', True, (255, 255, 255))
+        label = FONT.render('Backgrounds', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 400))
 
-        font = pygame.font.Font(None, 28)
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 500))
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
+
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), packs, 2)
+        pygame.draw.rect(win, (50, 50, 50), sounds, 2)
+        pygame.draw.rect(win, (50, 50, 50), network, 2)
+        pygame.draw.rect(win, (50, 50, 50), controls, 2)
+        pygame.draw.rect(win, (50, 50, 50), backgrounds, 2)
 
         pygame.display.flip()
 
@@ -500,11 +527,32 @@ def pack_menu(win):
     run = True
     global shape_pack
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    srs = pygame.Rect(625, 215, 250, 48)
+    mono = pygame.Rect(625, 265, 250, 48)
+    domino = pygame.Rect(625, 315, 250, 48)
+    triomino = pygame.Rect(625, 365, 250, 48)
+    everything = pygame.Rect(625, 415, 250, 48)
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if srs.collidepoint(event.pos):
+                    shape_pack = SRS_PACK
+                if mono.collidepoint(event.pos):
+                    shape_pack = MONOMINO_PACK
+                if domino.collidepoint(event.pos):
+                    shape_pack = DOMINO_PACK
+                if triomino.collidepoint(event.pos):
+                    shape_pack = TRIOMINO_PACK
+                if everything.collidepoint(event.pos):
+                    shape_pack = EVERYTHING_PACK
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
@@ -530,81 +578,30 @@ def pack_menu(win):
         label = font.render(f'Current Pack: { shape_pack.name }', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 150))
 
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750 - (label.get_width() / 2), 525))
-
-        label = FONT.render('SRS -- 1', True, (255, 255, 255))
+        label = FONT.render('SRS', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 225))
 
-        label = FONT.render('Monominos -- 2', True, (255, 255, 255))
+        label = FONT.render('Monominos', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 275))
 
-        label = FONT.render('Dominos -- 3', True, (255, 255, 255))
+        label = FONT.render('Dominos', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 325))
 
-        label = FONT.render('Triominos -- 4', True, (255, 255, 255))
+        label = FONT.render('Triominos', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 375))
 
-        label = FONT.render('Everything -- 5', True, (255, 255, 255))
+        label = FONT.render('Everything', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 425))
 
-        pygame.display.flip()
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
 
-
-def control_menu(win):
-    run = True
-    global DAS
-
-    das_box = TextBox(600, 220, 400, 48)
-    text_boxes = [das_box]
-
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                exit()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    das = das_box.get_text()
-
-                    if das != '':
-                        DAS = int(das)
-
-                        if DAS < 0:
-                            DAS = 0
-
-                if event.key == pygame.K_ESCAPE:
-                    run = False
-
-            for box in text_boxes:
-                box.handle(event)
-
-        for box in text_boxes:
-            box.update()
-
-        win.fill((0, 0, 0))
-
-        font = pygame.font.Font(None, 110)
-        label = font.render('Controls', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 25))
-
-        font = pygame.font.Font(None, 28)
-        label = font.render(f'DAS: { DAS }', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 150))
-
-        label = FONT.render('DAS: ', True, (255, 255, 255))
-        win.blit(label, (500, 227))
-
-        font = pygame.font.Font(None, 28)
-        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 304))
-
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 334))
-
-        for box in text_boxes:
-            box.draw(win)
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), srs, 2)
+        pygame.draw.rect(win, (50, 50, 50), mono, 2)
+        pygame.draw.rect(win, (50, 50, 50), domino, 2)
+        pygame.draw.rect(win, (50, 50, 50), triomino, 2)
+        pygame.draw.rect(win, (50, 50, 50), everything, 2)
 
         pygame.display.flip()
 
@@ -617,11 +614,44 @@ def sound_menu(win):
     sfx_box = TextBox(600, 280, 400, 48)
     text_boxes = [music_box, sfx_box]
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    apply = pygame.Rect(650, 363, 200, 48)
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if apply.collidepoint(event.pos):
+                    music = music_box.get_text()
+                    sfx = sfx_box.get_text()
+
+                    if music != '':
+                        music_volume = float(music)
+
+                        if music_volume < 0:
+                            music_volume = 0
+                        if music_volume > 1:
+                            music_volume = 1
+
+                        pygame.mixer.music.set_volume(music_volume)
+
+                    if sfx != '':
+                        sfx_volume = float(sfx)
+
+                        if sfx_volume < 0:
+                            sfx_volume = 0
+                        if sfx_volume > 1:
+                            sfx_volume = 1
+
+                        clear.set_volume(sfx_volume)
+                        tetris.set_volume(sfx_volume)
+                        level_up.set_volume(sfx_volume)
+                        game_over.set_volume(sfx_volume)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -679,12 +709,14 @@ def sound_menu(win):
         label = FONT.render('SFX Volume: ', True, (255, 255, 255))
         win.blit(label, (380, 287))
 
-        font = pygame.font.Font(None, 28)
-        label = font.render('Press ENTER to Apply', True, (255, 255, 255))
+        label = FONT.render('Apply', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 370))
 
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 400))
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
+
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), apply, 2)
 
         for box in text_boxes:
             box.draw(win)
@@ -696,11 +728,23 @@ def network_menu(win):
     run = True
     global online
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    multi = pygame.Rect(625, 218, 250, 48)
+    single = pygame.Rect(625, 268, 250, 48)
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if multi.collidepoint(event.pos):
+                    online = 1
+                if single.collidepoint(event.pos):
+                    online = 0
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
@@ -725,14 +769,93 @@ def network_menu(win):
 
         win.blit(label, (750-(label.get_width()/2), 150))
 
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 350))
-
-        label = FONT.render('Multiplayer -- 1', True, (255, 255, 255))
+        label = FONT.render('Multiplayer', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 225))
 
-        label = FONT.render('Singleplayer -- 2', True, (255, 255, 255))
+        label = FONT.render('Singleplayer', True, (255, 255, 255))
         win.blit(label, (750-(label.get_width()/2), 275))
+
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
+
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), multi, 2)
+        pygame.draw.rect(win, (50, 50, 50), single, 2)
+
+        pygame.display.flip()
+
+
+def control_menu(win):
+    run = True
+    global DAS
+
+    das_box = TextBox(600, 220, 400, 48)
+    text_boxes = [das_box]
+
+    esc = pygame.Rect(5, 5, 40, 40)
+    apply = pygame.Rect(650, 297, 200, 48)
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if apply.collidepoint(event.pos):
+                    das = das_box.get_text()
+
+                    if das != '':
+                        DAS = int(das)
+
+                        if DAS < 0:
+                            DAS = 0
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    das = das_box.get_text()
+
+                    if das != '':
+                        DAS = int(das)
+
+                        if DAS < 0:
+                            DAS = 0
+
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+
+            for box in text_boxes:
+                box.handle(event)
+
+        for box in text_boxes:
+            box.update()
+
+        win.fill((0, 0, 0))
+
+        font = pygame.font.Font(None, 110)
+        label = font.render('Controls', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 25))
+
+        font = pygame.font.Font(None, 28)
+        label = font.render(f'DAS: { DAS }', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 150))
+
+        label = FONT.render('DAS: ', True, (255, 255, 255))
+        win.blit(label, (500, 227))
+
+        label = FONT.render('Apply', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 304))
+
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
+
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), apply, 2)
+
+        for box in text_boxes:
+            box.draw(win)
 
         pygame.display.flip()
 
@@ -741,11 +864,39 @@ def background_menu(win):
     run = True
     global bg
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    bg_1 = pygame.Rect(75, 225, 150, 150)
+    bg_2 = pygame.Rect(275, 225, 150, 150)
+    bg_3 = pygame.Rect(475, 225, 150, 150)
+    bg_4 = pygame.Rect(675, 225, 150, 150)
+    bg_5 = pygame.Rect(875, 225, 150, 150)
+    bg_6 = pygame.Rect(1075, 225, 150, 150)
+    bg_7 = pygame.Rect(1275, 225, 150, 150)
+
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+                if bg_1.collidepoint(event.pos):
+                    bg.set_background(1)
+                if bg_2.collidepoint(event.pos):
+                    bg.set_background(2)
+                if bg_3.collidepoint(event.pos):
+                    bg.set_background(3)
+                if bg_4.collidepoint(event.pos):
+                    bg.set_background(4)
+                if bg_5.collidepoint(event.pos):
+                    bg.set_background(5)
+                if bg_6.collidepoint(event.pos):
+                    bg.set_background(6)
+                if bg_7.collidepoint(event.pos):
+                    bg.set_background(7)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
@@ -778,44 +929,53 @@ def background_menu(win):
         default_image_size = (100, 100)
         default_y_pos = 250
 
+        label = font.render('1', True, (255, 255, 255))
+        win.blit(label, (150, default_y_pos + 150))
+        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'), default_image_size)
+        win.blit(image8, (100, default_y_pos))
+
         font = pygame.font.Font(None, 28)
         label = font.render('2', True, (255, 255, 255))
-        win.blit(label, (150, default_y_pos - 30))
+        win.blit(label, (350, default_y_pos + 150))
         image2 = pygame.transform.scale(pygame.image.load('backgrounds/bg2.jpg'), default_image_size)
-        win.blit(image2, (100, default_y_pos))
+        win.blit(image2, (300, default_y_pos))
 
         label = font.render('3', True, (255, 255, 255))
-        win.blit(label, (350, default_y_pos - 30))
+        win.blit(label, (550, default_y_pos + 150))
         image3 = pygame.transform.scale(pygame.image.load('backgrounds/bg3.jpg'), default_image_size)
-        win.blit(image3, (300, default_y_pos))
+        win.blit(image3, (500, default_y_pos))
 
         label = font.render('4', True, (255, 255, 255))
-        win.blit(label, (550, default_y_pos - 30))
+        win.blit(label, (750, default_y_pos + 150))
         image4 = pygame.transform.scale(pygame.image.load('backgrounds/bg4.jpg'), default_image_size)
-        win.blit(image4, (500, default_y_pos))
+        win.blit(image4, (700, default_y_pos))
 
         label = font.render('5', True, (255, 255, 255))
-        win.blit(label, (750, default_y_pos - 30))
+        win.blit(label, (950, default_y_pos + 150))
         image5 = pygame.transform.scale(pygame.image.load('backgrounds/bg5.jpg'), default_image_size)
-        win.blit(image5, (700, default_y_pos))
+        win.blit(image5, (900, default_y_pos))
 
         label = font.render('6', True, (255, 255, 255))
-        win.blit(label, (950, default_y_pos - 30))
+        win.blit(label, (1150, default_y_pos + 150))
         image6 = pygame.transform.scale(pygame.image.load('backgrounds/bg6.jpg'), default_image_size)
-        win.blit(image6, (900, default_y_pos))
+        win.blit(image6, (1100, default_y_pos))
 
         label = font.render('7', True, (255, 255, 255))
-        win.blit(label, (1150, default_y_pos - 30))
+        win.blit(label, (1350, default_y_pos + 150))
         image7 = pygame.transform.scale(pygame.image.load('backgrounds/bg7.jpg'), default_image_size)
-        win.blit(image7, (1100, default_y_pos))
+        win.blit(image7, (1300, default_y_pos))
 
-        label = font.render('1', True, (255, 255, 255))
-        win.blit(label, (1350, default_y_pos - 30))
-        image8 = pygame.transform.scale(pygame.image.load('backgrounds/bg1.jpg'), default_image_size)
-        win.blit(image8, (1300, default_y_pos))
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
 
-        label = font.render('Press ESC to Return', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 450))
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_1, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_2, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_3, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_4, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_5, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_6, 2)
+        pygame.draw.rect(win, (50, 50, 50), bg_7, 2)
 
         pygame.display.flip()
 
@@ -1087,10 +1247,32 @@ def main_menu(win):
     ip_box = TextBox(600, 280, 400, 48)
     text_boxes = [name_box, ip_box]
 
+    esc = pygame.Rect(5, 5, 40, 40)
+    play = pygame.Rect(675, 368, 150, 48)
+    settings = pygame.Rect(650, 593, 200, 48)
+
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if esc.collidepoint(event.pos):
+                    run = False
+
+                if play.collidepoint(event.pos):
+                    name = name_box.get_text()
+                    ip = ip_box.get_text()
+
+                    if name != '' and ip != '':
+                        print(f'Username -- { name }')
+                        print(f'      IP -- { ip }')
+
+                        wait_screen(win)
+                        main(win, ip, name)
+
+                if settings.collidepoint(event.pos):
+                    settings_menu(win)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -1135,12 +1317,18 @@ def main_menu(win):
         label = FONT.render('Server IP: ', True, (255, 255, 255))
         win.blit(label, (428, 287))
 
-        font = pygame.font.Font(None, 28)
-        label = font.render('Press ENTER to Play', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 370))
+        label = FONT.render('X', True, (255, 255, 255))
+        win.blit(label, (14, 10))
 
-        label = font.render('Press S for Settings', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 400))
+        label = FONT.render('Play', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 375))
+
+        label = FONT.render('Settings', True, (255, 255, 255))
+        win.blit(label, (750-(label.get_width()/2), 600))
+
+        pygame.draw.rect(win, (50, 50, 50), esc, 2)
+        pygame.draw.rect(win, (50, 50, 50), play, 2)
+        pygame.draw.rect(win, (50, 50, 50), settings, 2)
 
         for box in text_boxes:
             box.draw(win)
