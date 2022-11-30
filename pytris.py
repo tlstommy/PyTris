@@ -288,7 +288,7 @@ def create_garbage(grid, locked, num_garbage):
                 locked[newkey] = (93, 93, 93)
 
 
-def clear_rows(grid, locked):
+def clear_lines(grid, locked):
     lines = 0
 
     for i in range(len(grid)):
@@ -1189,7 +1189,7 @@ def main(win,server_ip,username):
             change_piece = False
 
             # update lines cleared
-            cleared = clear_rows(grid, locked_positions)
+            cleared = clear_lines(grid, locked_positions)
 
             level_count += cleared
             line += cleared
