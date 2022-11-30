@@ -367,7 +367,7 @@ def draw_window(surface, grid, opponent_grid, opponent_name, score, line, level)
     pygame.draw.rect(surface, (128, 128, 128), (opponent_top_left_x, top_left_y, play_width, play_height), 5)
     draw_grid(surface, grid, opponent_grid)
 
-def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType):
+def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalType, game_start, game_end, send_garbage):
     #print(grid)
     jsonData = {
                 "username":username, 
@@ -375,19 +375,19 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalT
                 "recvPort":25000,
                 "signalType":signalType,
                 "currentGrid":grid,
+                "game_end":game_end,
+                "send_garbage":send_garbage,
                 }
 
     client.createClientSocket();client.sendData(jsonData)
     
     try:
-        opponent_grid = client.receiveData()["currentGrid"]
+        opponent = client.receiveData()
     except:
-
-        opponent_grid = EMPTY_GRID
-
+        pass
 
     
-    return list(opponent_grid)
+    return opponent
 
 
 def settings_menu(win):
@@ -966,6 +966,7 @@ def main(win,server_ip,username):
     localIP =socket.gethostbyname(socket.gethostname())
 
 
+
     # Opponent Initialization
     opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
@@ -985,6 +986,11 @@ def main(win,server_ip,username):
     score = 0
     level = 0
     line = 0
+    game_end = False
+
+    opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
+    while not opponent_info:
+        opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
 
     pygame.mixer.music.play(-1)
 
@@ -1166,7 +1172,7 @@ def main(win,server_ip,username):
             leveled = False
 
         try:
-            opponent_grid = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard")
+            opponent_grid = list(call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)["currentGrid"])
             # Send client info over server
             # Recieve opponent info from server
 
