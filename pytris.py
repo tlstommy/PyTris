@@ -987,6 +987,7 @@ def main(win,server_ip,username):
     level = 0
     line = 0
     cleared = 0
+    garbage_queue = 0
     game_end = False
 
     opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
@@ -1015,7 +1016,7 @@ def main(win,server_ip,username):
                 change_piece = True
 
         for event in pygame.event.get():
-            #if receiver.game_end == True:
+            # if receiver.game_end == True:
             #    draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
             #    pygame.mixer.Sound.play(game_over)
             #    pygame.mixer.music.stop()
@@ -1171,14 +1172,21 @@ def main(win,server_ip,username):
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
+            if garbage_queue > 0:
+                create_garbage(grid, locked_positions, garbage_queue)
+                garbage_queue = 0
+            
+
+
 
         try:
-            opponent_grid = list(call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)["currentGrid"])
-            # Send client info over server
-            # Recieve opponent info from server
+            opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
 
         except TypeError as e:
             print("ERROR:", e)
+
+        opponent_grid = opponent_info["CurrentGrid"]
+        garbage_queue += opponent_info["send_garbage"]
         draw_window(win, grid, opponent_grid, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
