@@ -289,29 +289,32 @@ def create_garbage(grid, locked, num_garbage):
 
 
 def clear_rows(grid, locked):
-    inc = 0
-    for i in range(len(grid)-1, -1, -1):
+    lines = 0
+
+    for i in range(len(grid)):
         row = grid[i]
-        if (0, 0, 0) not in row and (255, 255, 255) not in row:
-            inc += 1
+        count = 0
+        for j in row:
+            if j in all_colors:
+                count += 1
+
+        if count == 10:
             ind = i
+            lines += 1
             for j in range(len(row)):
                 try:
                     del locked[(j,i)]
                 except:
                     continue
 
-    if inc > 0:
+    if lines:
         for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
             x, y = key
             if y < ind:
-                newkey = (x, y + inc)
+                newkey = (x, y + lines)
                 locked[newkey] = locked.pop(key)
 
-    if inc > 4:
-        inc = 4
-
-    return inc
+    return lines
 
 
 def draw_queue(queue, surface, hold):
