@@ -237,7 +237,7 @@ def clear_lines(grid, locked):
         row = grid[i]
         count = 0
         for j in row:
-            if j in all_colors:
+            if j in all_colors or j == (93, 93, 93):
                 count += 1
 
         if count == 10:
