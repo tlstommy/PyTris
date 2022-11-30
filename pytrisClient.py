@@ -43,9 +43,8 @@ class Opponent(object):
 # Holds information such as username, ip, and locked positions formatted through
 # a json object
 class PlayerInfo(object):
-    def __init__(self, name, IP, grid, locked_pos = {}):
+    def __init__(self, name, grid, locked_pos = {}):
         self.username = name
-        self.ip = IP
         self.locked_pos = []
         self.game_start = False
         self.game_end = False

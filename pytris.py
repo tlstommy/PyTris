@@ -966,6 +966,13 @@ def main(win,server_ip,username):
     # Opponent Initialization
     opponent = Opponent("Player 2", locked_positions)
     opponent_grid = create_grid(opponent.locked_pos)
+    receiver = PlayerInfo()
+    sender = PlayerInfo(username)
+    sender.game_start = True
+    # Send info over server
+
+    # while receiver.game_start != True:
+        # Recieve Json Data over server
 
     total_left_held = 0
     total_right_held = 0
@@ -1006,8 +1013,19 @@ def main(win,server_ip,username):
                 change_piece = True
 
         for event in pygame.event.get():
+            if receiver.game_end == True:
+                draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
+                pygame.mixer.Sound.play(game_over)
+                pygame.mixer.music.stop()
+                pygame.display.update()
+                pygame.time.delay(1500)
+                run = False
+                exit()
+
             if event.type == pygame.QUIT:
                 run = False
+                sender.game_end = True
+                # Send data over server
                 exit()
 
             if event.type == pygame.KEYDOWN:
@@ -1053,6 +1071,8 @@ def main(win,server_ip,username):
                     current_piece.y -= 1
                     change_piece = 1
                 if event.key == pygame.K_ESCAPE:
+                    sender.game_end = True
+                    # send info over server
                     exit()
 
         keys = pygame.key.get_pressed()
@@ -1106,6 +1126,8 @@ def main(win,server_ip,username):
             current_piece = bag_queue.pop(0)
             if not valid_space(current_piece, grid):
                 draw_text_middle(win, "YOU LOST!", 80, (255, 255, 255))
+                sender.game_end = True
+                # Send info over server
                 call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"gameover-loss")
                 client.createClientSocket();client.sendData("GAMEOVER")
                 print(client.receiveData())
@@ -1122,6 +1144,8 @@ def main(win,server_ip,username):
 
             level_count += cleared
             line += cleared
+
+            sender.update(grid, locked_positions)
 
             # update level & speed
             if cleared > 0 and level_count >= 10:
@@ -1141,25 +1165,27 @@ def main(win,server_ip,username):
             if cleared == 2:
                 score += 100 * (level + 1)
                 # send 1 line
-                # opponent_info.send_garbage(1)
+                sender.send_garbage(1)
                 if not leveled:
                     pygame.mixer.Sound.play(clear)
             if cleared == 3:
                 score += 300 * (level + 1)
                 # send 2 lines
-                # opponent_info.send_garbage(2)
+                sender.send_garbage(2)
                 if not leveled:
                     pygame.mixer.Sound.play(clear)
             if cleared == 4:
                 score += 1200 * (level + 1)
                 # send 3 lines
-                # opponent_info.send_garbage(3)
+                sender.send_garbage(3)
                 if not leveled:
                     pygame.mixer.Sound.play(tetris)
 
             leveled = False
             try:
                 opponent_grid = call_server(server_ip,localIP,username,grid,opponent_grid,win,client,"standard")
+                # Send client info over server
+                # Recieve opponent info from server
                 
             except TypeError as e:
                 print("ERROR:",e)
