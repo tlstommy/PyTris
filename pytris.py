@@ -384,7 +384,7 @@ def call_server(server_ip,localIP,username,grid,opponent_grid,win,client,signalT
     try:
         opponent = client.receiveData()
     except:
-        pass
+        opponent = {}
 
     
     return opponent
@@ -990,7 +990,7 @@ def main(win,server_ip,username):
     game_end = False
 
     opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
-    while not opponent_info:
+    while len(opponent_info) == 0:
         opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
 
     pygame.mixer.music.play(-1)
