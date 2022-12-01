@@ -12,7 +12,7 @@ class Server:
         self.player2ID = None
     def createServer(self):
         #create new socket
-        self.serverSocket = socket.socket()
+        self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #bind the port
         self.serverSocket.bind(('',self.port))
         self.serverSocket.listen(20)

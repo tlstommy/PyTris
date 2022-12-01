@@ -962,8 +962,9 @@ def main(win,server_ip,username):
         bag_queue.extend(create_queue())
 
     #server stuff
-    client = Client(server_ip,8888,recvPort=25000)
-    localIP =socket.gethostbyname(socket.gethostname())
+    if online == 1:
+        client = Client(server_ip,8888,recvPort=25000)
+        localIP =socket.gethostbyname(socket.gethostname())
 
 
 
@@ -989,16 +990,17 @@ def main(win,server_ip,username):
     garbage_queue = 0
     game_end = False
 
-    opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
-    while len(opponent_info) == 0:
+    if online == 1:
         opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
+        while len(opponent_info) == 0:
+            opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
 
     pygame.mixer.music.play(-1)
-    opponent.name = opponent_info["username"]
+    if online == 1:
+        opponent.name = opponent_info["username"]
 
     while run:
         grid = create_grid(locked_positions)
-        #opponent_grid = create_grid(opponent.locked_pos)
         fall_time += clock.get_rawtime()
         level_time += clock.get_rawtime()
         cleared = 0
@@ -1017,18 +1019,20 @@ def main(win,server_ip,username):
                 change_piece = True
 
         for event in pygame.event.get():
-            if opponent_info["game_end"] == True:
-               draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
-               pygame.mixer.Sound.play(game_over)
-               pygame.mixer.music.stop()
-               pygame.display.update()
-               pygame.time.delay(1500)
-               run = False
+            if online == 1:
+                if opponent_info["game_end"] == True:
+                    draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
+                    pygame.mixer.Sound.play(game_over)
+                    pygame.mixer.music.stop()
+                    pygame.display.update()
+                    pygame.time.delay(1500)
+                    run = False
 
             if event.type == pygame.QUIT:
                 run = False
                 game_end = True
-                opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
+                if online == 1:
+                    opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
                 exit()
 
             if event.type == pygame.KEYDOWN:
@@ -1105,10 +1109,6 @@ def main(win,server_ip,username):
             if y > -1:
                 grid[y][x] = current_piece.color
 
-        # I went ahead and made the ghost piece but it's pretty buggy, you can finalize and commit if you want Lohith
-        # Make a deep copy of the current piece to use as the ghost
-        # Move it below the current piece because it won't find any valid spaces otherwise
-        # Recolor the cell to white
         ghost_shape_copy = copy.deepcopy(current_piece)
         while ghost_shape_copy.y < current_piece.y + 4 and ghost_shape_copy.y < 20:
             ghost_shape_copy.y += 1
@@ -1182,16 +1182,15 @@ def main(win,server_ip,username):
                 garbage_queue = 0
             
 
+        if online == 1:
+            try:
+                opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
 
+            except TypeError as e:
+                print("ERROR:", e)
 
-        try:
-            opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
-
-        except TypeError as e:
-            print("ERROR:", e)
-
-        opponent_grid = opponent_info["currentGrid"]
-        garbage_queue += opponent_info["send_garbage"]
+            opponent_grid = opponent_info["currentGrid"]
+            garbage_queue += opponent_info["send_garbage"]
         draw_window(win, grid, opponent_grid, username, opponent.name, score, line, level)
         draw_queue(bag_queue, win, hold_piece)
 
