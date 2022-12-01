@@ -1,0 +1,138 @@
+932b02fc pytris.py            (hbrandutk     2022-11-30 17:18:41 -0500  377)                 "currentGrid":grid,
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  930)     win.fill((0, 0, 0))
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  932)     font = pygame.font.Font(None, 125)
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  933)     label = font.render('Connecting...', True, (255, 255, 255))
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  934)     win.blit(label, (750-(label.get_width()/2), 350-(label.get_height()/2)))
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  936)     font = pygame.font.Font(None, 24)
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  937)     label = font.render('Press ENTER to skip', True, (255, 255, 255))
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  938)     win.blit(label, (10, 10))
+bc59d1ca pytris.py            (hbrandutk     2022-11-30 20:13:19 -0500  940)     pygame.display.flip()
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  951)     if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  952)         client = Client(server_ip,8888,recvPort=25000)
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  953)         localIP =socket.gethostbyname(socket.gethostname())
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  979)     if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  981)         while len(opponent_info) == 0:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  982)             opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, 0)
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  985)     if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500  986)         opponent.name = opponent_info["username"]
+6fba1276 pytris.py            (hbrandutk     2022-11-30 18:39:52 -0500  992)         cleared = 0
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1008)             if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1009)                 if opponent_info["game_end"] == True:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1010)                     draw_text_middle(win, "YOU WON!", 80, (255, 255, 255))
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1011)                     pygame.mixer.Sound.play(game_over)
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1012)                     pygame.mixer.music.stop()
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1013)                     pygame.display.update()
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1014)                     pygame.time.delay(1500)
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1015)                     run = False
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1020)                 if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1021)                     opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
+bd696b6b pytris.py            (hbrandutk     2022-10-13 03:33:07 -0400 1125)             hold_used = 0
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1171)         if online == 1:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1172)             try:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1173)                 opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1175)             except TypeError as e:
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1176)                 print("ERROR:", e)
+932b02fc pytris.py            (hbrandutk     2022-11-30 17:18:41 -0500 1177) 
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1178)             opponent_grid = opponent_info["currentGrid"]
+a304ed38 pytris.py            (hbrandutk     2022-11-30 19:43:59 -0500 1179)             garbage_queue += opponent_info["send_garbage"]
+a304ed38 (hbrandutk 2022-11-30 19:43:59 -0500  15)         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  55)                 if self.player2 != None:
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  56)                     if self.player2["send_garbage"] > 0:
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  57)                         self.player2["send_garbage"] = 0
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  65)                 if self.player1 != None:
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  66)                     if self.player1["send_garbage"] > 0:
+6fba1276 (hbrandutk 2022-11-30 18:39:52 -0500  67)                         self.player1["send_garbage"] = 0
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  1) import socket
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  2) from _thread import *
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  3) import sys
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  4) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  5) player_info = ["", ""]
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  6) def threaded_client(conn, player):
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  7)     print(f"Created thread for player {player}")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  8)     conn.send(str.encode(f"You are player {player}"))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  9)     reply = ""
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 10)     while True:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 11)         try:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 12)             data = conn.recv(4096).decode()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 13)             player_info[player] = data
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 14)             if not data:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 15)                 print("Disconnected")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 16)                 break
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 17)             else:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 18)                 if player == 1:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 19)                     reply = player_info[0]
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 20)                 else:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 21)                     reply = player_info[1]
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 22) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 23)                 print("Received: ", data)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 24)                 print("Sending : ", reply)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 25)             conn.sendall(str.encode(reply))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 26)         except:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 27)             break
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 28) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 29)     print("Lost connection")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 30)     conn.close()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 31) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 32) server_ip = socket.gethostbyname(socket.gethostname())
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 33) port = 8888
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 34) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 35) s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 36) try:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 37)     s.bind((server_ip, port))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 38) except socket.error as e:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 39)     print(e)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 40) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 41) print(f"socket created on {socket.gethostbyname(socket.gethostname())} with port: {port}\n")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 42) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 43) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 44) s.listen(2)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 45) print("Waiting for a connection, Server Started")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 46) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 47) num_players = 0
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 48) while True:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 49)     conn, addr = s.accept()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 50)     print("Connected to:", addr)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 51) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 52)     start_new_thread(threaded_client, (conn, num_players))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 53)     num_players += 1
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 54) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 55) s.close()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  1) import socket, time
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  2) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  3) class Client:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  4)     def __init__(self):
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  5)         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  6)         self.remote_address = "216.96.157.171"
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  7)         self.port = 8888
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  8) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500  9)     def connect(self):
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 10)         try:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 11)             self.client.connect((self.remote_address, self.port))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 12)             return self.client.recv(4096).decode()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 13)         except:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 14)             pass
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 15) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 16)     def send(self, data):
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 17)         try:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 18)             self.client.send(str.encode(data))
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 19)             return self.client.recv(4096).decode()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 20)         except socket.error as e:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 21)             print(e)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 22) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 23) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 24) c1 = Client()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 25) c2 = Client()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 26) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 27) time.sleep(1)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 28) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 29) response_1 = c1.connect()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 30) response_2 = c2.connect()
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 31) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 32) print(f"Response 1: {response_1}\n Response 2: {response_2}\n")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 33) 
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 34) time.sleep(1)
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 35) while True:
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 36)     response_1 = c1.send("Message from c1")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 37)     response_2 = c2.send("Message from c2")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 38)     print(f"Response 1: {response_1}\n Response 2: {response_2}\n")
+fa0906ea (hbrandutk 2022-11-30 14:40:33 -0500 39)     time.sleep(1)
