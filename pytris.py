@@ -250,11 +250,22 @@ def clear_lines(grid, locked):
                     continue
 
     if lines:
+        yes = 0
+        old_y = -1
         for key in sorted(list(locked), key=lambda x: x[1])[::-1]:
             x, y = key
             if y < ind:
-                newkey = (x, y + lines)
+                if old_y == -1:
+                    old_y = y
+
+                if old_y != y:
+                    yes += 1
+
+                new_y = ind - yes
+
+                newkey = (x, new_y)
                 locked[newkey] = locked.pop(key)
+                old_y = y
 
     return lines
 
