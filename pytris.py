@@ -926,32 +926,18 @@ def background_menu(win):
 
 
 def wait_screen(win):
-    run = True
 
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                exit()
+    win.fill((0, 0, 0))
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    run = False
+    font = pygame.font.Font(None, 125)
+    label = font.render('Connecting...', True, (255, 255, 255))
+    win.blit(label, (750-(label.get_width()/2), 350-(label.get_height()/2)))
 
-            # if 2 players are connected to server
-                # run = False
+    font = pygame.font.Font(None, 24)
+    label = font.render('Press ENTER to skip', True, (255, 255, 255))
+    win.blit(label, (10, 10))
 
-        win.fill((0, 0, 0))
-
-        font = pygame.font.Font(None, 125)
-        label = font.render('Connecting...', True, (255, 255, 255))
-        win.blit(label, (750-(label.get_width()/2), 350-(label.get_height()/2)))
-
-        font = pygame.font.Font(None, 24)
-        label = font.render('Press ENTER to skip', True, (255, 255, 255))
-        win.blit(label, (10, 10))
-
-        pygame.display.flip()
+    pygame.display.flip()
 
 
 def main(win,server_ip,username):
