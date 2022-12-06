@@ -944,10 +944,6 @@ def wait_screen(win):
     label = font.render('Connecting...', True, (255, 255, 255))
     win.blit(label, (750-(label.get_width()/2), 350-(label.get_height()/2)))
 
-    font = pygame.font.Font(None, 24)
-    label = font.render('Press ENTER to skip', True, (255, 255, 255))
-    win.blit(label, (10, 10))
-
     pygame.display.flip()
 
 
@@ -1076,9 +1072,12 @@ def main(win,server_ip,username):
                     change_piece = 1
                 if event.key == pygame.K_ESCAPE:
                     # send info over server
-                    game_end = True
-                    opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
-                    exit()
+                    if online:
+                        game_end = True
+                        opponent_info = call_server(server_ip, localIP, username, grid, opponent_grid, win, client, "standard", game_end, cleared)
+                        exit()
+                    else:
+                        run = False
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -1177,7 +1176,7 @@ def main(win,server_ip,username):
             if garbage_queue > 0:
                 create_garbage(grid, locked_positions, garbage_queue)
                 garbage_queue = 0
-            
+
 
         if online == 1:
             try:
@@ -1237,7 +1236,7 @@ def main_menu(win):
 
                     #print("ipdebug on!")
                     #ip = "216.96.223.241"
-                    
+
                     if name != '' and ip != '':
                         print(f'Username -- { name }')
                         print(f'      IP -- { ip }')
