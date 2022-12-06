@@ -1078,6 +1078,7 @@ def main(win,server_ip,username):
                         exit()
                     else:
                         run = False
+                        pygame.mixer.music.stop()
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
