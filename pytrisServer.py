@@ -7,7 +7,7 @@ class Server:
         self.port = port
         self.player1 = None
         self.player2 = None
-        #ids are just username+ip, helps server distinguish people with the same ip
+        #ids are just username+ip, helps server di stinguish people with the same ip
         self.player1ID = None
         self.player2ID = None
     def createServer(self):

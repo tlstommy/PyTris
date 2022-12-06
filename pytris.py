@@ -47,7 +47,7 @@ top_left_y = (s_height - play_height)
 opponent_top_left_x = s_width - (top_left_x + play_width) - 200   # Opponent X position
 
 shape_pack = SRS_PACK
-DAS = 1000
+DAS = 100
 
 COLOR_INACTIVE = pygame.Color(128, 128, 128)
 COLOR_ACTIVE = pygame.Color(255, 255, 255)
