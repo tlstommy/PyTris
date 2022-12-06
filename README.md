@@ -39,10 +39,20 @@ To run the client, make sure you are still in the PyTris directory and type ```p
 ![alt text for screen readers](/example.png "PyTris")
 
 For testing purposes, running two clients and connecting to a server on the same machine is the most reliable method. There is also the option to play singleplayer in the settings menu. When playing a singleplayer game, just type anything into the Server IP text box and click play to run.
+
 # Gameplay
-PyTris is old fashioned Tetris with a few modern twists that adhere to the modern Tetris™ guideline standards. Gameplay consists of clearing lines to send garbage lines to your opponent with the hope of those lines causing them to run out of space. Clearing a single line sends one garbage line, two sends two, and so on. The game ends when a player 
+PyTris is old fashioned Tetris with a few modern twists that adhere to the modern Tetrisâ„¢ guideline standards. Gameplay consists of clearing lines to send garbage lines to your opponent with the hope of those lines causing them to run out of space. Clearing a single line sends one garbage line, two sends two, and so on. The game ends when a player 
 
 ![alt text for screen readers](/gameplay.png "PyTris")
+
+# Controls
+* Up - Clockwise Rotate
+* Z - Counterclockwise Rotate
+* A - 180 Rotate
+* Left, Right, and Down arrow keys - Move left, right, and down
+* Space - Hard drop (places piece instantly)
+* Left shift - Hold a piece
+
 # Credits
 
 Credit goes to Tim from https://www.techwithtim.net/
