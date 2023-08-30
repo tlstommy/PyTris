@@ -6,7 +6,7 @@ PyTris is a client server application for the purpose of playing a multiplayer o
 
 #  Contributors
 * Henry Brand - [hbrand](https://github.com/hbrandutk)
-* Thomas Smith - [lulamae12](https://github.com/lulamae12)
+* Thomas Smith - [tlstommy](https://github.com/tlstommy)
 * Eli Kell - [eli-kell](https://github.com/eli-kell)
 * Daniel White - [daniel-white99](https://github.com/daniel-white99)
 * Lohith Gangula - [LohithGangula](https://github.com/LohithGangula)
