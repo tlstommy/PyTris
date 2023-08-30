@@ -53,10 +53,5 @@ PyTris is old fashioned Tetris with a few modern twists that adhere to the moder
 * Space - Hard drop (places piece instantly)
 * Left shift - Hold a piece
 
-# Credits
-
-Credit goes to Tim from https://www.techwithtim.net/
-His tutorial was instrumental in figuring out how to get the basics of our own Tetris game running on Python.
-
 # Licence
 [LICENSE](https://github.com/utk-cs340-fall22/PyTris/blob/main/LICENSE)
